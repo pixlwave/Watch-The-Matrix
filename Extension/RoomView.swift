@@ -13,12 +13,14 @@ struct RoomView: View {
                 ForEach(room.events) { event in
                     VStack(alignment: .leading) {
                         Text(event.body)
-                        Text(event.sender)
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
+                        if !event.isMe && room.members.count > 2 {
+                            Text(event.sender)
+                                .font(.footnote)
+                                .foregroundColor(Color.primary.opacity(0.667))
+                        }
                     }
                     .id(event.id)
-                    .listRowPlatterColor(event.isMe ? nil : .purple)
+                    .listRowPlatterColor(event.isMe ? Color(.darkGray) : .purple)
                     .onLongPressGesture {
                         eventToReactTo = event
                     }
@@ -45,6 +47,30 @@ struct RoomView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+struct RoomView_Previews: PreviewProvider {
+    static var previews: some View {
+        List {
+            VStack(alignment: .leading) {
+                Text("Hello, World!")
+                Text("@me:server.net")
+                    .font(.footnote)
+                    .foregroundColor(Color.primary.opacity(0.667))
+//                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .listRowPlatterColor(Color(.darkGray))
+            
+            VStack(alignment: .leading) {
+                Text("A slightly longer message")
+                Text("@them:sever-1234-sddf.org")
+                    .font(.footnote)
+                    .foregroundColor(Color.primary.opacity(0.667))
+//                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .listRowPlatterColor(.purple)
         }
     }
 }
