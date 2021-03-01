@@ -21,6 +21,7 @@ struct WatchTheMatrixApp: App {
             case .syncError:
                 Text("Error syncing messages")
                     .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
             }
         }
 
