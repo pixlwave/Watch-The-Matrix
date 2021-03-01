@@ -10,6 +10,12 @@ struct RoomView: View {
     var body: some View {
         ScrollViewReader { reader in
             List {
+                if room.hasMoreMessages {
+                    Button("Load More…") {
+                        matrix.loadMoreMessages(in: room)
+                    }
+                }
+                
                 ForEach(room.events) { event in
                     VStack(alignment: .leading) {
                         Text(event.body)
