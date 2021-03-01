@@ -5,7 +5,8 @@ struct RoomView: View {
     @EnvironmentObject var matrix: Client
     @ObservedObject var room: Room
     
-    @State var eventToReactTo: Event?
+    @State private var shouldScroll = false
+    @State private var eventToReactTo: Event?
     
     var body: some View {
         ScrollViewReader { reader in
@@ -36,7 +37,11 @@ struct RoomView: View {
             .onAppear {
                 reader.scrollTo(room.events.last?.id, anchor: .bottom)
             }
+            .onReceive(room.$events) { newValue in
+                shouldScroll = newValue.last != room.events.last
+            }
             .onChange(of: room.events) { events in
+                guard shouldScroll else { return }
                 withAnimation {
                     reader.scrollTo(events.last?.id, anchor: .bottom)
                 }
