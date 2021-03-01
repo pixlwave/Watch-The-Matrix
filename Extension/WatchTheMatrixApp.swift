@@ -18,6 +18,9 @@ struct WatchTheMatrixApp: App {
                     RootView()
                         .environmentObject(matrix)
                 }
+            case .syncError:
+                Text("Error syncing messages")
+                    .foregroundColor(.red)
             }
         }
 
