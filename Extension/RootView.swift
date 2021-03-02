@@ -41,7 +41,7 @@ struct RoomCell: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(room.name ?? room.id)
-            Text(room.events.last?.body ?? "")
+            Text(room.lastMessage()?.body ?? "")
                 .lineLimit(1)
                 .font(.footnote)
                 .foregroundColor(.secondary)

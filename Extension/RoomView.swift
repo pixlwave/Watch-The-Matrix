@@ -19,15 +19,15 @@ struct RoomView: View {
                 
                 ForEach(room.events) { event in
                     VStack(alignment: .leading) {
-                        Text(event.body)
-                        if !event.isMe && room.members.count > 2 {
+                        Text((event as? MessageEvent)?.body ?? "")
+                        if room.members.count > 2 {
                             Text(displayName(for: event.sender))
                                 .font(.footnote)
                                 .foregroundColor(Color.primary.opacity(0.667))
                         }
                     }
                     .id(event.id)
-                    .listRowPlatterColor(event.isMe ? .purple : Color(.darkGray))
+                    .listRowPlatterColor(event.sender == matrix.userID ? .purple : Color(.darkGray))
                     .onLongPressGesture {
                         eventToReactTo = event
                     }
