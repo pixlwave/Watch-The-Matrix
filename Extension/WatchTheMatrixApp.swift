@@ -16,6 +16,7 @@ struct WatchTheMatrixApp: App {
             case .idle:
                 NavigationView {
                     RootView()
+                        .environment(\.managedObjectContext, matrix.container.viewContext)
                         .environmentObject(matrix)
                 }
             case .syncError:
