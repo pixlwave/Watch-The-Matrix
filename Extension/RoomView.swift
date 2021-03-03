@@ -6,7 +6,7 @@ struct RoomView: View {
     @ObservedObject var room: Room
     
     @State private var shouldScroll = false
-    @State private var eventToReactTo: Event?
+    @State private var messageToReactTo: Message?
     
     var body: some View {
         ScrollViewReader { reader in
@@ -17,41 +17,41 @@ struct RoomView: View {
                     }
                 }
                 
-                ForEach(room.events) { event in
+                ForEach(room.messages) { message in
                     VStack(alignment: .leading) {
-                        Text((event as? MessageEvent)?.body ?? "")
+                        Text(message.body ?? "")
                         if room.members.count > 2 {
-                            Text(displayName(for: event.sender))
+                            Text(message.sender?.displayName ?? message.sender?.id ?? "")
                                 .font(.footnote)
                                 .foregroundColor(Color.primary.opacity(0.667))
                         }
                     }
-                    .id(event.id)
-                    .listRowPlatterColor(event.sender == matrix.userID ? .purple : Color(.darkGray))
+                    .id(message.id)
+                    .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
                     .onLongPressGesture {
-                        eventToReactTo = event
+                        messageToReactTo = message
                     }
                 }
             }
             .navigationTitle(room.name ?? "")
             .onAppear {
-                reader.scrollTo(room.events.last?.id, anchor: .bottom)
+                reader.scrollTo(room.messages.last?.id, anchor: .bottom)
             }
-            .onReceive(room.$events) { newValue in
-                shouldScroll = newValue.last != room.events.last
-            }
-            .onChange(of: room.events) { events in
-                guard shouldScroll else { return }
-                withAnimation {
-                    reader.scrollTo(events.last?.id, anchor: .bottom)
-                }
-            }
-            .sheet(item: $eventToReactTo) { event in
+//            .onReceive(room.$events) { newValue in
+//                shouldScroll = newValue.last != room.messages.last
+//            }
+//            .onChange(of: room.events) { events in
+//                guard shouldScroll else { return }
+//                withAnimation {
+//                    reader.scrollTo(events.last?.id, anchor: .bottom)
+//                }
+//            }
+            .sheet(item: $messageToReactTo) { message in
                 LazyVGrid(columns: [GridItem(), GridItem()]) {
                     ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
                         Button {
-                            matrix.sendReaction(text: reaction, to: eventToReactTo!, in: room)
-                            eventToReactTo = nil
+                            matrix.sendReaction(text: reaction, to: message, in: room)
+                            messageToReactTo = nil
                         } label: {
                             Text(reaction)
                                 .font(.system(size: 21))
@@ -63,7 +63,7 @@ struct RoomView: View {
     }
     
     func displayName(for userID: String) -> String {
-        room.members.first { $0.userID == userID }?.displayName ?? userID
+        room.members.first { $0.id == userID }?.displayName ?? userID
     }
 }
 
