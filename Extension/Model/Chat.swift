@@ -30,6 +30,8 @@ public class Chat: ObservableObject {
         else { fatalError("Unable to find Core Data Model") }
         
         container = NSPersistentContainer(name: "Matrix", managedObjectModel: managedObjectModel)
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")    // in memory for now
+        
         container.loadPersistentStores { storeDescription, error in
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
