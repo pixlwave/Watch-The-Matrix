@@ -83,6 +83,7 @@ public class Chat: ObservableObject {
     public func createRoom(name: String) {
         client.createRoom(name: name)
             .print()
+            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
     public func sendMessage(body: String, room: Room) {
@@ -90,6 +91,7 @@ public class Chat: ObservableObject {
         
         client.sendMessage(body: body, roomID: roomID)
             .print()
+            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
     public func sendReaction(text: String, to event: Message, in room: Room) {
@@ -97,37 +99,40 @@ public class Chat: ObservableObject {
         
         client.sendReaction(text: text, to: eventID, in: roomID)
             .print()
+            .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
     }
     
     private func getName(of room: Room) {
         guard let roomID = room.id else { return }
         
         client.getName(of: roomID)
-            .sink { completion in
-                print(completion)
-                room.objectWillChange.send()
-                room.name = room.members.filter { $0.id != self.userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
-                self.save()
-            } receiveValue: { response in
-                room.objectWillChange.send()
-                room.name = response.name
-                self.save()
-            }
+            .subscribe(Subscribers.Sink { completion in
+                    print(completion)
+                    room.objectWillChange.send()
+                    room.name = room.members.filter { $0.id != self.userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
+                    self.save()
+                } receiveValue: { response in
+                    room.objectWillChange.send()
+                    room.name = response.name
+                    self.save()
+                }
+            )
     }
     
     private func getMembers(in room: Room) {
         guard let roomID = room.id else { return }
         
         client.getMembers(in: roomID)
-            .sink { completion in
-                //
-            } receiveValue: { response in
-                let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                                              .map { Member(event: $0, context: self.backgroundContext) }
-                
-                room.roomMembers = NSSet(array: members)
-                self.save()
-            }
+            .subscribe(Subscribers.Sink { completion in
+                    //
+                } receiveValue: { response in
+                    let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
+                        .map { Member(event: $0, context: self.backgroundContext) }
+                    
+                    room.roomMembers = NSSet(array: members)
+                    self.save()
+                }
+            )
     }
     
     private var syncCancellable: AnyCancellable?
@@ -159,11 +164,11 @@ public class Chat: ObservableObject {
                     self.nextBatch = response.nextBatch
                     self.longPoll()
                     
-//                    rooms.forEach {
-//                        self.getName(of: $0)
-//                        self.getMembers(in: $0)
-//                        self.loadMoreMessages(in: $0)
-//                    }
+                    rooms.forEach {
+                        self.getName(of: $0)
+                        self.getMembers(in: $0)
+                        self.loadMoreMessages(in: $0)
+                    }
                 }
             }
     }
@@ -198,7 +203,7 @@ public class Chat: ObservableObject {
         guard let roomID = room.id else { return }
         
         client.loadMessages(in: roomID, from: room.previousBatch!)
-            .sink { completion in
+            .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
                 let messages = response.events?.filter { $0.type == "m.room.message" }
@@ -211,6 +216,6 @@ public class Chat: ObservableObject {
                 room.previousBatch = response.endToken
                 
                 self.save()
-            }
+            })
     }
 }
