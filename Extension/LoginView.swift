@@ -2,7 +2,7 @@ import SwiftUI
 import Matrix
 
 struct LoginView: View {
-    @EnvironmentObject var matrix: Client
+    @EnvironmentObject var matrix: Chat
     
     @State var username = ""
     @State var password = ""
@@ -21,7 +21,7 @@ struct LoginView: View {
     func login() {
         if !homeserverAddress.isEmpty {
             if let homeserver = Homeserver(string: homeserverAddress) {
-                matrix.homeserver = homeserver
+                matrix.client.homeserver = homeserver
             } else {
                 return
             }

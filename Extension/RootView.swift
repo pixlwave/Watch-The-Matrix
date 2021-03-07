@@ -2,7 +2,7 @@ import SwiftUI
 import Matrix
 
 struct RootView: View {
-    @EnvironmentObject var matrix: Client
+    @EnvironmentObject var matrix: Chat
     @State var isPresentingSignOutAlert = false
     
     @FetchRequest(entity: Room.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)]) var rooms: FetchedResults<Room>

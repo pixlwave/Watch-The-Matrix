@@ -2,7 +2,7 @@ import SwiftUI
 import Matrix
 
 struct RoomView: View {
-    @EnvironmentObject var matrix: Client
+    @EnvironmentObject var matrix: Chat
     @ObservedObject var room: Room
     
     @State private var shouldScroll = false
