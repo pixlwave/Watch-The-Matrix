@@ -17,11 +17,6 @@ public class Chat: ObservableObject {
     private var nextBatch: String?
     
     public var container: NSPersistentContainer
-    lazy private var backgroundContext: NSManagedObjectContext = {
-        let context = container.newBackgroundContext()
-        context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        return context
-    }()     // lazily created on the background thread
     
     public init() {
         guard
@@ -40,14 +35,15 @@ public class Chat: ObservableObject {
     }
     
     private func save() {
-        guard backgroundContext.hasChanges else { return }
-        try? backgroundContext.save()
+        guard container.viewContext.hasChanges else { return }
+        try? container.viewContext.save()
     }
     
     private var authCancellable: AnyCancellable?
     
     public func register(username: String, password: String) {
         authCancellable = client.register(username: username, password: password)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
             } receiveValue: { response in
@@ -59,6 +55,7 @@ public class Chat: ObservableObject {
     
     public func login(username: String, password: String) {
         authCancellable = client.login(username: username, password: password)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
             } receiveValue: { response in
@@ -71,6 +68,7 @@ public class Chat: ObservableObject {
     
     public func logout() {
         authCancellable = client.logout()
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
             } receiveValue: { success in
@@ -106,33 +104,35 @@ public class Chat: ObservableObject {
         guard let roomID = room.id else { return }
         
         client.getName(of: roomID)
+            .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
-                    print(completion)
+                if case .failure(let error) = completion {
+                    print(error)
                     room.objectWillChange.send()
                     room.name = room.members.filter { $0.id != self.userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
                     self.save()
-                } receiveValue: { response in
-                    room.objectWillChange.send()
-                    room.name = response.name
-                    self.save()
                 }
-            )
+            } receiveValue: { response in
+                room.objectWillChange.send()
+                room.name = response.name
+                self.save()
+            })
     }
     
     private func getMembers(in room: Room) {
         guard let roomID = room.id else { return }
         
         client.getMembers(in: roomID)
+            .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
-                    //
-                } receiveValue: { response in
-                    let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                        .map { Member(event: $0, context: self.backgroundContext) }
-                    
-                    room.roomMembers = NSSet(array: members)
-                    self.save()
-                }
-            )
+                //
+            } receiveValue: { response in
+                let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
+                    .map { Member(event: $0, context: self.container.viewContext) }
+                
+                room.roomMembers = NSSet(array: members)
+                self.save()
+            })
     }
     
     private var syncCancellable: AnyCancellable?
@@ -141,9 +141,7 @@ public class Chat: ObservableObject {
         status = .syncing
         
         syncCancellable = client.sync()
-            .mapError { error in
-                return error
-            }
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
@@ -154,7 +152,7 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 let rooms: [Room] = joinedRooms.keys.map { key in
-                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.backgroundContext)
+                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
                 }
                 
                 self.save()
@@ -165,8 +163,8 @@ public class Chat: ObservableObject {
                     self.longPoll()
                     
                     rooms.forEach {
-                        self.getName(of: $0)
                         self.getMembers(in: $0)
+                        self.getName(of: $0)
                         self.loadMoreMessages(in: $0)
                     }
                 }
@@ -175,12 +173,13 @@ public class Chat: ObservableObject {
     
     public func longPoll() {
         syncCancellable = client.sync(since: nextBatch, timeout: 5000)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
-                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.backgroundContext)
+                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
                 }
                 
                 self.save()
@@ -200,14 +199,15 @@ public class Chat: ObservableObject {
     }
     
     public func loadMoreMessages(in room: Room) {
-        guard let roomID = room.id else { return }
+        guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
-        client.loadMessages(in: roomID, from: room.previousBatch!)
+        client.loadMessages(in: roomID, from: previousBatch)
+            .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
                 let messages = response.events?.filter { $0.type == "m.room.message" }
-                                               .compactMap { Message(roomEvent: $0, context: self.backgroundContext) }
+                                               .compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
                 
                 if let messages = messages {
                     room.addToRoomMessages(NSSet(array: messages))
