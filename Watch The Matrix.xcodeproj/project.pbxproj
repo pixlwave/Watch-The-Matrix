@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
+		A54E5CDB25F5342700D43CDE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* Member.swift */; };
+		A54E5CDC25F5342700D43CDE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCE25F5331900D43CDE /* Message.swift */; };
+		A54E5CDD25F5342700D43CDE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
+		A54E5CDE25F5342700D43CDE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* Chat.swift */; };
+		A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
 		A59A0C4C25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */; };
 		A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -67,6 +72,11 @@
 /* Begin PBXFileReference section */
 		A52BA37225DEC59800BBCCFC /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A54E5CCC25F5331900D43CDE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A54E5CCD25F5331900D43CDE /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,6 +106,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A54E5CCA25F5331900D43CDE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */,
+				A54E5CCD25F5331900D43CDE /* Chat.swift */,
+				A54E5CCE25F5331900D43CDE /* Message.swift */,
+				A54E5CCF25F5331900D43CDE /* Room.swift */,
+				A54E5CD025F5331900D43CDE /* Member.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A54E5CD725F5333900D43CDE /* watchOS Extras */ = {
+			isa = PBXGroup;
+			children = (
+				A59A0C6025DD6AC200B5EDAA /* NotificationController.swift */,
+				A59A0C6225DD6AC200B5EDAA /* NotificationView.swift */,
+				A59A0C6425DD6AC200B5EDAA /* ComplicationController.swift */,
+			);
+			path = "watchOS Extras";
+			sourceTree = "<group>";
+		};
 		A59A0C4025DD6AC000B5EDAA = {
 			isa = PBXGroup;
 			children = (
@@ -133,9 +165,8 @@
 				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
 				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
-				A59A0C6025DD6AC200B5EDAA /* NotificationController.swift */,
-				A59A0C6225DD6AC200B5EDAA /* NotificationView.swift */,
-				A59A0C6425DD6AC200B5EDAA /* ComplicationController.swift */,
+				A54E5CCA25F5331900D43CDE /* Model */,
+				A54E5CD725F5333900D43CDE /* watchOS Extras */,
 				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
 				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
 				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
@@ -291,10 +322,15 @@
 				A59A0C6125DD6AC200B5EDAA /* NotificationController.swift in Sources */,
 				A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */,
 				A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */,
+				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
+				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
+				A54E5CDE25F5342700D43CDE /* Chat.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
+				A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */,
 				A59A0C5D25DD6AC200B5EDAA /* WatchTheMatrixApp.swift in Sources */,
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
+				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,6 +625,19 @@
 			productName = Matrix;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A54E5CCC25F5331900D43CDE /* Model.xcdatamodel */,
+			);
+			currentVersion = A54E5CCC25F5331900D43CDE /* Model.xcdatamodel */;
+			path = Matrix.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A59A0C4125DD6AC000B5EDAA /* Project object */;
 }
