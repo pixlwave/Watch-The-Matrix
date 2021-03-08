@@ -1,5 +1,6 @@
 import SwiftUI
 import Matrix
+import CoreData
 
 struct RoomView: View {
     @EnvironmentObject var matrix: Chat
@@ -7,6 +8,17 @@ struct RoomView: View {
     
     @State private var shouldScroll = false
     @State private var messageToReactTo: Message?
+    
+    @FetchRequest<Message> var messages: FetchedResults<Message>
+    
+    init(room: Room) {
+        self.room = room
+        
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "room == %@", room)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: true)]
+        _messages = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
         ScrollViewReader { reader in
@@ -17,7 +29,7 @@ struct RoomView: View {
                     }
                 }
                 
-                ForEach(room.allMessages) { message in
+                ForEach(messages) { message in
                     VStack(alignment: .leading) {
                         Text(message.body ?? "")
                         if room.allMembers.count > 2 {
@@ -35,10 +47,10 @@ struct RoomView: View {
             }
             .navigationTitle(room.name ?? room.generatedName(for: matrix.userID))
             .onAppear {
-                reader.scrollTo(room.allMessages.last?.id, anchor: .bottom)
+                reader.scrollTo(messages.last?.id, anchor: .bottom)
             }
 //            .onReceive(room.$events) { newValue in
-//                shouldScroll = newValue.last != room.allMessages.last
+//                shouldScroll = newValue.last != room.lastMessage
 //            }
 //            .onChange(of: room.events) { events in
 //                guard shouldScroll else { return }

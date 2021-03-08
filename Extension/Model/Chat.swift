@@ -4,21 +4,21 @@ import CoreData
 
 public class Chat: ObservableObject {
     
-    public var client = Client()
+    var client = Client()
     
-    public enum Status { case signedOut, syncing, idle, syncError }
+    enum Status { case signedOut, syncing, idle, syncError }
     
-    @Published public private(set) var status: Status = .signedOut
+    @Published private(set) var status: Status = .signedOut
     
-    @Published public private(set) var userID = UserDefaults.standard.string(forKey: "userID") {
+    @Published private(set) var userID = UserDefaults.standard.string(forKey: "userID") {
         didSet { UserDefaults.standard.set(userID, forKey: "userID")}
     }
     
     private var nextBatch: String?
     
-    public var container: NSPersistentContainer
+    var container: NSPersistentContainer
     
-    public init() {
+    init() {
         guard
             let modelURL = Bundle.main.url(forResource: "Matrix", withExtension: "momd"),
             let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
@@ -41,7 +41,7 @@ public class Chat: ObservableObject {
     
     private var authCancellable: AnyCancellable?
     
-    public func register(username: String, password: String) {
+    func register(username: String, password: String) {
         authCancellable = client.register(username: username, password: password)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -53,7 +53,7 @@ public class Chat: ObservableObject {
             }
     }
     
-    public func login(username: String, password: String) {
+    func login(username: String, password: String) {
         authCancellable = client.login(username: username, password: password)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -66,7 +66,7 @@ public class Chat: ObservableObject {
             }
     }
     
-    public func logout() {
+    func logout() {
         authCancellable = client.logout()
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -78,13 +78,13 @@ public class Chat: ObservableObject {
             }
     }
     
-    public func createRoom(name: String) {
+    func createRoom(name: String) {
         client.createRoom(name: name)
             .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
-    public func sendMessage(body: String, room: Room) {
+    func sendMessage(body: String, room: Room) {
         guard let roomID = room.id else { return }
         
         client.sendMessage(body: body, roomID: roomID)
@@ -92,7 +92,7 @@ public class Chat: ObservableObject {
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
-    public func sendReaction(text: String, to event: Message, in room: Room) {
+    func sendReaction(text: String, to event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
         
         client.sendReaction(text: text, to: eventID, in: roomID)
@@ -133,7 +133,7 @@ public class Chat: ObservableObject {
     
     private var syncCancellable: AnyCancellable?
     
-    public func initialSync() {
+    func initialSync() {
         status = .syncing
         
         syncCancellable = client.sync()
@@ -163,7 +163,7 @@ public class Chat: ObservableObject {
             }
     }
     
-    public func longPoll() {
+    func longPoll() {
         syncCancellable = client.sync(since: nextBatch, timeout: 5000)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -190,7 +190,7 @@ public class Chat: ObservableObject {
             }
     }
     
-    public func loadMoreMessages(in room: Room) {
+    func loadMoreMessages(in room: Room) {
         guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
         client.loadMessages(in: roomID, from: previousBatch)

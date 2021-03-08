@@ -41,10 +41,17 @@ struct RoomCell: View {
     @ObservedObject var room: Room
     @EnvironmentObject var matrix: Chat
     
+    @FetchRequest<Message> var lastMessage: FetchedResults<Message>
+    
+    init(room: Room) {
+        self.room = room
+        _lastMessage = FetchRequest(fetchRequest: room.lastMessageRequest)
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(room.name ?? room.generatedName(for: matrix.userID))
-            Text(room.allMessages.last?.body ?? "")
+            Text(lastMessage.first?.body ?? "")
                 .lineLimit(1)
                 .font(.footnote)
                 .foregroundColor(.secondary)

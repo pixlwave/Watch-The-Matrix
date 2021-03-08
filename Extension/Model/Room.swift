@@ -2,13 +2,21 @@ import Matrix
 import CoreData
 
 extension Room {
-    public var hasMoreMessages: Bool { previousBatch != nil }
+    var hasMoreMessages: Bool { previousBatch != nil }
     
-    public var allMessages: [Message] {
+    var allMessages: [Message] {
         messages?.allObjects as? [Message] ?? []
     }
     
-    public var allMembers: [Member] {
+    var lastMessageRequest: NSFetchRequest<Message> {
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "room == %@", self)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: false)]
+        request.fetchLimit = 1
+        return request
+    }
+    
+    var allMembers: [Member] {
         members?.allObjects as? [Member] ?? []
     }
     
