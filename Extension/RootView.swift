@@ -6,10 +6,13 @@ struct RootView: View {
     @State var isPresentingSignOutAlert = false
     
     @FetchRequest(entity: Room.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)]) var rooms: FetchedResults<Room>
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         List(rooms) { room in
-            NavigationLink(destination: RoomView(room: room).environmentObject(matrix)) {
+            NavigationLink(destination: RoomView(room: room)
+                            .environmentObject(matrix)
+                            .environment(\.managedObjectContext, managedObjectContext)) {
                 RoomCell(room: room)
             }
         }
