@@ -110,7 +110,7 @@ public class Chat: ObservableObject {
                     print(error)
                 }
             } receiveValue: { response in
-                room.name = response.name
+                room.name = response.name.isEmpty ? nil : response.name
                 self.save()
             })
     }
