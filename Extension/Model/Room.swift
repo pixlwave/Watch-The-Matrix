@@ -43,7 +43,7 @@ extension Room {
         self.previousBatch = joinedRoom.timeline.previousBatch
     }
     
-    func generatedName(for userID: String?) -> String {
-        name ?? allMembers.filter { $0.id != userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
+    func generateName(for userID: String?) -> String {
+        allMembers.filter { $0.id != userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
     }
 }

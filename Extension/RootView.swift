@@ -59,7 +59,7 @@ struct RoomCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(room.name ?? room.generatedName(for: matrix.userID))
+            Text(room.name ?? room.generateName(for: matrix.userID))
             Text(lastMessage.first?.body ?? "")
                 .lineLimit(1)
                 .font(.footnote)
