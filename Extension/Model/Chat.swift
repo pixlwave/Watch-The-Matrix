@@ -171,9 +171,7 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
-                    let request: NSFetchRequest<Room> = Room.fetchRequest()
-                    request.predicate = NSPredicate(format: "id == %@", key)
-                    guard let results = try? self.container.viewContext.fetch(request) else { return }
+                    guard let results = try? self.container.viewContext.fetch(Room.fetchRequest(id: key)) else { return }
                     
                     if results.isEmpty {
                         let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)

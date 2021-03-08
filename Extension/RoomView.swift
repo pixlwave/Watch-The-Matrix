@@ -13,14 +13,12 @@ struct RoomView: View {
     
     init(room: Room) {
         self.room = room
-        
-        let request: NSFetchRequest<Message> = Message.fetchRequest()
-        request.predicate = NSPredicate(format: "room == %@", room)
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: true)]
-        _messages = FetchRequest(fetchRequest: request)
+        _messages = FetchRequest(fetchRequest: room.messagesRequest, animation: .default)
     }
     
     var body: some View {
+        let showsSenders = room.allMembers.count > 2
+        
         ScrollViewReader { reader in
             List {
                 if room.hasMoreMessages {
@@ -32,7 +30,7 @@ struct RoomView: View {
                 ForEach(messages) { message in
                     VStack(alignment: .leading) {
                         Text(message.body ?? "")
-                        if room.allMembers.count > 2 {
+                        if showsSenders {
                             Text(message.sender?.displayName ?? message.sender?.id ?? "")
                                 .font(.footnote)
                                 .foregroundColor(Color.primary.opacity(0.667))
@@ -52,10 +50,10 @@ struct RoomView: View {
 //            .onReceive(room.$events) { newValue in
 //                shouldScroll = newValue.last != room.lastMessage
 //            }
-//            .onChange(of: room.events) { events in
+//            .onChange(of: messages) { messages in
 //                guard shouldScroll else { return }
 //                withAnimation {
-//                    reader.scrollTo(events.last?.id, anchor: .bottom)
+//                    reader.scrollTo(messages.last?.id, anchor: .bottom)
 //                }
 //            }
             .sheet(item: $messageToReactTo) { message in
