@@ -145,9 +145,7 @@ public class Chat: ObservableObject {
             .sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
-                    DispatchQueue.main.async {
-                        self.status = .syncError
-                    }
+                    self.status = .syncError
                 }
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
@@ -157,16 +155,14 @@ public class Chat: ObservableObject {
                 
                 self.save()
                 
-                DispatchQueue.main.async {
-                    self.status = .idle
-                    self.nextBatch = response.nextBatch
-                    self.longPoll()
-                    
-                    rooms.forEach {
-                        self.getMembers(in: $0)
-                        self.getName(of: $0)
-                        self.loadMoreMessages(in: $0)
-                    }
+                self.status = .idle
+                self.nextBatch = response.nextBatch
+                self.longPoll()
+                
+                rooms.forEach {
+                    self.getMembers(in: $0)
+                    self.getName(of: $0)
+                    self.loadMoreMessages(in: $0)
                 }
             }
     }
