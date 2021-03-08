@@ -126,7 +126,7 @@ public class Chat: ObservableObject {
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
                     .map { Member(event: $0, context: self.container.viewContext) }
                 
-                room.roomMembers = NSSet(array: members)
+                room.members = NSSet(array: members)
                 self.save()
             })
     }
@@ -202,7 +202,7 @@ public class Chat: ObservableObject {
                                                .compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
                 
                 if let messages = messages {
-                    room.addToRoomMessages(NSSet(array: messages))
+                    room.addToMessages(NSSet(array: messages))
                 }
                 
                 room.previousBatch = response.endToken

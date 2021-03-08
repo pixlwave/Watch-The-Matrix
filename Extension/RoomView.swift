@@ -17,10 +17,10 @@ struct RoomView: View {
                     }
                 }
                 
-                ForEach(room.messages) { message in
+                ForEach(room.allMessages) { message in
                     VStack(alignment: .leading) {
                         Text(message.body ?? "")
-                        if room.members.count > 2 {
+                        if room.allMembers.count > 2 {
                             Text(message.sender?.displayName ?? message.sender?.id ?? "")
                                 .font(.footnote)
                                 .foregroundColor(Color.primary.opacity(0.667))
@@ -35,10 +35,10 @@ struct RoomView: View {
             }
             .navigationTitle(room.name ?? room.generatedName(for: matrix.userID))
             .onAppear {
-                reader.scrollTo(room.messages.last?.id, anchor: .bottom)
+                reader.scrollTo(room.allMessages.last?.id, anchor: .bottom)
             }
 //            .onReceive(room.$events) { newValue in
-//                shouldScroll = newValue.last != room.messages.last
+//                shouldScroll = newValue.last != room.allMessages.last
 //            }
 //            .onChange(of: room.events) { events in
 //                guard shouldScroll else { return }
@@ -63,7 +63,7 @@ struct RoomView: View {
     }
     
     func displayName(for userID: String) -> String {
-        room.members.first { $0.id == userID }?.displayName ?? userID
+        room.allMembers.first { $0.id == userID }?.displayName ?? userID
     }
 }
 
