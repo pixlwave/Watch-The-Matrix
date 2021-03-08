@@ -173,14 +173,14 @@ public class Chat: ObservableObject {
                 joinedRooms.keys.forEach { key in
                     guard let results = try? self.container.viewContext.fetch(Room.fetchRequest(id: key)) else { return }
                     
-                    if results.isEmpty {
+                    if let room = results.first {
+                        let messages = joinedRooms[key]!.timeline.events.compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
+                        room.addToMessages(NSSet(array: messages))
+                    } else {
                         let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
                         self.getMembers(in: room)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
-                    } else {
-                        let messages = joinedRooms[key]!.timeline.events.compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
-                        results.first?.addToMessages(NSSet(array: messages))
                     }
                 }
                 
