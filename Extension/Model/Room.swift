@@ -21,4 +21,8 @@ extension Room {
         self.roomMessages = NSSet(array: messages)
         self.previousBatch = joinedRoom.timeline.previousBatch
     }
+    
+    func generatedName(for userID: String?) -> String {
+        name ?? members.filter { $0.id != userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
+    }
 }

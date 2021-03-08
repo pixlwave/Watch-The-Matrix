@@ -33,7 +33,7 @@ struct RoomView: View {
                     }
                 }
             }
-            .navigationTitle(room.name ?? "")
+            .navigationTitle(room.name ?? room.generatedName(for: matrix.userID))
             .onAppear {
                 reader.scrollTo(room.messages.last?.id, anchor: .bottom)
             }

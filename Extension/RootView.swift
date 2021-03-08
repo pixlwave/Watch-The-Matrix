@@ -39,10 +39,11 @@ struct RootView: View {
 
 struct RoomCell: View {
     @ObservedObject var room: Room
+    @EnvironmentObject var matrix: Chat
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(room.name ?? room.id ?? "")
+            Text(room.name ?? room.generatedName(for: matrix.userID))
             Text(room.messages.last?.body ?? "")
                 .lineLimit(1)
                 .font(.footnote)

@@ -108,12 +108,8 @@ public class Chat: ObservableObject {
             .subscribe(Subscribers.Sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
-                    room.objectWillChange.send()
-                    room.name = room.members.filter { $0.id != self.userID }.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
-                    self.save()
                 }
             } receiveValue: { response in
-                room.objectWillChange.send()
                 room.name = response.name
                 self.save()
             })
