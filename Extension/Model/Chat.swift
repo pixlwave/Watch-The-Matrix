@@ -171,19 +171,22 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
-                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
+                    let request: NSFetchRequest<Room> = Room.fetchRequest()
+                    request.predicate = NSPredicate(format: "id == %@", key)
+                    guard let results = try? self.container.viewContext.fetch(request) else { return }
+                    
+                    if results.isEmpty {
+                        let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
+                        self.getMembers(in: room)
+                        self.getName(of: room)
+                        self.loadMoreMessages(in: room)
+                    } else {
+                        let messages = joinedRooms[key]!.timeline.events.compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
+                        results.first?.addToMessages(NSSet(array: messages))
+                    }
                 }
                 
                 self.save()
-                
-    //            rooms.forEach { room in
-    //                if let index = self.rooms.firstIndex(where: { room.id == $0.id }) {
-    //                    self.rooms[index].events.append(contentsOf: room.events)
-    //                } else {
-    //                    self.rooms.append(room)
-    //                    self.getName(of: room)
-    //                }
-    //            }
                 
                 self.nextBatch = response.nextBatch
                 self.longPoll()
