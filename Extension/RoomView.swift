@@ -6,7 +6,7 @@ struct RoomView: View {
     @EnvironmentObject var matrix: Chat
     @ObservedObject var room: Room
     
-    @State private var shouldScroll = false
+    @State private var lastMessageID: String?
     @State private var messageToReactTo: Message?
     
     @FetchRequest<Message> var messages: FetchedResults<Message>
@@ -45,17 +45,17 @@ struct RoomView: View {
             }
             .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
             .onAppear {
-                reader.scrollTo(messages.last?.id, anchor: .bottom)
+                lastMessageID = messages.last?.id
+                reader.scrollTo(lastMessageID, anchor: .bottom)
             }
-//            .onReceive(room.$events) { newValue in
-//                shouldScroll = newValue.last != room.lastMessage
-//            }
-//            .onChange(of: messages) { messages in
-//                guard shouldScroll else { return }
-//                withAnimation {
-//                    reader.scrollTo(messages.last?.id, anchor: .bottom)
-//                }
-//            }
+            .onReceive(messages.publisher) { newValue in
+                if messages.last?.id != lastMessageID {
+                    withAnimation {
+                        lastMessageID = messages.last?.id
+                        reader.scrollTo(lastMessageID, anchor: .bottom)
+                    }
+                }
+            }
             .sheet(item: $messageToReactTo) { message in
                 LazyVGrid(columns: [GridItem(), GridItem()]) {
                     ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
