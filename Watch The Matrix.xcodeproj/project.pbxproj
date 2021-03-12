@@ -25,6 +25,8 @@
 		A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */; };
 		A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6925DD6AC300B5EDAA /* Preview Assets.xcassets */; };
 		A59A0C8925DD6B7900B5EDAA /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A59A0C8825DD6B7900B5EDAA /* Matrix */; };
+		A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
+		A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87A25F676730054D1A2 /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		A59A0C6B25DD6AC300B5EDAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		A59A0C7D25DD6ACE00B5EDAA /* Matrix */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Matrix; path = ../Matrix; sourceTree = "<group>"; };
+		A5E9E87225F673C00054D1A2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
+		A5E9E87A25F676730054D1A2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +115,9 @@
 			children = (
 				A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */,
 				A54E5CCD25F5331900D43CDE /* Chat.swift */,
-				A54E5CCE25F5331900D43CDE /* Message.swift */,
 				A54E5CCF25F5331900D43CDE /* Room.swift */,
+				A54E5CCE25F5331900D43CDE /* Message.swift */,
+				A5E9E87225F673C00054D1A2 /* Reaction.swift */,
 				A54E5CD025F5331900D43CDE /* Member.swift */,
 			);
 			path = Model;
@@ -164,6 +169,7 @@
 				A59A0C5C25DD6AC200B5EDAA /* WatchTheMatrixApp.swift */,
 				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
+				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
 				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
 				A54E5CCA25F5331900D43CDE /* Model */,
 				A54E5CD725F5333900D43CDE /* watchOS Extras */,
@@ -327,9 +333,11 @@
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
 				A54E5CDE25F5342700D43CDE /* Chat.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
+				A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */,
 				A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */,
 				A59A0C5D25DD6AC200B5EDAA /* WatchTheMatrixApp.swift in Sources */,
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
+				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
 				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ struct RoomView: View {
     }
     
     var body: some View {
-        let showsSenders = room.allMembers.count > 2
+        let showSenders = room.allMembers.count > 2
         
         ScrollViewReader { reader in
             List {
@@ -28,19 +28,11 @@ struct RoomView: View {
                 }
                 
                 ForEach(messages) { message in
-                    VStack(alignment: .leading) {
-                        Text(message.body ?? "")
-                        if showsSenders {
-                            Text(message.sender?.displayName ?? message.sender?.id ?? "")
-                                .font(.footnote)
-                                .foregroundColor(Color.primary.opacity(0.667))
+                    MessageView(message: message, showSender: showSenders)
+                        .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
+                        .onLongPressGesture {
+                            messageToReactTo = message
                         }
-                    }
-                    .id(message.id)
-                    .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
-                    .onLongPressGesture {
-                        messageToReactTo = message
-                    }
                 }
             }
             .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
