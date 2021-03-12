@@ -1,6 +1,7 @@
 import Matrix
 import Combine
 import CoreData
+import KeychainAccess
 
 public class Chat: ObservableObject {
     
@@ -17,6 +18,7 @@ public class Chat: ObservableObject {
     private var nextBatch: String?
     
     var container: NSPersistentContainer
+    private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
     init() {
         guard
@@ -31,7 +33,14 @@ public class Chat: ObservableObject {
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
         
-        if client.accessToken != nil { initialSync() }
+        if let accessToken = keychain["accessToken"] {
+            client.accessToken = accessToken
+            initialSync()
+        }
+    }
+    
+    private func secureSave(accessToken: String) {
+        keychain["accessToken"] = accessToken
     }
     
     private func save() {
@@ -49,7 +58,9 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 self.userID = response.userID
 //                self.homeserver = response.homeServer
-                self.client.accessToken = response.accessToken;  #warning("Should this be in the client?!")
+                self.client.accessToken = response.accessToken
+                self.secureSave(accessToken: response.accessToken)
+                self.initialSync()
             }
     }
     
@@ -61,7 +72,8 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 self.userID = response.userID
 //                self.homeserver = response.homeServer
-                self.client.accessToken = response.accessToken;  #warning("Should this be in the client?!")
+                self.client.accessToken = response.accessToken
+                self.secureSave(accessToken: response.accessToken)
                 self.initialSync()
             }
     }

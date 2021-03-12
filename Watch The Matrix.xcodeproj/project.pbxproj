@@ -14,6 +14,7 @@
 		A54E5CDD25F5342700D43CDE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
 		A54E5CDE25F5342700D43CDE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* Chat.swift */; };
 		A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
+		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A59A0C4C25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */; };
 		A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -103,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */,
 				A59A0C8925DD6B7900B5EDAA /* Matrix in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +250,7 @@
 			name = "Watch The Matrix WatchKit Extension";
 			packageProductDependencies = (
 				A59A0C8825DD6B7900B5EDAA /* Matrix */,
+				A5799D3525FC205C00D4B940 /* KeychainAccess */,
 			);
 			productName = "Watch The Matrix WatchKit Extension";
 			productReference = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */;
@@ -282,6 +285,9 @@
 				Base,
 			);
 			mainGroup = A59A0C4025DD6AC000B5EDAA;
+			packageReferences = (
+				A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = A59A0C4825DD6AC000B5EDAA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -627,7 +633,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A5799D3525FC205C00D4B940 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
 		A59A0C8825DD6B7900B5EDAA /* Matrix */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Matrix;
