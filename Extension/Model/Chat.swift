@@ -33,14 +33,25 @@ public class Chat: ObservableObject {
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
         
+        loadCredentials()
+        
+        if client.accessToken != nil { initialSync() }
+    }
+    
+    private func loadCredentials() {
         if let accessToken = keychain["accessToken"] {
             client.accessToken = accessToken
-            initialSync()
+        }
+        
+        if let homeserverData = keychain[data: "homeserver"],
+           let homeserver = Homeserver(data: homeserverData) {
+            client.homeserver = homeserver
         }
     }
     
-    private func secureSave(accessToken: String) {
-        keychain["accessToken"] = accessToken
+    private func saveCredentials() {
+        keychain["accessToken"] = client.accessToken
+        keychain[data: "homeserver"] = client.homeserver.data()
     }
     
     private func save() {
@@ -59,7 +70,7 @@ public class Chat: ObservableObject {
                 self.userID = response.userID
 //                self.homeserver = response.homeServer
                 self.client.accessToken = response.accessToken
-                self.secureSave(accessToken: response.accessToken)
+                self.saveCredentials()
                 self.initialSync()
             }
     }
@@ -73,7 +84,7 @@ public class Chat: ObservableObject {
                 self.userID = response.userID
 //                self.homeserver = response.homeServer
                 self.client.accessToken = response.accessToken
-                self.secureSave(accessToken: response.accessToken)
+                self.saveCredentials()
                 self.initialSync()
             }
     }
