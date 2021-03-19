@@ -98,6 +98,7 @@ public class Chat: ObservableObject {
                 guard success else { return }
                 self.client.accessToken = nil
                 self.status = .signedOut
+                self.saveCredentials()
             }
     }
     
