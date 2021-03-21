@@ -6,19 +6,19 @@ struct RootView: View {
     @State var isPresentingSignOutAlert = false
     
     @FetchRequest(entity: Room.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)], animation: .default) var rooms: FetchedResults<Room>
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) var viewContext
     
     var body: some View {
         let sortedRooms = rooms.sorted { room1, room2 in
-            let date1 = (try? managedObjectContext.fetch(room1.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
-            let date2 = (try? managedObjectContext.fetch(room2.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
+            let date1 = (try? viewContext.fetch(room1.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
+            let date2 = (try? viewContext.fetch(room2.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
             return date1 > date2
         }
         
         List(sortedRooms) { room in
             NavigationLink(destination: RoomView(room: room)
                             .environmentObject(matrix)
-                            .environment(\.managedObjectContext, managedObjectContext)) {
+                            .environment(\.managedObjectContext, viewContext)) {
                 RoomCell(room: room)
             }
         }

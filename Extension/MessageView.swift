@@ -5,7 +5,7 @@ struct MessageView: View {
     @ObservedObject var message: Message
     let showSender: Bool
     
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) var viewContext
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,7 +17,7 @@ struct MessageView: View {
                     .foregroundColor(Color.primary.opacity(0.667))
             }
             
-            if let reactions = try? managedObjectContext.fetch(message.reactionsRequest), !reactions.isEmpty {
+            if let reactions = try? viewContext.fetch(message.reactionsRequest), !reactions.isEmpty {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 25))]) {
                     ForEach(reactions) { reaction in
                         Text(reaction.key ?? "")
