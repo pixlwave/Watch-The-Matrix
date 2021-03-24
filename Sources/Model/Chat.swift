@@ -179,9 +179,7 @@ public class Chat: ObservableObject {
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
                     if let room = self.dataController.room(id: key) {
-                        let messages = joinedRooms[key]!.timeline.events.filter { $0.type == "m.room.message" }
-                                                                        .compactMap { self.dataController.createMessage(roomEvent: $0) }
-                        room.addToMessages(NSSet(array: messages))
+                        self.dataController.process(events: joinedRooms[key]!.timeline.events, in: room)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
                         self.getMembers(in: room)
@@ -205,13 +203,9 @@ public class Chat: ObservableObject {
             .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
-                let messages = response.events?.filter { $0.type == "m.room.message" }
-                                               .compactMap { self.dataController.createMessage(roomEvent: $0) }
+                guard let events = response.events else { return }
                 
-                if let messages = messages {
-                    room.addToMessages(NSSet(array: messages))
-                }
-                
+                self.dataController.process(events: events, in: room)
                 room.previousBatch = response.endToken
                 
                 self.dataController.save()

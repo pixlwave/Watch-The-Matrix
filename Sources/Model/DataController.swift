@@ -31,16 +31,22 @@ class DataController {
         (try? viewContext.count(for: request)) ?? 0
     }
     
+    // MARK: Create Objects
     func createRoom(id: String, joinedRoom: JoinedRooms) -> Room {
-        let messages = joinedRoom.timeline.events.filter { $0.type == "m.room.message" }
-                                                 .compactMap { createMessage(roomEvent: $0) }
-        
         let room = Room(context: viewContext)
         room.id = id
-        room.messages = NSSet(array: messages)
+        
+        process(events: joinedRoom.timeline.events, in: room)
         room.previousBatch = joinedRoom.timeline.previousBatch
         
         return room
+    }
+    
+    func createMessage(id: String) -> Message? {
+        let message = Message(context: viewContext)
+        message.id = id
+        
+        return message
     }
     
     func createMessage(roomEvent: RoomEvent) -> Message? {
@@ -87,13 +93,29 @@ class DataController {
         let reaction = Reaction(context: viewContext)
         reaction.key = key
         reaction.id = roomEvent.eventID
-        reaction.messageID = messageID;     #warning("Handle this in the same way as sender")
+        reaction.message = message(id: messageID) ?? createMessage(id: messageID)
         reaction.sender = member(id: roomEvent.sender) ?? createMember(id: roomEvent.sender)
         reaction.date = roomEvent.date
         
         return reaction
     }
     
+    
+    // MARK: Process Responses
+    func process(events: [RoomEvent], in room: Room) {
+        let messages = events
+            .filter { $0.type == "m.room.message" }
+            .compactMap { createMessage(roomEvent: $0) }
+        
+        let reactions = events
+            .filter { $0.type == "m.reaction" }
+            .compactMap { createReaction(roomEvent: $0) }
+        
+        room.addToMessages(NSSet(array: messages))
+    }
+    
+    
+    // MARK: Get Objects
     func room(id: String) -> Room? {
         let request: NSFetchRequest<Room> = Room.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
