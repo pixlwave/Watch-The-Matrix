@@ -23,8 +23,9 @@ extension Room {
         return request
     }
     
-    var allMembers: [Member] {
-        members?.allObjects as? [Member] ?? []
+    #warning("Use queries instead?")
+    var allMembers: [User] {
+        members?.allObjects as? [User] ?? []
     }
     
     func generateName(for userID: String?) -> String {

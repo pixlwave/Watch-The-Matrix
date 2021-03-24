@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
-		A54E5CDB25F5342700D43CDE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* Member.swift */; };
+		A54E5CDB25F5342700D43CDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* User.swift */; };
 		A54E5CDC25F5342700D43CDE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCE25F5331900D43CDE /* Message.swift */; };
 		A54E5CDD25F5342700D43CDE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
 		A54E5CDE25F5342700D43CDE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* Chat.swift */; };
@@ -81,7 +81,7 @@
 		A54E5CCD25F5331900D43CDE /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		A54E5CD025F5331900D43CDE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		A564A4CD260B588B00895426 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,7 +123,7 @@
 				A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */,
 				A54E5CCD25F5331900D43CDE /* Chat.swift */,
 				A54E5CCF25F5331900D43CDE /* Room.swift */,
-				A54E5CD025F5331900D43CDE /* Member.swift */,
+				A54E5CD025F5331900D43CDE /* User.swift */,
 				A54E5CCE25F5331900D43CDE /* Message.swift */,
 				A5E9E87225F673C00054D1A2 /* Reaction.swift */,
 				A564A4CD260B588B00895426 /* TestData.swift */,
@@ -360,7 +360,7 @@
 				A59A0C5D25DD6AC200B5EDAA /* WatchTheMatrixApp.swift in Sources */,
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
-				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
+				A54E5CDB25F5342700D43CDE /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

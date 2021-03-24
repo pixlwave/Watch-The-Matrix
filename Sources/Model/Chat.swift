@@ -122,7 +122,7 @@ public class Chat: ObservableObject {
             })
     }
     
-    private func getMembers(in room: Room) {
+    private func getMembers(of room: Room) {
         guard let roomID = room.id else { return }
         
         client.getMembers(in: roomID)
@@ -131,7 +131,7 @@ public class Chat: ObservableObject {
                 //
             } receiveValue: { response in
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                                              .map { self.dataController.createMember(event: $0) }
+                                              .map { self.dataController.createUser(event: $0) }
                 
                 room.members = NSSet(array: members)
                 self.dataController.save()
@@ -163,7 +163,7 @@ public class Chat: ObservableObject {
                 self.longPoll()
                 
                 rooms.forEach {
-                    self.getMembers(in: $0)
+                    self.getMembers(of: $0)
                     self.getName(of: $0)
                     self.loadMoreMessages(in: $0)
                 }
@@ -182,7 +182,7 @@ public class Chat: ObservableObject {
                         self.dataController.process(events: joinedRooms[key]!.timeline.events, in: room)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
-                        self.getMembers(in: room)
+                        self.getMembers(of: room)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
                     }

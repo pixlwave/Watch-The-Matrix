@@ -55,32 +55,32 @@ class DataController {
         let message = Message(context: viewContext)
         message.body = body
         message.id = roomEvent.eventID
-        message.sender = member(id: roomEvent.sender) ?? createMember(id: roomEvent.sender)
+        message.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
         message.date = roomEvent.date
         
         return message
     }
     
-    func createMember(id: String) -> Member {
-        let member = Member(context: viewContext)
-        member.id = id
-        return member
+    func createUser(id: String) -> User {
+        let user = User(context: viewContext)
+        user.id = id
+        return user
     }
     
-    func createMember(event: StateEvent) -> Member {
-        let member = Member(context: viewContext)
+    func createUser(event: StateEvent) -> User {
+        let user = User(context: viewContext)
         
-        member.id = event.stateKey
-        member.displayName = event.content.displayName
+        user.id = event.stateKey
+        user.displayName = event.content.displayName
         
         if let urlString = event.content.avatarURL, var components = URLComponents(string: urlString) {
             components.scheme = "https"
-            member.avatarURL = components.url
+            user.avatarURL = components.url
         } else {
-            member.avatarURL = nil
+            user.avatarURL = nil
         }
         
-        return member
+        return user
     }
     
     func createReaction(roomEvent: RoomEvent) -> Reaction? {
@@ -94,7 +94,7 @@ class DataController {
         reaction.key = key
         reaction.id = roomEvent.eventID
         reaction.message = message(id: messageID) ?? createMessage(id: messageID)
-        reaction.sender = member(id: roomEvent.sender) ?? createMember(id: roomEvent.sender)
+        reaction.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
         reaction.date = roomEvent.date
         
         return reaction
@@ -128,8 +128,8 @@ class DataController {
         return try? viewContext.fetch(request).first
     }
     
-    func member(id: String) -> Member? {
-        let request: NSFetchRequest<Member> = Member.fetchRequest()
+    func user(id: String) -> User? {
+        let request: NSFetchRequest<User> = User.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }

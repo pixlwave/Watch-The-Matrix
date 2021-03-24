@@ -6,18 +6,18 @@ extension DataController {
         room.id = "12345"
         room.name = "Test Room"
         
-        let member = Member(context: viewContext)
-        member.id = "@test:example.org"
-        member.displayName = "Test User"
+        let user = User(context: viewContext)
+        user.id = "@test:example.org"
+        user.displayName = "Test User"
         
         let message = Message(context: viewContext)
         message.id = "m12345"
         message.body = "HELLO, WORLD!"
         message.date = Date()
         
-        room.members = [member]
+        room.members = [user]
         message.room = room
-        message.sender = member
+        message.sender = user
         
         save()
     }
@@ -26,15 +26,15 @@ extension DataController {
         let room = Room(context: viewContext)
         room.id = "12345"
         
-        let member = Member(context: viewContext)
-        member.id = "@test:example.org"
+        let user = User(context: viewContext)
+        user.id = "@test:example.org"
         
         let message = Message(context: viewContext)
         message.id = "m23456"
         message.body = "A message that arrived later"
         message.date = Date()
         message.room = room
-        message.sender = member
+        message.sender = user
         
         save()
     }
@@ -45,8 +45,8 @@ extension DataController {
         print("Room: \(count(for: Room.fetchRequest()))")
         print((try? viewContext.fetch(Room.fetchRequest())) ?? [])
         
-        print("Members: \(count(for: Member.fetchRequest()))")
-        print((try? viewContext.fetch(Member.fetchRequest())) ?? [])
+        print("Users: \(count(for: User.fetchRequest()))")
+        print((try? viewContext.fetch(User.fetchRequest())) ?? [])
         
         print("Messages: \(count(for: Message.fetchRequest()))")
         print((try? viewContext.fetch(Message.fetchRequest())) ?? [])
