@@ -1,6 +1,6 @@
+import Foundation
 import Matrix
 import Combine
-import CoreData
 import KeychainAccess
 
 public class Chat: ObservableObject {
@@ -21,7 +21,6 @@ public class Chat: ObservableObject {
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
     init() {
-        
         loadCredentials()
         
         if client.accessToken != nil { initialSync() }
