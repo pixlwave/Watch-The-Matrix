@@ -138,11 +138,12 @@
 		A59A0C4025DD6AC000B5EDAA = {
 			isa = PBXGroup;
 			children = (
-				A59A0C4F25DD6AC000B5EDAA /* App */,
-				A59A0C5B25DD6AC200B5EDAA /* Extension */,
+				A59A0C5B25DD6AC200B5EDAA /* Sources */,
+				A5D9CF0A260B4CE200875D38 /* Resources */,
+				A59A0C6825DD6AC300B5EDAA /* Preview Content */,
+				A59A0C4F25DD6AC000B5EDAA /* Watch App */,
 				A59A0C4825DD6AC000B5EDAA /* Products */,
 				A59A0C7D25DD6ACE00B5EDAA /* Matrix */,
-				A59A0C8725DD6B7900B5EDAA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,31 +157,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A59A0C4F25DD6AC000B5EDAA /* App */ = {
+		A59A0C4F25DD6AC000B5EDAA /* Watch App */ = {
 			isa = PBXGroup;
 			children = (
 				A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */,
 				A59A0C5225DD6AC200B5EDAA /* Info.plist */,
 			);
-			path = App;
+			path = "Watch App";
 			sourceTree = "<group>";
 		};
-		A59A0C5B25DD6AC200B5EDAA /* Extension */ = {
+		A59A0C5B25DD6AC200B5EDAA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				A59A0C5C25DD6AC200B5EDAA /* WatchTheMatrixApp.swift */,
-				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
-				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
-				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
-				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
+				A5D9CF06260B4CD000875D38 /* Views */,
 				A54E5CCA25F5331900D43CDE /* Model */,
 				A54E5CD725F5333900D43CDE /* watchOS Extras */,
-				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
-				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
-				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
-				A59A0C6825DD6AC300B5EDAA /* Preview Content */,
 			);
-			path = Extension;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A59A0C6825DD6AC300B5EDAA /* Preview Content */ = {
@@ -191,11 +185,25 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A59A0C8725DD6B7900B5EDAA /* Frameworks */ = {
+		A5D9CF06260B4CD000875D38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
+				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
+				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
+				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
 			);
-			name = Frameworks;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A5D9CF0A260B4CE200875D38 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
+				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
+				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,10 +491,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Extension/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -507,10 +515,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Extension/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -535,7 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				IBSC_MODULE = Watch_The_Matrix_WatchKit_Extension;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -555,7 +563,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				IBSC_MODULE = Watch_The_Matrix_WatchKit_Extension;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
