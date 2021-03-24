@@ -31,6 +31,7 @@ class DataController {
         (try? viewContext.count(for: request)) ?? 0
     }
     
+    
     // MARK: Create Objects
     func createRoom(id: String, joinedRoom: JoinedRooms) -> Room {
         let room = Room(context: viewContext)
@@ -49,10 +50,12 @@ class DataController {
         return message
     }
     
+    /// Creates a message from the received `RoomEvent`. If the message already exists
+    /// calling this method will update it's properties to match the `RoomEvent`.
     func createMessage(roomEvent: RoomEvent) -> Message? {
         guard let body = roomEvent.content.body else { return nil }
         
-        let message = Message(context: viewContext)
+        let message = self.message(id: roomEvent.eventID) ?? Message(context: viewContext)
         message.body = body
         message.id = roomEvent.eventID
         message.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
@@ -107,7 +110,7 @@ class DataController {
             .filter { $0.type == "m.room.message" }
             .compactMap { createMessage(roomEvent: $0) }
         
-        let reactions = events
+        _ = events
             .filter { $0.type == "m.reaction" }
             .compactMap { createReaction(roomEvent: $0) }
         
