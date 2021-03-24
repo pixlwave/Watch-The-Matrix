@@ -178,9 +178,7 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
-                    guard let results = try? self.dataController.viewContext.fetch(Room.fetchRequest(id: key)) else { return }
-                    
-                    if let room = results.first {
+                    if let room = self.dataController.room(id: key) {
                         let messages = joinedRooms[key]!.timeline.events.filter { $0.type == "m.room.message" }
                                                                         .compactMap { Message(roomEvent: $0, context: self.dataController.viewContext) }
                         room.addToMessages(NSSet(array: messages))
