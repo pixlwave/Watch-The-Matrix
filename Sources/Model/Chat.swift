@@ -17,21 +17,10 @@ public class Chat: ObservableObject {
     
     private var nextBatch: String?
     
-    var container: NSPersistentContainer
+    let dataController = DataController(inMemory: true)    // in memory for now
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
     init() {
-        guard
-            let modelURL = Bundle.main.url(forResource: "Matrix", withExtension: "momd"),
-            let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
-        else { fatalError("Unable to find Core Data Model") }
-        
-        container = NSPersistentContainer(name: "Matrix", managedObjectModel: managedObjectModel)
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")    // in memory for now
-        
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error { fatalError("Core Data container error: \(error)") }
-        }
         
         loadCredentials()
         
@@ -52,11 +41,6 @@ public class Chat: ObservableObject {
     private func saveCredentials() {
         keychain["accessToken"] = client.accessToken
         keychain[data: "homeserver"] = client.homeserver.data()
-    }
-    
-    private func save() {
-        guard container.viewContext.hasChanges else { return }
-        try? container.viewContext.save()
     }
     
     private var authCancellable: AnyCancellable?
@@ -135,7 +119,7 @@ public class Chat: ObservableObject {
                 }
             } receiveValue: { response in
                 room.name = response.name.isEmpty ? nil : response.name
-                self.save()
+                self.dataController.save()
             })
     }
     
@@ -148,10 +132,10 @@ public class Chat: ObservableObject {
                 //
             } receiveValue: { response in
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                    .map { Member(event: $0, context: self.container.viewContext) }
+                    .map { Member(event: $0, context: self.dataController.viewContext) }
                 
                 room.members = NSSet(array: members)
-                self.save()
+                self.dataController.save()
             })
     }
     
@@ -170,10 +154,10 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 let rooms: [Room] = joinedRooms.keys.map { key in
-                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
+                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.dataController.viewContext)
                 }
                 
-                self.save()
+                self.dataController.save()
                 
                 self.status = .idle
                 self.nextBatch = response.nextBatch
@@ -195,21 +179,21 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
-                    guard let results = try? self.container.viewContext.fetch(Room.fetchRequest(id: key)) else { return }
+                    guard let results = try? self.dataController.viewContext.fetch(Room.fetchRequest(id: key)) else { return }
                     
                     if let room = results.first {
                         let messages = joinedRooms[key]!.timeline.events.filter { $0.type == "m.room.message" }
-                                                                        .compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
+                                                                        .compactMap { Message(roomEvent: $0, context: self.dataController.viewContext) }
                         room.addToMessages(NSSet(array: messages))
                     } else {
-                        let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.container.viewContext)
+                        let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.dataController.viewContext)
                         self.getMembers(in: room)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
                     }
                 }
                 
-                self.save()
+                self.dataController.save()
                 
                 self.nextBatch = response.nextBatch
                 self.longPoll()
@@ -225,7 +209,7 @@ public class Chat: ObservableObject {
                 //
             } receiveValue: { response in
                 let messages = response.events?.filter { $0.type == "m.room.message" }
-                                               .compactMap { Message(roomEvent: $0, context: self.container.viewContext) }
+                                               .compactMap { Message(roomEvent: $0, context: self.dataController.viewContext) }
                 
                 if let messages = messages {
                     room.addToMessages(NSSet(array: messages))
@@ -233,7 +217,7 @@ public class Chat: ObservableObject {
                 
                 room.previousBatch = response.endToken
                 
-                self.save()
+                self.dataController.save()
             })
     }
 }
