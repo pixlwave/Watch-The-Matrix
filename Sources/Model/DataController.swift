@@ -103,13 +103,38 @@ class DataController {
         return reaction
     }
     
+    func createEdit(roomEvent: RoomEvent) -> Edit? {
+        guard
+            let relationship = roomEvent.content.relationship,
+            let body = roomEvent.content.newContent?.body,
+            let messageID = relationship.eventID
+        else { return nil }
+        
+        let edit = Edit(context: viewContext)
+        edit.body = body
+        edit.id = roomEvent.eventID
+        edit.date = roomEvent.date
+        edit.message = message(id: messageID) ?? createMessage(id: messageID)
+        
+        return edit
+    }
+    
     
     // MARK: Process Responses
     func process(events: [RoomEvent], in room: Room) {
-        let messages = events
+        let messageEvents = events
             .filter { $0.type == "m.room.message" }
+        
+        let messages = messageEvents
+            .filter { $0.content.relationship?.type != .replace }
             .compactMap { createMessage(roomEvent: $0) }
         
+        // edits
+        _ = messageEvents
+            .filter { $0.content.relationship?.type == .replace }
+            .compactMap { createEdit(roomEvent: $0) }
+        
+        // reactions
         _ = events
             .filter { $0.type == "m.reaction" }
             .compactMap { createReaction(roomEvent: $0) }

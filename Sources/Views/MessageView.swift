@@ -9,7 +9,13 @@ struct MessageView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(message.body ?? "")
+            let lastEdit = (try? viewContext.fetch(message.lastEditRequest))?.first
+            Text(lastEdit?.body ?? message.body ?? "")
+            
+            if lastEdit != nil {
+                Text("Edited")
+                    .font(.footnote)
+            }
             
             if showSender {
                 Text(message.sender?.displayName ?? message.sender?.id ?? "")
