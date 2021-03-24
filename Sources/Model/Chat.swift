@@ -125,7 +125,7 @@ public class Chat: ObservableObject {
     private func getMembers(of room: Room) {
         guard let roomID = room.id else { return }
         
-        client.getMembers(in: roomID)
+        client.getMembers(of: roomID)
             .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
                 //
