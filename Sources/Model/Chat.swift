@@ -131,7 +131,7 @@ public class Chat: ObservableObject {
                 //
             } receiveValue: { response in
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                    .map { Member(event: $0, context: self.dataController.viewContext) }
+                                              .map { self.dataController.createMember(event: $0) }
                 
                 room.members = NSSet(array: members)
                 self.dataController.save()
@@ -153,7 +153,7 @@ public class Chat: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 let rooms: [Room] = joinedRooms.keys.map { key in
-                    Room(id: key, joinedRoom: joinedRooms[key]!, context: self.dataController.viewContext)
+                    self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
                 }
                 
                 self.dataController.save()
@@ -180,10 +180,10 @@ public class Chat: ObservableObject {
                 joinedRooms.keys.forEach { key in
                     if let room = self.dataController.room(id: key) {
                         let messages = joinedRooms[key]!.timeline.events.filter { $0.type == "m.room.message" }
-                                                                        .compactMap { Message(roomEvent: $0, context: self.dataController.viewContext) }
+                                                                        .compactMap { self.dataController.createMessage(roomEvent: $0) }
                         room.addToMessages(NSSet(array: messages))
                     } else {
-                        let room = Room(id: key, joinedRoom: joinedRooms[key]!, context: self.dataController.viewContext)
+                        let room = self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
                         self.getMembers(in: room)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
@@ -206,7 +206,7 @@ public class Chat: ObservableObject {
                 //
             } receiveValue: { response in
                 let messages = response.events?.filter { $0.type == "m.room.message" }
-                                               .compactMap { Message(roomEvent: $0, context: self.dataController.viewContext) }
+                                               .compactMap { self.dataController.createMessage(roomEvent: $0) }
                 
                 if let messages = messages {
                     room.addToMessages(NSSet(array: messages))
