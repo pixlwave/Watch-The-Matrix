@@ -85,59 +85,6 @@ public class Chat: ObservableObject {
             }
     }
     
-    func createRoom(name: String) {
-        client.createRoom(name: name)
-            .print()
-            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
-    }
-    
-    func sendMessage(body: String, room: Room) {
-        guard let roomID = room.id else { return }
-        
-        client.sendMessage(body: body, roomID: roomID)
-            .print()
-            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
-    }
-    
-    func sendReaction(text: String, to event: Message, in room: Room) {
-        guard let eventID = event.id, let roomID = room.id else { return }
-        
-        client.sendReaction(text: text, to: eventID, in: roomID)
-            .print()
-            .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
-    }
-    
-    private func getName(of room: Room) {
-        guard let roomID = room.id else { return }
-        
-        client.getName(of: roomID)
-            .receive(on: DispatchQueue.main)
-            .subscribe(Subscribers.Sink { completion in
-                if case .failure(let error) = completion {
-                    print(error)
-                }
-            } receiveValue: { response in
-                room.name = response.name.isEmpty ? nil : response.name
-                self.dataController.save()
-            })
-    }
-    
-    private func getMembers(of room: Room) {
-        guard let roomID = room.id else { return }
-        
-        client.getMembers(of: roomID)
-            .receive(on: DispatchQueue.main)
-            .subscribe(Subscribers.Sink { completion in
-                //
-            } receiveValue: { response in
-                let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                                              .map { self.dataController.createUser(event: $0) }
-                
-                room.members = NSSet(array: members)
-                self.dataController.save()
-            })
-    }
-    
     private var syncCancellable: AnyCancellable?
     
     func initialSync() {
@@ -174,6 +121,37 @@ public class Chat: ObservableObject {
             }
     }
     
+    private func getName(of room: Room) {
+        guard let roomID = room.id else { return }
+        
+        client.getName(of: roomID)
+            .receive(on: DispatchQueue.main)
+            .subscribe(Subscribers.Sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { response in
+                room.name = response.name.isEmpty ? nil : response.name
+                self.dataController.save()
+            })
+    }
+    
+    private func getMembers(of room: Room) {
+        guard let roomID = room.id else { return }
+        
+        client.getMembers(of: roomID)
+            .receive(on: DispatchQueue.main)
+            .subscribe(Subscribers.Sink { completion in
+                //
+            } receiveValue: { response in
+                let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
+                                              .map { self.dataController.createUser(event: $0) }
+                
+                room.members = NSSet(array: members)
+                self.dataController.save()
+            })
+    }
+    
     func loadMoreMessages(in room: Room) {
         guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
@@ -189,5 +167,27 @@ public class Chat: ObservableObject {
                 
                 self.dataController.save()
             })
+    }
+    
+    func sendReaction(text: String, to event: Message, in room: Room) {
+        guard let eventID = event.id, let roomID = room.id else { return }
+        
+        client.sendReaction(text: text, to: eventID, in: roomID)
+            .print()
+            .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
+    }
+    
+    func sendMessage(body: String, room: Room) {
+        guard let roomID = room.id else { return }
+        
+        client.sendMessage(body: body, roomID: roomID)
+            .print()
+            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
+    }
+    
+    func createRoom(name: String) {
+        client.createRoom(name: name)
+            .print()
+            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
 }
