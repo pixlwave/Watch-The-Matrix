@@ -19,7 +19,7 @@
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
         <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Redaction" inverseName="message" inverseEntity="Redaction"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="messages" inverseEntity="Room"/>
-        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -31,13 +31,13 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="key" attributeType="String"/>
         <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="reactions" inverseEntity="Message"/>
-        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="reactions" inverseEntity="User"/>
     </entity>
     <entity name="Redaction" representedClassName="Redaction" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
         <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="redactions" inverseEntity="Message"/>
-        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="redactions" inverseEntity="User"/>
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
@@ -55,6 +55,9 @@
         <attribute name="avatarURL" optional="YES" attributeType="URI"/>
         <attribute name="displayName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message"/>
+        <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="sender" inverseEntity="Reaction"/>
+        <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Redaction" inverseName="sender" inverseEntity="Redaction"/>
         <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="members" inverseEntity="Room"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -67,7 +70,7 @@
         <element name="Message" positionX="0" positionY="0" width="128" height="149"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Room" positionX="0" positionY="0" width="128" height="104"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="89"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="134"/>
         <element name="Redaction" positionX="9" positionY="63" width="128" height="89"/>
     </elements>
 </model>
