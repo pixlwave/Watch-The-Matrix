@@ -19,8 +19,8 @@ struct WatchTheMatrixApp: App {
                         .environment(\.managedObjectContext, matrix.dataController.viewContext)
                         .environmentObject(matrix)
                 }
-            case .syncError:
-                Text("Error syncing messages")
+            case .syncError(let error):
+                Text("Error syncing messages: \(error.description)")
                     .foregroundColor(.red)
                     .multilineTextAlignment(.center)
             }

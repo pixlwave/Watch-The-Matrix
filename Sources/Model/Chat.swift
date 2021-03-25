@@ -7,7 +7,7 @@ public class Chat: ObservableObject {
     
     var client = Client()
     
-    enum Status { case signedOut, syncing, idle, syncError }
+    enum Status { case signedOut, syncing, idle, syncError(error: MatrixError) }
     
     @Published private(set) var status: Status = .signedOut
     
@@ -142,39 +142,17 @@ public class Chat: ObservableObject {
     
     func initialSync() {
         status = .syncing
-        
-        syncCancellable = client.sync()
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                if case .failure(let error) = completion {
-                    print(error)
-                    self.status = .syncError
-                }
-            } receiveValue: { response in
-                let joinedRooms = response.rooms.joined
-                let rooms: [Room] = joinedRooms.keys.map { key in
-                    self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
-                }
-                
-                self.dataController.save()
-                
-                self.status = .idle
-                self.nextBatch = response.nextBatch
-                self.longPoll()
-                
-                rooms.forEach {
-                    self.getMembers(of: $0)
-                    self.getName(of: $0)
-                    self.loadMoreMessages(in: $0)
-                }
-            }
+        longPoll()
     }
     
     func longPoll() {
         syncCancellable = client.sync(since: nextBatch, timeout: 5000)
             .receive(on: DispatchQueue.main)
             .sink { completion in
-                //
+                if case .failure(let error) = completion {
+                    print(error)
+                    self.status = .syncError(error: error)
+                }
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
@@ -190,6 +168,7 @@ public class Chat: ObservableObject {
                 
                 self.dataController.save()
                 
+                self.status = .idle
                 self.nextBatch = response.nextBatch
                 self.longPoll()
             }
