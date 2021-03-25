@@ -17,7 +17,10 @@ extension Room {
     
     var lastMessageRequest: NSFetchRequest<Message> {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
-        request.predicate = NSPredicate(format: "room == %@", self)
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
+            NSPredicate(format: "room == %@", self),
+            NSPredicate(format: "redactions.@count == 0")
+        ])
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: false)]
         request.fetchLimit = 1
         return request

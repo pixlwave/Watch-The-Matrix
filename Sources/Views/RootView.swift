@@ -50,6 +50,7 @@ struct RoomCell: View {
     @ObservedObject var room: Room
     @EnvironmentObject var matrix: Chat
     
+    @Environment(\.managedObjectContext) var viewContext
     @FetchRequest<Message> var lastMessage: FetchedResults<Message>
     
     init(room: Room) {
@@ -60,10 +61,20 @@ struct RoomCell: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(room.name ?? room.generateName(for: matrix.userID))
-            Text(lastMessage.first?.body ?? "")
+            Text(lastMessageBody() ?? "")
                 .lineLimit(1)
                 .font(.footnote)
                 .foregroundColor(.secondary)
+        }
+    }
+    
+    func lastMessageBody() -> String? {
+        guard let lastMessage = lastMessage.first else { return nil }
+        
+        if let edit = (try? viewContext.fetch(lastMessage.lastEditRequest))?.first {
+            return edit.body
+        } else {
+            return lastMessage.body
         }
     }
 }

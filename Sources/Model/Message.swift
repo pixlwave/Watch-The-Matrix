@@ -16,4 +16,10 @@ extension Message {
         request.fetchLimit = 1
         return request
     }
+    
+    var redactionsRequest: NSFetchRequest<Redaction> {
+        let request: NSFetchRequest<Redaction> = Redaction.fetchRequest()
+        request.predicate = NSPredicate(format: "message == %@", self)
+        return request
+    }
 }

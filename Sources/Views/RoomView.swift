@@ -28,11 +28,15 @@ struct RoomView: View {
                 }
                 
                 ForEach(messages) { message in
-                    MessageView(message: message, showSender: showSenders)
-                        .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
-                        .onLongPressGesture {
-                            messageToReactTo = message
-                        }
+                    if message.redactions?.count == 0 {
+                        MessageView(message: message, showSender: showSenders)
+                            .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
+                            .onLongPressGesture {
+                                messageToReactTo = message
+                            }
+                    } else {
+                        Label("Deleted", systemImage: "trash")
+                    }
                 }
             }
             .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
