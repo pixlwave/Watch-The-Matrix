@@ -17,7 +17,7 @@ struct RoomView: View {
     }
     
     var body: some View {
-        let showSenders = room.allMembers.count > 2
+        let showSenders = room.memberCount > 2
         
         ScrollViewReader { reader in
             List {
@@ -28,7 +28,7 @@ struct RoomView: View {
                 }
                 
                 ForEach(messages) { message in
-                    if message.redactions?.count == 0 {
+                    if !message.isRedacted {
                         MessageView(message: message, showSender: showSenders)
                             .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
                             .onLongPressGesture {
@@ -66,10 +66,6 @@ struct RoomView: View {
                 }
             }
         }
-    }
-    
-    func displayName(for userID: String) -> String {
-        room.allMembers.first { $0.id == userID }?.displayName ?? userID
     }
 }
 

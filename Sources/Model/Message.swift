@@ -22,4 +22,9 @@ extension Message {
         request.predicate = NSPredicate(format: "message == %@", self)
         return request
     }
+    
+    var isRedacted: Bool {
+        // check if there is at least 1 redaction
+        return (try? managedObjectContext?.count(for: redactionsRequest)) ?? 0 > 0
+    }
 }
