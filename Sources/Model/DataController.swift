@@ -16,7 +16,8 @@ class DataController {
         else { fatalError("Unable to find Core Data Model") }
         
         container = NSPersistentContainer(name: "Matrix", managedObjectModel: managedObjectModel)
-        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        #warning("This works for properties, but may not be suitable for relationships.")
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
@@ -51,11 +52,11 @@ class DataController {
     }
     
     /// Creates a message from a Matrix `RoomEvent`. If the message already exists
-    /// calling this method will update it's properties to match the `RoomEvent`.
+    /// this method will overwrite it's properties to match the `RoomEvent`.
     func createMessage(roomEvent: RoomEvent) -> Message? {
         guard let body = roomEvent.content.body else { return nil }
         
-        let message = self.message(id: roomEvent.eventID) ?? Message(context: viewContext)
+        let message = Message(context: viewContext)
         message.body = body
         message.id = roomEvent.eventID
         message.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
@@ -72,9 +73,9 @@ class DataController {
     
     #warning("Calling user(id:) blocks the main queue when syncing large rooms")
     /// Creates a user from a Matrix `StateEvent`. If the user already exists
-    /// calling this method will update it's properties to match the `StateEvent`.
+    /// this method will overwrite it's properties to match the `StateEvent`.
     func createUser(event: StateEvent) -> User {
-        let user = self.user(id: event.stateKey) ?? User(context: viewContext)
+        let user = User(context: viewContext)
         
         user.id = event.stateKey
         user.displayName = event.content.displayName
