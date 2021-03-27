@@ -71,7 +71,6 @@ class DataController {
         return user
     }
     
-    #warning("Calling user(id:) blocks the main queue when syncing large rooms")
     /// Creates a user from a Matrix `StateEvent`. If the user already exists
     /// this method will overwrite it's properties to match the `StateEvent`.
     func createUser(event: StateEvent) -> User {
