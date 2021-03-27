@@ -5,12 +5,12 @@ struct MessageView: View {
     @ObservedObject var message: Message
     let showSender: Bool
     
-    @Environment(\.managedObjectContext) var viewContext
-    
     var body: some View {
+        let lastEdit = message.lastEdit
+        let reactions = message.reactionsViewModel
+        
         VStack(alignment: .leading) {
-            let lastEdit = message.lastEdit
-            Text(message.lastEdit?.body ?? message.body ?? "")
+            Text(lastEdit?.body ?? message.body ?? "")
             
             if lastEdit != nil {
                 Text("Edited")
@@ -23,10 +23,19 @@ struct MessageView: View {
                     .foregroundColor(Color.primary.opacity(0.667))
             }
             
-            if let reactions = try? viewContext.fetch(message.reactionsRequest), !reactions.isEmpty {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 25))]) {
-                    ForEach(reactions) { reaction in
-                        Text(reaction.key ?? "")
+            if !reactions.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(0..<reactions.count) { index in
+                            HStack {
+                                Text(reactions[index].key)
+                                Text(String(reactions[index].count))
+                                    .font(.footnote)
+                            }
+                            .padding(.vertical, 2)
+                            .padding(.horizontal, 4)
+                            .background(Capsule().foregroundColor(.black))
+                        }
                     }
                 }
             }

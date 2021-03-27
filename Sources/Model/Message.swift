@@ -2,11 +2,25 @@ import Matrix
 import CoreData
 
 extension Message {
-    var reactionsRequest: NSFetchRequest<Reaction> {
+    private var reactionsRequest: NSFetchRequest<Reaction> {
         let request: NSFetchRequest<Reaction> = Reaction.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Reaction.key, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Reaction.date, ascending: true)]
         return request
+    }
+    
+    var reactionsViewModel: [(key: String, count: Int)] {
+        // get all unique reaction keys
+        let reactions = (try? managedObjectContext?.fetch(reactionsRequest)) ?? []
+        let keys = NSOrderedSet(array: reactions.compactMap { $0.key })
+        
+        // return as an array of tuples containing each key and it's count
+        return keys.compactMap {
+            let key = $0 as! String
+            let count = reactions.filter { $0.key == key }.count
+            
+            return (key: key, count: count)
+        }
     }
     
     var lastEdit: Edit? {
