@@ -24,11 +24,6 @@ struct RootView: View {
         }
         .navigationTitle("Rooms")
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { matrix.createRoom(name: "Test")} label: {
-                    Image(systemName: "plus")
-                }
-            }
             ToolbarItem(placement: .cancellationAction) {
                 Button { isPresentingSignOutAlert = true } label: {
                     Image(systemName: "person")
