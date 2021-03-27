@@ -73,10 +73,12 @@ class DataController {
     
     /// Creates a user from a Matrix `StateEvent`. If the user already exists
     /// this method will overwrite it's properties to match the `StateEvent`.
-    func createUser(event: RoomEvent) -> User {
+    func createUser(event: RoomEvent) -> User? {
+        guard let userID = event.stateKey else { return nil }
+        
         let user = User(context: viewContext)
         
-        user.id = event.stateKey
+        user.id = userID
         user.displayName = event.content.displayName
         
         if let urlString = event.content.avatarURL, var components = URLComponents(string: urlString) {
