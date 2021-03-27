@@ -73,7 +73,7 @@ class DataController {
     
     /// Creates a user from a Matrix `StateEvent`. If the user already exists
     /// this method will overwrite it's properties to match the `StateEvent`.
-    func createUser(event: StateEvent) -> User {
+    func createUser(event: RoomEvent) -> User {
         let user = User(context: viewContext)
         
         user.id = event.stateKey
