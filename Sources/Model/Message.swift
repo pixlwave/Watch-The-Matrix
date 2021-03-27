@@ -9,15 +9,16 @@ extension Message {
         return request
     }
     
-    var lastEditRequest: NSFetchRequest<Edit> {
+    var lastEdit: Edit? {
         let request: NSFetchRequest<Edit> = Edit.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Edit.date, ascending: false)]
         request.fetchLimit = 1
-        return request
+        
+        return try? managedObjectContext?.fetch(request).first
     }
     
-    var redactionsRequest: NSFetchRequest<Redaction> {
+    private var redactionsRequest: NSFetchRequest<Redaction> {
         let request: NSFetchRequest<Redaction> = Redaction.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)
         return request

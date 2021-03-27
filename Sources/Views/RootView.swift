@@ -11,7 +11,7 @@ struct RootView: View {
     var body: some View {
         let sortedRooms = rooms.sorted { room1, room2 in
             let date1 = room1.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
-            let date2 = room1.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
+            let date2 = room2.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
             return date1 > date2
         }
         
@@ -52,23 +52,18 @@ struct RoomCell: View {
     
     @Environment(\.managedObjectContext) var viewContext
     
+    var lastMessageBody: String {
+        guard let lastMessage = room.lastMessage else { return "" }
+        return lastMessage.lastEdit?.body ?? lastMessage.body ?? ""
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(room.name ?? room.generateName(for: matrix.userID))
-            Text(lastMessageBody() ?? "")
+            Text(lastMessageBody)
                 .lineLimit(1)
                 .font(.footnote)
                 .foregroundColor(.secondary)
-        }
-    }
-    
-    func lastMessageBody() -> String? {
-        guard let lastMessage = room.lastMessage else { return nil }
-        
-        if let edit = (try? viewContext.fetch(lastMessage.lastEditRequest))?.first {
-            return edit.body
-        } else {
-            return lastMessage.body
         }
     }
 }

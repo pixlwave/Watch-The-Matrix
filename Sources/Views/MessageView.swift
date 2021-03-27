@@ -9,8 +9,8 @@ struct MessageView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            let lastEdit = (try? viewContext.fetch(message.lastEditRequest))?.first
-            Text(lastEdit?.body ?? message.body ?? "")
+            let lastEdit = message.lastEdit
+            Text(message.lastEdit?.body ?? message.body ?? "")
             
             if lastEdit != nil {
                 Text("Edited")
