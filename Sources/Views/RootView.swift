@@ -45,8 +45,6 @@ struct RoomCell: View {
     @ObservedObject var room: Room
     @EnvironmentObject var matrix: MatrixController
     
-    @Environment(\.managedObjectContext) var viewContext
-    
     var lastMessageBody: String {
         guard let lastMessage = room.lastMessage else { return "" }
         return lastMessage.lastEdit?.body ?? lastMessage.body ?? ""
