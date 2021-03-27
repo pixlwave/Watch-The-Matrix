@@ -26,7 +26,7 @@ struct MessageView: View {
             if !reactions.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(0..<reactions.count) { index in
+                        ForEach(0..<reactions.count, id: \.self) { index in
                             HStack {
                                 Text(reactions[index].key)
                                 Text(String(reactions[index].count))
