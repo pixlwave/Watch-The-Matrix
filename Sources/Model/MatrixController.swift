@@ -104,7 +104,9 @@ public class MatrixController: ObservableObject {
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
                     if let room = self.dataController.room(id: key) {
-                        self.dataController.process(events: joinedRooms[key]!.timeline.events, in: room)
+                        let events = joinedRooms[key]!.timeline.events
+                        self.dataController.process(events: events, in: room)
+                        self.dataController.processState(events: events, in: room)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
                         self.getMembers(of: room)

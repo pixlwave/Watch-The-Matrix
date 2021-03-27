@@ -166,6 +166,19 @@ class DataController {
         room.addToMessages(NSSet(array: messages))
     }
     
+    /// Processes any state events in the provided array for the specified room.
+    /// NOTE: Calling this while paginating backwards will update the room's current state.
+    func processState(events: [RoomEvent], in room: Room) {
+        let roomName = events
+            .filter { $0.type == "m.room.name" }
+            .sorted { $0.date > $1.date }
+            .first
+        
+        if let name = roomName?.content.name {
+            room.name = name.isEmpty ? nil : name
+        }
+    }
+    
     
     // MARK: Get Objects
     func room(id: String) -> Room? {
