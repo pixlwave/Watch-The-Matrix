@@ -11,7 +11,7 @@ extension Room {
         return request
     }
     
-    var lastMessageRequest: NSFetchRequest<Message> {
+    var lastMessage: Message? {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "room == %@", self),
@@ -19,7 +19,8 @@ extension Room {
         ])
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: false)]
         request.fetchLimit = 1
-        return request
+        
+        return try? managedObjectContext?.fetch(request).first
     }
     
     var memberCount: Int {

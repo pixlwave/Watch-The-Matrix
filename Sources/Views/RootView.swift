@@ -10,8 +10,8 @@ struct RootView: View {
     
     var body: some View {
         let sortedRooms = rooms.sorted { room1, room2 in
-            let date1 = (try? viewContext.fetch(room1.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
-            let date2 = (try? viewContext.fetch(room2.lastMessageRequest).first?.date) ?? Date(timeIntervalSince1970: 0)
+            let date1 = room1.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
+            let date2 = room1.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
             return date1 > date2
         }
         
@@ -51,12 +51,6 @@ struct RoomCell: View {
     @EnvironmentObject var matrix: MatrixController
     
     @Environment(\.managedObjectContext) var viewContext
-    @FetchRequest<Message> var lastMessage: FetchedResults<Message>
-    
-    init(room: Room) {
-        self.room = room
-        _lastMessage = FetchRequest(fetchRequest: room.lastMessageRequest)
-    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -69,7 +63,7 @@ struct RoomCell: View {
     }
     
     func lastMessageBody() -> String? {
-        guard let lastMessage = lastMessage.first else { return nil }
+        guard let lastMessage = room.lastMessage else { return nil }
         
         if let edit = (try? viewContext.fetch(lastMessage.lastEditRequest))?.first {
             return edit.body
