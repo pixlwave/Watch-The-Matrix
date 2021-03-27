@@ -2,7 +2,7 @@ import SwiftUI
 import Matrix
 
 struct RootView: View {
-    @EnvironmentObject var matrix: Chat
+    @EnvironmentObject var matrix: MatrixController
     @State var isPresentingSignOutAlert = false
     
     @FetchRequest(entity: Room.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)], animation: .default) var rooms: FetchedResults<Room>
@@ -48,7 +48,7 @@ struct RootView: View {
 
 struct RoomCell: View {
     @ObservedObject var room: Room
-    @EnvironmentObject var matrix: Chat
+    @EnvironmentObject var matrix: MatrixController
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest<Message> var lastMessage: FetchedResults<Message>

@@ -3,7 +3,7 @@ import Matrix
 import Combine
 import KeychainAccess
 
-public class Chat: ObservableObject {
+public class MatrixController: ObservableObject {
     
     var client = Client()
     

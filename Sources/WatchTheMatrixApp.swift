@@ -3,7 +3,7 @@ import Matrix
 
 @main
 struct WatchTheMatrixApp: App {
-    @StateObject var matrix = Chat()
+    @StateObject var matrix = MatrixController()
     
     var body: some Scene {
         WindowGroup {

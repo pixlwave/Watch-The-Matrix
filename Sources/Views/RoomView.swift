@@ -3,7 +3,7 @@ import Matrix
 import CoreData
 
 struct RoomView: View {
-    @EnvironmentObject var matrix: Chat
+    @EnvironmentObject var matrix: MatrixController
     @ObservedObject var room: Room
     
     @State private var lastMessageID: String?

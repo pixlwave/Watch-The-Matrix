@@ -69,8 +69,8 @@
         <element name="Edit" positionX="9" positionY="54" width="128" height="89"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="149"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
+        <element name="Redaction" positionX="9" positionY="63" width="128" height="89"/>
         <element name="Room" positionX="0" positionY="0" width="128" height="104"/>
         <element name="User" positionX="0" positionY="0" width="128" height="134"/>
-        <element name="Redaction" positionX="9" positionY="63" width="128" height="89"/>
     </elements>
 </model>

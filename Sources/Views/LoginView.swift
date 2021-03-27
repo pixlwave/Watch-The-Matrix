@@ -2,7 +2,7 @@ import SwiftUI
 import Matrix
 
 struct LoginView: View {
-    @EnvironmentObject var matrix: Chat
+    @EnvironmentObject var matrix: MatrixController
     
     @State var username = ""
     @State var password = ""
