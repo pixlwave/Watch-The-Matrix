@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
 		A54E5CDB25F5342700D43CDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* User.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A515EAC12610D28C00D27C86 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncState.swift; sourceTree = "<group>"; };
 		A52BA37225DEC59800BBCCFC /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A54E5CCC25F5331900D43CDE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				A5E9E87225F673C00054D1A2 /* Reaction.swift */,
 				A5A30C0B260BA53700861601 /* Edit.swift */,
 				A5BCCB59260C9DAB00CBC29B /* Redaction.swift */,
+				A515EAC12610D28C00D27C86 /* SyncState.swift */,
 				A564A4CD260B588B00895426 /* TestData.swift */,
 			);
 			path = Model;
@@ -359,6 +362,7 @@
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
+				A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */,
 				A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
 				A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */,

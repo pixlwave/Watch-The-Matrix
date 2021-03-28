@@ -32,6 +32,17 @@ class DataController {
         (try? viewContext.count(for: request)) ?? 0
     }
     
+    func syncState() -> SyncState {
+        let request: NSFetchRequest<SyncState> = SyncState.fetchRequest()
+        let state = try? viewContext.fetch(request).first
+        return state ?? SyncState(context: viewContext)
+    }
+    
+    func save() {
+        guard container.viewContext.hasChanges else { return }
+        try? container.viewContext.save()
+    }
+    
     
     // MARK: Create Objects
     func createRoom(id: String, joinedRoom: JoinedRooms) -> Room {
@@ -214,10 +225,5 @@ class DataController {
         let request: NSFetchRequest<User> = User.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
-    }
-    
-    func save() {
-        guard container.viewContext.hasChanges else { return }
-        try? container.viewContext.save()
     }
 }

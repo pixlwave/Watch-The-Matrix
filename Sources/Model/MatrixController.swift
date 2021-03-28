@@ -15,12 +15,14 @@ public class MatrixController: ObservableObject {
         didSet { UserDefaults.standard.set(userID, forKey: "userID")}
     }
     
-    private var nextBatch: String?
+    private var syncState: SyncState
     
-    let dataController = DataController(inMemory: true)    // in memory for now
+    let dataController = DataController()
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
     init() {
+        syncState = dataController.syncState()      // get the sync state from the data store
+        
         loadCredentials()
         
         if client.accessToken != nil { initialSync() }
@@ -93,7 +95,7 @@ public class MatrixController: ObservableObject {
     }
     
     func longPoll() {
-        syncCancellable = client.sync(since: nextBatch, timeout: 5000)
+        syncCancellable = client.sync(since: syncState.nextBatch, timeout: 5000)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
@@ -111,6 +113,7 @@ public class MatrixController: ObservableObject {
                         if joinedRoom.timeline.isLimited {
                             room.deleteAllMessages()
                             self.dataController.processState(events: joinedRoom.state.events, in: room)
+                            room.previousBatch = joinedRoom.timeline.previousBatch
                         }
                         
                         let events = joinedRoom.timeline.events
@@ -127,7 +130,7 @@ public class MatrixController: ObservableObject {
                 self.dataController.save()
                 
                 self.status = .idle
-                self.nextBatch = response.nextBatch
+                self.syncState.nextBatch = response.nextBatch
                 self.longPoll()
             }
     }
