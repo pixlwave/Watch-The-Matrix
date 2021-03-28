@@ -167,7 +167,7 @@ class DataController {
     }
     
     /// Processes any state events in the provided array for the specified room.
-    /// NOTE: Calling this while paginating backwards will update the room's current state.
+    /// NOTE: Calling this while paginating backwards will incorrectly update the room's current state.
     func processState(events: [RoomEvent], in room: Room) {
         let roomName = events
             .filter { $0.type == "m.room.name" }
@@ -176,6 +176,21 @@ class DataController {
         
         if let name = roomName?.content.name {
             room.name = name.isEmpty ? nil : name
+        }
+        
+        // members
+        events.filter { $0.type == "m.room.member" }.forEach { member in
+            guard let userID = member.stateKey else { return }
+            let user = self.user(id: userID) ?? createUser(id: userID)
+            user.displayName = member.content.displayName
+            
+            if let urlString = member.content.avatarURL, var components = URLComponents(string: urlString) {
+                components.scheme = "https"
+                user.avatarURL = components.url
+            } else {
+                user.avatarURL = nil
+            }
+            #warning("This doesn't check if the user is leaving 🙄")
         }
     }
     
