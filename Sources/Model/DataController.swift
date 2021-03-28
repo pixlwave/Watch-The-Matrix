@@ -76,9 +76,13 @@ class DataController {
     func createUser(event: RoomEvent) -> User? {
         guard let userID = event.stateKey else { return nil }
         
-        let user = User(context: viewContext)
+        let user = createUser(id: userID)
+        updateUser(user, from: event)
         
-        user.id = userID
+        return user
+    }
+    
+    func updateUser(_ user: User, from event: RoomEvent) {
         user.displayName = event.content.displayName
         
         if let urlString = event.content.avatarURL, var components = URLComponents(string: urlString) {
@@ -87,8 +91,6 @@ class DataController {
         } else {
             user.avatarURL = nil
         }
-        
-        return user
     }
     
     func createReaction(roomEvent: RoomEvent) -> Reaction? {
@@ -179,18 +181,18 @@ class DataController {
         }
         
         // members
-        events.filter { $0.type == "m.room.member" }.forEach { member in
-            guard let userID = member.stateKey else { return }
-            let user = self.user(id: userID) ?? createUser(id: userID)
-            user.displayName = member.content.displayName
+        events.filter { $0.type == "m.room.member" }.forEach {
+            guard let userID = $0.stateKey, let membership = $0.content.membership else { return }
             
-            if let urlString = member.content.avatarURL, var components = URLComponents(string: urlString) {
-                components.scheme = "https"
-                user.avatarURL = components.url
+            if membership == .join {
+                let user = self.user(id: userID) ?? createUser(id: userID)
+                updateUser(user, from: $0)
+                room.addToMembers(user)             // this can be called even if the relationship already exists
             } else {
-                user.avatarURL = nil
+                if let user = self.user(id: userID) {
+                    room.removeFromMembers(user)    // this can be called even if the user isn't a member
+                }
             }
-            #warning("This doesn't check if the user is leaving 🙄")
         }
     }
     
