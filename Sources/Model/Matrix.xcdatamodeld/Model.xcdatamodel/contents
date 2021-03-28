@@ -43,6 +43,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
+        <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="rooms" inverseEntity="User"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="room" inverseEntity="Message"/>
         <uniquenessConstraints>
@@ -73,7 +74,7 @@
         <element name="Message" positionX="0" positionY="0" width="128" height="149"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="9" positionY="63" width="128" height="89"/>
-        <element name="Room" positionX="0" positionY="0" width="128" height="104"/>
+        <element name="Room" positionX="0" positionY="0" width="128" height="119"/>
         <element name="SyncState" positionX="9" positionY="72" width="128" height="44"/>
         <element name="User" positionX="0" positionY="0" width="128" height="134"/>
     </elements>

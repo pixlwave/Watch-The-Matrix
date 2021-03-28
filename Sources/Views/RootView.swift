@@ -52,7 +52,15 @@ struct RoomCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(room.name ?? room.generateName(for: matrix.userID))
+            HStack {
+                if room.unreadCount > 0 {
+                    Text(Image(systemName: "circlebadge.fill"))
+                        .imageScale(.small)
+                        .foregroundColor(.purple)
+                }
+                Text(room.name ?? room.generateName(for: matrix.userID))
+            }
+            
             Text(lastMessageBody)
                 .lineLimit(1)
                 .font(.footnote)

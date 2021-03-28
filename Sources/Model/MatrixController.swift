@@ -125,11 +125,13 @@ public class MatrixController: ObservableObject {
                         let events = joinedRoom.timeline.events
                         self.dataController.process(events: events, in: room)
                         self.dataController.processState(events: events, in: room)
+                        room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
                         self.getMembers(of: room, at: response.nextBatch)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
+                        room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
                     }
                 }
                 
