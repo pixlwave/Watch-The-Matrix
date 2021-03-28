@@ -43,6 +43,7 @@ struct RoomView: View {
             .onAppear {
                 lastMessageID = messages.last?.id
                 reader.scrollTo(lastMessageID, anchor: .bottom)
+                markRoomAsRead()
             }
             .onReceive(messages.publisher) { newValue in
                 if messages.last?.id != lastMessageID {
@@ -66,6 +67,11 @@ struct RoomView: View {
                 }
             }
         }
+    }
+    
+    func markRoomAsRead() {
+        guard let lastMessage = room.lastMessage else { return }
+        matrix.sendReadReceipt(to: lastMessage, in: room)
     }
 }
 

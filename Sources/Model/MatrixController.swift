@@ -212,4 +212,12 @@ public class MatrixController: ObservableObject {
             .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
+    
+    func sendReadReceipt(to event: Message, in room: Room) {
+        guard let eventID = event.id, let roomID = room.id else { return }
+        
+        client.sendReadReceipt(for: eventID, in: roomID)
+            .print()
+            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
+    }
 }
