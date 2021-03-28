@@ -15,9 +15,9 @@
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
-        <relationship name="edits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Edit" inverseName="message" inverseEntity="Edit"/>
-        <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
-        <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Redaction" inverseName="message" inverseEntity="Redaction"/>
+        <relationship name="edits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Edit" inverseName="message" inverseEntity="Edit"/>
+        <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
+        <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Redaction" inverseName="message" inverseEntity="Redaction"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="messages" inverseEntity="Room"/>
         <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User"/>
         <uniquenessConstraints>
@@ -44,7 +44,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="rooms" inverseEntity="User"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="room" inverseEntity="Message"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="room" inverseEntity="Message"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>

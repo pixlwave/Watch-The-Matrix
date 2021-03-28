@@ -103,12 +103,21 @@ public class MatrixController: ObservableObject {
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
                 joinedRooms.keys.forEach { key in
+                    let joinedRoom = joinedRooms[key]!
+                    
                     if let room = self.dataController.room(id: key) {
-                        let events = joinedRooms[key]!.timeline.events
+                        #warning("Deleting old messages needs testing.")
+                        // delete existing messages when the timeline is limited and process state events from the sync gap
+                        if joinedRoom.timeline.isLimited {
+                            room.deleteAllMessages()
+                            self.dataController.processState(events: joinedRoom.state.events, in: room)
+                        }
+                        
+                        let events = joinedRoom.timeline.events
                         self.dataController.process(events: events, in: room)
                         self.dataController.processState(events: events, in: room)
                     } else {
-                        let room = self.dataController.createRoom(id: key, joinedRoom: joinedRooms[key]!)
+                        let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
                         self.getMembers(of: room)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)

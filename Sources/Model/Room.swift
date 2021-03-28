@@ -40,4 +40,11 @@ extension Room {
         let fetchedMembers = (try? managedObjectContext?.fetch(request)) ?? []
         return fetchedMembers.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
     }
+    
+    func deleteAllMessages() {
+        messages?.forEach {
+            guard let message = $0 as? Message else { return }
+            managedObjectContext?.delete(message)
+        }
+    }
 }
