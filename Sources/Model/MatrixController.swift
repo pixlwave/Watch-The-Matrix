@@ -121,7 +121,7 @@ public class MatrixController: ObservableObject {
                         self.dataController.processState(events: events, in: room)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
-                        self.getMembers(of: room)
+                        self.getMembers(of: room, at: response.nextBatch)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
                     }
@@ -150,10 +150,10 @@ public class MatrixController: ObservableObject {
             })
     }
     
-    private func getMembers(of room: Room) {
+    private func getMembers(of room: Room, at paginationToken: String) {
         guard let roomID = room.id else { return }
         
-        client.getMembers(of: roomID)
+        client.getMembers(of: roomID, at: paginationToken)
             .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
                 //
