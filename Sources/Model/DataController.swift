@@ -23,6 +23,12 @@ class DataController {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
         
+        #if DEBUG
+        if CommandLine.arguments.contains("--delete-persistent-store"), let url = container.persistentStoreDescriptions.first?.url {
+            try! FileManager.default.removeItem(at: url)
+        }
+        #endif
+        
         container.loadPersistentStores { storeDescription, error in
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
