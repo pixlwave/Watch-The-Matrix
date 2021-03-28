@@ -52,7 +52,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="SyncState" representedClassName="SyncState" syncable="YES" codeGenerationType="class">
-        <attribute name="nextBatch" attributeType="String"/>
+        <attribute name="nextBatch" optional="YES" attributeType="String"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="avatarURL" optional="YES" attributeType="URI"/>
@@ -74,7 +74,7 @@
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="9" positionY="63" width="128" height="89"/>
         <element name="Room" positionX="0" positionY="0" width="128" height="104"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="134"/>
         <element name="SyncState" positionX="9" positionY="72" width="128" height="44"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="134"/>
     </elements>
 </model>

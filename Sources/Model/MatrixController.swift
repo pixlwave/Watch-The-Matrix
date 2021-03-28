@@ -25,7 +25,13 @@ public class MatrixController: ObservableObject {
         
         loadCredentials()
         
-        if client.accessToken != nil { initialSync() }
+        if client.accessToken != nil {
+            if syncState.nextBatch == nil {         // if the persistent store has been deleted
+                initialSync()
+            } else {
+                longPoll()
+            }
+        }
     }
     
     private func loadCredentials() {
