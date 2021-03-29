@@ -28,6 +28,7 @@ public class MatrixController: ObservableObject {
             if syncState.nextBatch == nil {         // if the persistent store has been deleted
                 initialSync()
             } else {
+                status = .idle                      // show the rooms list immediately
                 longPoll()
             }
         }
