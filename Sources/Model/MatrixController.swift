@@ -88,9 +88,19 @@ public class MatrixController: ObservableObject {
                 //
             } receiveValue: { success in
                 guard success else { return }
+                
+                // cancel the long poll
+                self.syncCancellable?.cancel()
+                
+                // reset access credentials
+                self.userID = nil
+                self.deviceID = nil
                 self.client.accessToken = nil
-                self.status = .signedOut
+                self.client.homeserver = .default
                 self.saveCredentials()
+                
+                // update the ui state
+                self.status = .signedOut
             }
     }
     
