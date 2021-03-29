@@ -228,7 +228,6 @@ public class MatrixController: ObservableObject {
         guard let eventID = event.id, let roomID = room.id else { return }
         
         client.sendReadReceipt(for: eventID, in: roomID)
-            .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
 }

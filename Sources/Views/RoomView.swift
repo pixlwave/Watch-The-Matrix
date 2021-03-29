@@ -70,7 +70,7 @@ struct RoomView: View {
     }
     
     func markRoomAsRead() {
-        guard let lastMessage = room.lastMessage else { return }
+        guard room.unreadCount > 0, let lastMessage = room.lastMessage else { return }
         matrix.sendReadReceipt(to: lastMessage, in: room)
     }
 }
