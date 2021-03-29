@@ -2,6 +2,8 @@ import Matrix
 import CoreData
 
 extension Room {
+    static let nameFormatter = ListFormatter()
+    
     var hasMoreMessages: Bool { previousBatch != nil }
     
     var messagesRequest: NSFetchRequest<Message> {
@@ -38,7 +40,17 @@ extension Room {
         request.fetchLimit = 5
         
         let fetchedMembers = (try? managedObjectContext?.fetch(request)) ?? []
-        return fetchedMembers.compactMap { $0.displayName ?? $0.id }.joined(separator: ", ")
+        let names = fetchedMembers.compactMap { $0.displayName ?? $0.id }
+        
+        guard !names.isEmpty else {
+            return NSLocalizedString("Empty Room", comment: "There is no-one else in the room")
+        }
+        
+        guard let generatedName = Room.nameFormatter.string(from: names), !generatedName.isEmpty else {
+            return NSLocalizedString("Unknown Room", comment: "A room name could not be generated")
+        }
+        
+        return generatedName
     }
     
     func deleteAllMessages() {
