@@ -11,9 +11,8 @@ public class MatrixController: ObservableObject {
     
     @Published private(set) var status: Status = .signedOut
     
-    @Published private(set) var userID = UserDefaults.standard.string(forKey: "userID") {
-        didSet { UserDefaults.standard.set(userID, forKey: "userID")}
-    }
+    @Published private(set) var userID: String?
+    @Published private(set) var deviceID: String?
     
     private var syncState: SyncState
     
@@ -35,9 +34,9 @@ public class MatrixController: ObservableObject {
     }
     
     private func loadCredentials() {
-        if let accessToken = keychain["accessToken"] {
-            client.accessToken = accessToken
-        }
+        client.accessToken = keychain["accessToken"]
+        userID = keychain["userID"]
+        deviceID = keychain["deviceID"]
         
         if let homeserverData = keychain[data: "homeserver"],
            let homeserver = Homeserver(data: homeserverData) {
@@ -47,6 +46,8 @@ public class MatrixController: ObservableObject {
     
     private func saveCredentials() {
         keychain["accessToken"] = client.accessToken
+        keychain["userID"] = userID
+        keychain["deviceID"] = deviceID
         keychain[data: "homeserver"] = client.homeserver.data()
     }
     
@@ -59,7 +60,7 @@ public class MatrixController: ObservableObject {
                 //
             } receiveValue: { response in
                 self.userID = response.userID
-//                self.homeserver = response.homeServer
+                self.deviceID = response.deviceID
                 self.client.accessToken = response.accessToken
                 self.saveCredentials()
                 self.initialSync()
@@ -73,7 +74,7 @@ public class MatrixController: ObservableObject {
                 //
             } receiveValue: { response in
                 self.userID = response.userID
-//                self.homeserver = response.homeServer
+                self.deviceID = response.deviceID
                 self.client.accessToken = response.accessToken
                 self.saveCredentials()
                 self.initialSync()
