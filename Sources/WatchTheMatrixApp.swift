@@ -7,7 +7,7 @@ struct WatchTheMatrixApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch matrix.status {
+            switch matrix.state {
             case .signedOut:
                 LoginView()
                     .environmentObject(matrix)

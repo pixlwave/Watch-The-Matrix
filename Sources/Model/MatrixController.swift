@@ -7,9 +7,9 @@ public class MatrixController: ObservableObject {
     
     var client = Client()
     
-    enum Status { case signedOut, syncing, idle, syncError(error: MatrixError) }
+    enum State { case signedOut, syncing, idle, syncError(error: MatrixError) }
     
-    @Published private(set) var status: Status = .signedOut
+    @Published private(set) var state: State = .signedOut
     
     @Published private(set) var userID: String?
     @Published private(set) var deviceID: String?
@@ -28,7 +28,7 @@ public class MatrixController: ObservableObject {
             if syncState.nextBatch == nil {         // if the persistent store has been deleted
                 initialSync()
             } else {
-                status = .idle                      // show the rooms list immediately
+                state = .idle                      // show the rooms list immediately
                 longPoll()
             }
         }
@@ -101,14 +101,14 @@ public class MatrixController: ObservableObject {
                 self.saveCredentials()
                 
                 // update the ui state
-                self.status = .signedOut
+                self.state = .signedOut
             }
     }
     
     private var syncCancellable: AnyCancellable?
     
     func initialSync() {
-        status = .syncing
+        state = .syncing
         longPoll()
     }
     
@@ -118,7 +118,7 @@ public class MatrixController: ObservableObject {
             .sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
-                    self.status = .syncError(error: error)
+                    self.state = .syncError(error: error)
                 }
             } receiveValue: { response in
                 let joinedRooms = response.rooms.joined
@@ -149,7 +149,7 @@ public class MatrixController: ObservableObject {
                 
                 self.dataController.save()
                 
-                self.status = .idle
+                self.state = .idle
                 self.syncState.nextBatch = response.nextBatch
                 self.longPoll()
             }
