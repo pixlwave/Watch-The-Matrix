@@ -90,7 +90,7 @@ class DataController {
     
     /// Creates a message from a Matrix `RoomEvent`. If the message already exists
     /// the store's merge policy will overwrite it's properties to match the `RoomEvent`.
-    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the message.
+    /// - Parameter roomEvent: A Matrix `RoomEvent`of type `m.room.message`.
     /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
     ///
     /// The message is created on the view context.
@@ -116,7 +116,7 @@ class DataController {
     
     /// Creates a user from a Matrix `RoomEvent`. If the user already exists
     /// store's merge policy will overwrite it's properties to match the `RoomEvent`.
-    /// - Parameter event: The Matrix `RoomEvent` that represents the user.
+    /// - Parameter event: A `RoomEvent` of type `m.room.member`.
     /// - Returns: The `User` object that was just created, or `nil` if the event was invalid.
     ///
     /// The user is created on the view context.
@@ -142,7 +142,7 @@ class DataController {
     }
     
     /// Creates a reaction from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the reaction.
+    /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.reaction`.
     /// - Returns: The `Reaction` object if successful or `nil` if the event was invalid.
     ///
     /// The reaction is created on the view context.
@@ -164,7 +164,7 @@ class DataController {
     }
     
     /// Creates a message edit from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the message edit.
+    /// - Parameter roomEvent: A Matrix `RoomEvent` with a `replace` relationship.
     /// - Returns: The `Edit` object if successful or `nil` if the event was invalid.
     ///
     /// The message edit is created on the view context.
@@ -185,7 +185,7 @@ class DataController {
     }
     
     /// Created a redaction from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the redaction.
+    /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.room.redaction`.
     /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
     ///
     /// The redaction is created on the view context.
