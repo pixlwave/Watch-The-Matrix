@@ -3,22 +3,30 @@ import Matrix
 import Combine
 import KeychainAccess
 
-public class MatrixController: ObservableObject {
+/// A class that calls the Matrix Client to make requests and hands the appropriate responses back to it's DataController.
+class MatrixController: ObservableObject {
     
+    /// The Matrix client object used to interact with the homeserver
     var client = Client()
     
     enum State { case signedOut, syncing, idle, syncError(error: MatrixError) }
     
+    /// The current state of the Matrix stack.
     @Published private(set) var state: State = .signedOut
     
     @Published private(set) var userID: String?
     @Published private(set) var deviceID: String?
     
+    /// An object that represents the current sync state to the Matrix homeserver.
     private var syncState: SyncState
     
+    /// The data controller used to format and persist synced data.
     let dataController = DataController()
+    
+    /// The keychain used to save and load user credentials from.
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
+    /// Initialises the controller and starts communication with the homeserver if user credentials are found.
     init() {
         syncState = dataController.syncState()      // get the sync state from the data store
         
@@ -28,12 +36,13 @@ public class MatrixController: ObservableObject {
             if syncState.nextBatch == nil {         // if the persistent store has been deleted
                 initialSync()
             } else {
-                state = .idle                      // show the rooms list immediately
+                state = .idle                       // show the rooms list immediately
                 longPoll()
             }
         }
     }
     
+    /// Loads the user's access token, ID, device ID and homeserver information from the keychain
     private func loadCredentials() {
         client.accessToken = keychain["accessToken"]
         userID = keychain["userID"]
@@ -45,6 +54,7 @@ public class MatrixController: ObservableObject {
         }
     }
     
+    /// Saves the user's access token, ID, device ID and homeserver information to the keychain
     private func saveCredentials() {
         keychain["accessToken"] = client.accessToken
         keychain["userID"] = userID
@@ -52,8 +62,11 @@ public class MatrixController: ObservableObject {
         keychain[data: "homeserver"] = client.homeserver.data()
     }
     
+    /// A cancellable instance used for login, register and logout operations.
     private var authCancellable: AnyCancellable?
     
+    /// Register a new account on the homeserver with the supplied username and password.
+    /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
     func register(username: String, password: String) {
         authCancellable = client.register(username: username, password: password)
             .receive(on: DispatchQueue.main)
@@ -68,6 +81,8 @@ public class MatrixController: ObservableObject {
             }
     }
     
+    /// Login to the homeserver using the supplied username and password.
+    /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
     func login(username: String, password: String) {
         authCancellable = client.login(username: username, password: password)
             .receive(on: DispatchQueue.main)
@@ -82,6 +97,8 @@ public class MatrixController: ObservableObject {
             }
     }
     
+    /// Logout of the homeserver. If successful the user's credentials will be reset and the state
+    /// will be updated triggering LoginView to be shown.
     func logout() {
         authCancellable = client.logout()
             .receive(on: DispatchQueue.main)
@@ -105,13 +122,17 @@ public class MatrixController: ObservableObject {
             }
     }
     
+    /// A cancellable instance used for sync operations.
     private var syncCancellable: AnyCancellable?
     
+    /// Begins an initial sync. This will show an indefinite progress view until this completes successfully.
     func initialSync() {
         state = .syncing
         longPoll()
     }
     
+    /// Long poll the sync endpoint on the homeserver and process the response automatically. As soon as a response
+    /// has been processed, this method calls itself to create a request loop.
     func longPoll() {
         syncCancellable = client.sync(since: syncState.nextBatch, timeout: 5000)
             .receive(on: DispatchQueue.main)
@@ -155,6 +176,7 @@ public class MatrixController: ObservableObject {
             }
     }
     
+    /// Requests the name of the room object passed in and updates it when a response is received.
     private func getName(of room: Room) {
         guard let roomID = room.id else { return }
         
@@ -170,6 +192,8 @@ public class MatrixController: ObservableObject {
             })
     }
     
+    /// Requests the membership list of the room passed in at a point in time defined by a pagination token.
+    /// When a response is received the room's members property will be automatically updated.
     private func getMembers(of room: Room, at paginationToken: String) {
         guard let roomID = room.id else { return }
         
@@ -186,6 +210,7 @@ public class MatrixController: ObservableObject {
             })
     }
     
+    /// Loads 10 more events at the start of the specified room.
     func loadMoreMessages(in room: Room) {
         guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
@@ -203,6 +228,9 @@ public class MatrixController: ObservableObject {
             })
     }
     
+    /// Sends a reaction to the event in the specified room.
+    /// - Parameters:
+    ///   - text: The reaction string to send.
     func sendReaction(text: String, to event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
         
@@ -211,6 +239,7 @@ public class MatrixController: ObservableObject {
             .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
     }
     
+    /// Sends a message to the specified room.
     func sendMessage(body: String, room: Room) {
         guard let roomID = room.id else { return }
         
@@ -219,12 +248,14 @@ public class MatrixController: ObservableObject {
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
+    /// Creates a new room with the specified name.
     func createRoom(name: String) {
         client.createRoom(name: name)
             .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
+    /// Indicates to the homeserver that a message has been read.
     func sendReadReceipt(for event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
         
