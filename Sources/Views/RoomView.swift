@@ -2,10 +2,13 @@ import SwiftUI
 import Matrix
 import CoreData
 
+/// A view that shows the messages of a room.
 struct RoomView: View {
     @EnvironmentObject var matrix: MatrixController
     @ObservedObject var room: Room
     
+    /// The id of the last message in the room. This is stored to determine whether new messages
+    /// have been added to the the room from a sync operation or a back pagination.
     @State private var lastMessageID: String?
     @State private var messageToReactTo: Message?
     
@@ -17,6 +20,7 @@ struct RoomView: View {
     }
     
     var body: some View {
+        // show the name of the message sender when there are more than 2 people in the room
         let showSenders = room.memberCount > 2
         
         ScrollViewReader { reader in
@@ -28,12 +32,11 @@ struct RoomView: View {
                 }
                 
                 ForEach(messages) { message in
+                    // hide the message if it has been redacted
                     if !message.isRedacted {
                         MessageView(message: message, showSender: showSenders)
                             .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
-                            .onLongPressGesture {
-                                messageToReactTo = message
-                            }
+                            .onLongPressGesture { messageToReactTo = message }
                     } else {
                         Label("Deleted", systemImage: "trash")
                     }
@@ -41,11 +44,16 @@ struct RoomView: View {
             }
             .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
             .onAppear {
+                // update the last message id and display the last message
                 lastMessageID = messages.last?.id
                 reader.scrollTo(lastMessageID, anchor: .bottom)
+                
+                // mark the last message in the room as read
                 markRoomAsRead()
             }
-            .onReceive(messages.publisher) { newValue in
+            .onReceive(messages.publisher) { _ in
+                // if a more recent message has been added, show this message
+                #warning("This should additionally check whether the last message is on screen.")
                 if messages.last?.id != lastMessageID {
                     withAnimation {
                         lastMessageID = messages.last?.id
@@ -54,6 +62,7 @@ struct RoomView: View {
                 }
             }
             .sheet(item: $messageToReactTo) { message in
+                // displays a two column reaction picker with 6 emoji to choose from
                 LazyVGrid(columns: [GridItem(), GridItem()]) {
                     ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
                         Button {
@@ -69,9 +78,10 @@ struct RoomView: View {
         }
     }
     
+    /// Sends a read receipt for the last message in the room when the room has an unread count.
     func markRoomAsRead() {
         guard room.unreadCount > 0, let lastMessage = room.lastMessage else { return }
-        matrix.sendReadReceipt(to: lastMessage, in: room)
+        matrix.sendReadReceipt(for: lastMessage, in: room)
     }
 }
 

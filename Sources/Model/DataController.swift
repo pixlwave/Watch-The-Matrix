@@ -2,19 +2,26 @@ import Foundation
 import CoreData
 import Matrix
 
+/// A class that handles persistence and updates to core data objects.
 class DataController {
-    let container: NSPersistentContainer
+    /// The persistence container used to store any synced data.
+    private let container: NSPersistentContainer
     
+    /// The container's view context.
     var viewContext: NSManagedObjectContext {
         container.viewContext
     }
     
+    /// Initialises the data controller with the option of storing the database in memory.
+    /// - Parameter inMemory: A boolean indicating whether or not to store the database in memory.
+    ///                       If this value is false the database will be stored to disk at it's default location.
     init(inMemory: Bool = false) {
         guard
             let modelURL = Bundle.main.url(forResource: "Matrix", withExtension: "momd"),
             let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
         else { fatalError("Unable to find Core Data Model") }
         
+        // create the persistent container and set the merge policy to allow for external property updates
         container = NSPersistentContainer(name: "Matrix", managedObjectModel: managedObjectModel)
         #warning("This works for properties, but may not be suitable for relationships.")
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -24,26 +31,35 @@ class DataController {
         }
         
         #if DEBUG
+        // delete the database from disk when the app is launched with a specific argument
         if CommandLine.arguments.contains("--delete-persistent-store"), let url = container.persistentStoreDescriptions.first?.url {
             try! FileManager.default.removeItem(at: url)
         }
         #endif
         
+        // finally load the persistent stores into the container
         container.loadPersistentStores { storeDescription, error in
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
     }
     
+    /// Returns the count of items that would be returned by a fetch request.
+    /// - Parameter request: The fetch request to be counted.
+    /// - Returns: A positive integer if there are any items and the request is valid, otherwise 0.
     func count<T>(for request: NSFetchRequest<T>) -> Int {
         (try? viewContext.count(for: request)) ?? 0
     }
     
+    /// Returns a managed object to store the current sync state of the app with the homeserver.
+    /// This should be the only method used to get a SyncState object.
+    /// - Returns: A `SyncState` object retrieved from the database, otherwise a newly created one
     func syncState() -> SyncState {
         let request: NSFetchRequest<SyncState> = SyncState.fetchRequest()
         let state = try? viewContext.fetch(request).first
         return state ?? SyncState(context: viewContext)
     }
     
+    /// Checks for any unsaved changes in the view context, and saves them if there are.
     func save() {
         guard container.viewContext.hasChanges else { return }
         try? container.viewContext.save()
@@ -51,7 +67,9 @@ class DataController {
     
     
     // MARK: Create Objects
-    func createRoom(id: String, joinedRoom: JoinedRooms) -> Room {
+    /// Creates a new room with the specified ID from a Matrix `JoinedRoom`.
+    /// The room is created on the view context.
+    func createRoom(id: String, joinedRoom: JoinedRoom) -> Room {
         let room = Room(context: viewContext)
         room.id = id
         
@@ -61,7 +79,9 @@ class DataController {
         return room
     }
     
-    func createMessage(id: String) -> Message? {
+    /// Creates an empty message with the specified ID that can be updated at a later date
+    /// when it's content is received from the server. The message is created on the view context.
+    func createMessage(id: String) -> Message {
         let message = Message(context: viewContext)
         message.id = id
         
@@ -69,7 +89,11 @@ class DataController {
     }
     
     /// Creates a message from a Matrix `RoomEvent`. If the message already exists
-    /// this method will overwrite it's properties to match the `RoomEvent`.
+    /// the store's merge policy will overwrite it's properties to match the `RoomEvent`.
+    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the message.
+    /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
+    ///
+    /// The message is created on the view context.
     func createMessage(roomEvent: RoomEvent) -> Message? {
         guard let body = roomEvent.content.body else { return nil }
         
@@ -82,14 +106,20 @@ class DataController {
         return message
     }
     
+    /// Creates an empty user with the specified ID that can be updated at a later date
+    /// when their properties are received from the server. The user is created on the view context.
     func createUser(id: String) -> User {
         let user = User(context: viewContext)
         user.id = id
         return user
     }
     
-    /// Creates a user from a Matrix `StateEvent`. If the user already exists
-    /// this method will overwrite it's properties to match the `StateEvent`.
+    /// Creates a user from a Matrix `RoomEvent`. If the user already exists
+    /// store's merge policy will overwrite it's properties to match the `RoomEvent`.
+    /// - Parameter event: The Matrix `RoomEvent` that represents the user.
+    /// - Returns: The `User` object that was just created, or `nil` if the event was invalid.
+    ///
+    /// The user is created on the view context.
     func createUser(event: RoomEvent) -> User? {
         guard let userID = event.stateKey else { return nil }
         
@@ -99,6 +129,7 @@ class DataController {
         return user
     }
     
+    /// Updates an existing user from a Matrix `RoomEvent`.
     func updateUser(_ user: User, from event: RoomEvent) {
         user.displayName = event.content.displayName
         
@@ -110,6 +141,11 @@ class DataController {
         }
     }
     
+    /// Creates a reaction from a Matrix `RoomEvent`.
+    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the reaction.
+    /// - Returns: The `Reaction` object if successful or `nil` if the event was invalid.
+    ///
+    /// The reaction is created on the view context.
     func createReaction(roomEvent: RoomEvent) -> Reaction? {
         guard
             let relationship = roomEvent.content.relationship,
@@ -127,6 +163,11 @@ class DataController {
         return reaction
     }
     
+    /// Creates a message edit from a Matrix `RoomEvent`.
+    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the message edit.
+    /// - Returns: The `Edit` object if successful or `nil` if the event was invalid.
+    ///
+    /// The message edit is created on the view context.
     func createEdit(roomEvent: RoomEvent) -> Edit? {
         guard
             let relationship = roomEvent.content.relationship,
@@ -143,6 +184,11 @@ class DataController {
         return edit
     }
     
+    /// Created a redaction from a Matrix `RoomEvent`.
+    /// - Parameter roomEvent: The Matrix `RoomEvent` that represents the redaction.
+    /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
+    ///
+    /// The redaction is created on the view context.
     func createRedaction(roomEvent: RoomEvent) -> Redaction? {
         guard
             let messageID = roomEvent.redacts
@@ -159,6 +205,12 @@ class DataController {
     
     
     // MARK: Process Responses
+    /// Process any room events in the provided array for the specified room.
+    /// The following event types are currently processed:
+    /// - Messages
+    /// - Message Edits
+    /// - Reactions
+    /// - Redactions
     func process(events: [RoomEvent], in room: Room) {
         let messageEvents = events
             .filter { $0.type == "m.room.message" }
@@ -187,6 +239,9 @@ class DataController {
     
     /// Processes any state events in the provided array for the specified room.
     /// NOTE: Calling this while paginating backwards will incorrectly update the room's current state.
+    /// The following event types are currently processed:
+    /// - Room Name
+    /// - Membership Changes
     func processState(events: [RoomEvent], in room: Room) {
         let roomName = events
             .filter { $0.type == "m.room.name" }
@@ -215,18 +270,21 @@ class DataController {
     
     
     // MARK: Get Objects
+    /// Fetch the room with the matching ID from the data store.
     func room(id: String) -> Room? {
         let request: NSFetchRequest<Room> = Room.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }
     
+    /// Fetch the message with the matching ID from the data store.
     func message(id: String) -> Message? {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }
     
+    /// Fetch the user with the matching ID from the data store.
     func user(id: String) -> User? {
         let request: NSFetchRequest<User> = User.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
