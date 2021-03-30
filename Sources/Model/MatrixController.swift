@@ -68,7 +68,7 @@ class MatrixController: ObservableObject {
     /// Register a new account on the homeserver with the supplied username and password.
     /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
     func register(username: String, password: String) {
-        authCancellable = client.register(username: username, password: password)
+        authCancellable = client.register(username: username, password: password, displayName: "Watch")
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
@@ -84,7 +84,7 @@ class MatrixController: ObservableObject {
     /// Login to the homeserver using the supplied username and password.
     /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
     func login(username: String, password: String) {
-        authCancellable = client.login(username: username, password: password)
+        authCancellable = client.login(username: username, password: password, displayName: "Watch")
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 //
