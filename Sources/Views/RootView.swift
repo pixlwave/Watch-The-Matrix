@@ -4,7 +4,10 @@ import Matrix
 /// A view that displays all of the rooms that the user is currently joined to.
 struct RootView: View {
     @EnvironmentObject var matrix: MatrixController
+    
+    // sheets and alerts
     @State var isPresentingSignOutAlert = false
+    @State var syncError: MatrixError? = nil
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(entity: Room.entity(),
@@ -21,11 +24,25 @@ struct RootView: View {
             return date1 > date2
         }
         
-        List(sortedRooms) { room in
-            NavigationLink(destination: RoomView(room: room)
-                            .environmentObject(matrix)
-                            .environment(\.managedObjectContext, viewContext)) {
-                RoomCell(room: room)
+        List {
+            if case let .syncError(error) = matrix.state {
+                Button { syncError = error } label: {
+                    HStack {
+                        Spacer()
+                        Text("Sync Error")
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                        Spacer()
+                    }
+                }
+            }
+            
+            ForEach(sortedRooms) { room in
+                NavigationLink(destination: RoomView(room: room)
+                                .environmentObject(matrix)
+                                .environment(\.managedObjectContext, viewContext)) {
+                    RoomCell(room: room)
+                }
             }
         }
         .navigationTitle("Rooms")
@@ -43,6 +60,11 @@ struct RootView: View {
                   },
                   secondaryButton: .cancel()
             )
+        }
+        .sheet(item: $syncError) { syncError in
+            Text(syncError.description)
+                .foregroundColor(.red)
+                .multilineTextAlignment(.center)
         }
     }
 }

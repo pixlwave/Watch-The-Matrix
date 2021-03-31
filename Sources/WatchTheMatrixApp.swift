@@ -14,16 +14,12 @@ struct WatchTheMatrixApp: App {
                     .environmentObject(matrix)
             case .syncing:
                 ProgressView()
-            case .idle:
+            case .idle, .syncError:
                 NavigationView {
                     RootView()
                         .environment(\.managedObjectContext, matrix.dataController.viewContext)
                         .environmentObject(matrix)
                 }
-            case .syncError(let error):
-                Text("Error syncing messages: \(error.description)")
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
             }
         }
         .onChange(of: scenePhase, perform: updateSyncState)
