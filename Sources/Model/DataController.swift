@@ -65,6 +65,30 @@ class DataController {
         try? container.viewContext.save()
     }
     
+    /// Execute a batch delete request for all of objects of the specified type.
+    /// - Parameter entity: The type of `NSManagedObject` to delete.
+    ///
+    /// The request is executed on the view context.
+    func batchDelete<T>(entity: T.Type) where T: NSManagedObject {
+        let request = T.fetchRequest()
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        _ = try? viewContext.execute(batchDeleteRequest)
+    }
+    
+    /// Deletes all data in the persistent store and saves the changes.
+    func deleteAll() {
+        batchDelete(entity: Room.self)
+        batchDelete(entity: User.self)
+        batchDelete(entity: Message.self)
+        batchDelete(entity: Reaction.self)
+        batchDelete(entity: Edit.self)
+        batchDelete(entity: Redaction.self)
+        batchDelete(entity: SyncState.self)
+         
+        save()      // save here to ensure all data is completely deleted
+    }
+    
     
     // MARK: Create Objects
     /// Creates a new room with the specified ID from a Matrix `JoinedRoom`.

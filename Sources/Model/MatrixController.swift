@@ -130,6 +130,12 @@ class MatrixController: ObservableObject {
                 self.client.homeserver = .default
                 self.saveCredentials()
                 
+                // clear all synced data
+                self.dataController.deleteAll()
+                
+                // create a fresh sync state object
+                self.syncState = self.dataController.syncState()
+                
                 // update the ui state
                 self.state = .signedOut
             }
