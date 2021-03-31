@@ -66,7 +66,7 @@ struct RoomView: View {
                 LazyVGrid(columns: [GridItem(), GridItem()]) {
                     ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
                         Button {
-                            matrix.sendReaction(text: reaction, to: message, in: room)
+                            matrix.sendReaction(reaction, to: message, in: room)
                             messageToReactTo = nil
                         } label: {
                             Text(reaction)

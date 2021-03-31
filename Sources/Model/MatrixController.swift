@@ -242,21 +242,19 @@ class MatrixController: ObservableObject {
     }
     
     /// Sends a reaction to the event in the specified room.
-    /// - Parameters:
-    ///   - text: The reaction string to send.
-    func sendReaction(text: String, to event: Message, in room: Room) {
+    func sendReaction(_ reaction: String, to event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
         
-        client.sendReaction(text: text, to: eventID, in: roomID)
+        client.sendReaction(reaction, to: eventID, in: roomID)
             .print()
             .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
     }
     
     /// Sends a message to the specified room.
-    func sendMessage(body: String, room: Room) {
+    func sendMessage(_ message: String, in room: Room) {
         guard let roomID = room.id else { return }
         
-        client.sendMessage(body: body, roomID: roomID)
+        client.sendMessage(message, in: roomID)
             .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
