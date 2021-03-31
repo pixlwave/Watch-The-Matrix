@@ -4,6 +4,7 @@ import Matrix
 @main
 struct WatchTheMatrixApp: App {
     @StateObject var matrix = MatrixController()
+    @Environment(\.scenePhase) var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -25,7 +26,16 @@ struct WatchTheMatrixApp: App {
                     .multilineTextAlignment(.center)
             }
         }
+        .onChange(of: scenePhase, perform: updateSyncState)
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
+    }
+    
+    func updateSyncState(for scenePhase: ScenePhase) {
+        if scenePhase == .active {
+            matrix.resumeSync()
+        } else {
+            matrix.pauseSync()
+        }
     }
 }

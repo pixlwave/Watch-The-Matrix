@@ -32,14 +32,7 @@ class MatrixController: ObservableObject {
         
         loadCredentials()
         
-        if client.accessToken != nil {
-            if syncState.nextBatch == nil {         // if the persistent store has been deleted
-                initialSync()
-            } else {
-                state = .idle                       // show the rooms list immediately
-                longPoll()
-            }
-        }
+        resumeSync()                                // resumes syncing if an access token was loaded
     }
     
     /// Loads the user's access token, ID, device ID and homeserver information from the keychain
@@ -62,7 +55,27 @@ class MatrixController: ObservableObject {
         keychain[data: "homeserver"] = client.homeserver.data()
     }
     
-    /// A cancellable instance used for login, register and logout operations.
+    /// Long poll the homeserver's sync endpoint, displaying an indefinite progress view if an initial sync needs to take place
+    /// This will only take place if the client has an access token.
+    func resumeSync() {
+        guard client.accessToken != nil else { return }
+        
+        // shows an indefinite progress view for an initial sync otherwise shows the rooms list
+        if syncState.nextBatch == nil {
+            state = .syncing
+        } else {
+            state = .idle
+        }
+        
+        longPoll()
+    }
+    
+    /// Cancel the long poll on the homeserver's sync endpoint.
+    func pauseSync() {
+        syncCancellable?.cancel()
+    }
+    
+    /// A cancellation token used for login, register and logout operations.
     private var authCancellable: AnyCancellable?
     
     /// Register a new account on the homeserver with the supplied username and password.
@@ -77,7 +90,7 @@ class MatrixController: ObservableObject {
                 self.deviceID = response.deviceID
                 self.client.accessToken = response.accessToken
                 self.saveCredentials()
-                self.initialSync()
+                self.resumeSync()
             }
     }
     
@@ -93,7 +106,7 @@ class MatrixController: ObservableObject {
                 self.deviceID = response.deviceID
                 self.client.accessToken = response.accessToken
                 self.saveCredentials()
-                self.initialSync()
+                self.resumeSync()
             }
     }
     
@@ -108,7 +121,7 @@ class MatrixController: ObservableObject {
                 guard success else { return }
                 
                 // cancel the long poll
-                self.syncCancellable?.cancel()
+                self.pauseSync()
                 
                 // reset access credentials
                 self.userID = nil
@@ -122,14 +135,8 @@ class MatrixController: ObservableObject {
             }
     }
     
-    /// A cancellable instance used for sync operations.
+    /// A cancellation token used for sync operations.
     private var syncCancellable: AnyCancellable?
-    
-    /// Begins an initial sync. This will show an indefinite progress view until this completes successfully.
-    func initialSync() {
-        state = .syncing
-        longPoll()
-    }
     
     /// Long poll the sync endpoint on the homeserver and process the response automatically. As soon as a response
     /// has been processed, this method calls itself to create a request loop.
