@@ -52,7 +52,7 @@ struct RoomView: View {
                 markRoomAsRead()
             }
             .onReceive(messages.publisher) { _ in
-                // if a more recent message has been added, show this message
+                // if a more recent message has been added, show that message
                 #warning("This should additionally check whether the last message is on screen.")
                 if messages.last?.id != lastMessageID {
                     withAnimation {
@@ -60,6 +60,10 @@ struct RoomView: View {
                         reader.scrollTo(lastMessageID, anchor: .bottom)
                     }
                 }
+                
+                // keep the room marked as read
+                // outside of the condition above to include edits to the last message
+                markRoomAsRead()
             }
             .sheet(item: $messageToReactTo) { message in
                 // displays a two column reaction picker with 6 emoji to choose from

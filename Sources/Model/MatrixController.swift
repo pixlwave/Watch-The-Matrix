@@ -266,11 +266,12 @@ class MatrixController: ObservableObject {
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
     
-    /// Indicates to the homeserver that a message has been read.
+    /// Indicates to the homeserver that a message has been read. If the message has edits,
+    /// the receipt will be sent for the most recent edit.
     func sendReadReceipt(for event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
         
-        client.sendReadReceipt(for: eventID, in: roomID)
+        client.sendReadReceipt(for: event.lastEdit?.id ?? eventID, in: roomID)
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
 }
