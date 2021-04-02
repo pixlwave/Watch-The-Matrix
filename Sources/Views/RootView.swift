@@ -93,6 +93,7 @@ struct RoomCell: View {
                 }
                 
                 Text(room.name ?? room.generateName(for: matrix.userID))
+                    .lineLimit(1)
             }
             
             Text(lastMessageBody)
