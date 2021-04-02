@@ -58,7 +58,6 @@ class MatrixController: ObservableObject {
     /// Long poll the homeserver's sync endpoint, displaying an indefinite progress view if an initial sync needs to take place
     /// This will only take place if the client has an access token.
     func resumeSync() {
-        print("*** RESUME SYNC ***")
         guard client.accessToken != nil else { return }
         
         // shows an indefinite progress view for an initial sync otherwise shows the rooms list
@@ -73,7 +72,6 @@ class MatrixController: ObservableObject {
     
     /// Cancel the long poll on the homeserver's sync endpoint.
     func pauseSync() {
-        print("*** PAUSE SYNC ***")
         syncCancellable?.cancel()
     }
     
@@ -178,13 +176,12 @@ class MatrixController: ObservableObject {
                         // delete existing messages when the timeline is limited and process state events from the sync gap
                         if joinedRoom.timeline.isLimited {
                             room.deleteAllMessages()
-                            self.dataController.processState(events: joinedRoom.state.events, in: room)
+                            joinedRoom.state.events.forEach { self.dataController.processStateEvent($0, in: room) }
                             room.previousBatch = joinedRoom.timeline.previousBatch
                         }
                         
                         let events = joinedRoom.timeline.events
-                        self.dataController.process(events: events, in: room)
-                        self.dataController.processState(events: events, in: room)
+                        self.dataController.process(events: events, in: room, includeState: true)
                         room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
@@ -247,7 +244,7 @@ class MatrixController: ObservableObject {
             } receiveValue: { response in
                 guard let events = response.events else { return }
                 
-                self.dataController.process(events: events, in: room)
+                self.dataController.process(events: events, in: room, includeState: false)
                 room.previousBatch = response.endToken
                 
                 self.dataController.save()

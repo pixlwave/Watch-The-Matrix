@@ -97,7 +97,7 @@ class DataController {
         let room = Room(context: viewContext)
         room.id = id
         
-        process(events: joinedRoom.timeline.events, in: room)
+        process(events: joinedRoom.timeline.events, in: room, includeState: true)
         room.previousBatch = joinedRoom.timeline.previousBatch
         
         return room
@@ -235,58 +235,49 @@ class DataController {
     /// - Message Edits
     /// - Reactions
     /// - Redactions
-    func process(events: [RoomEvent], in room: Room) {
-        let messageEvents = events
-            .filter { $0.type == "m.room.message" }
-        
-        let messages = messageEvents
-            .filter { $0.content.relationship?.type != .replace }
-            .compactMap { createMessage(roomEvent: $0) }
-        
-        // edits
-        _ = messageEvents
-            .filter { $0.content.relationship?.type == .replace }
-            .compactMap { createEdit(roomEvent: $0) }
-        
-        // reactions
-        _ = events
-            .filter { $0.type == "m.reaction" }
-            .compactMap { createReaction(roomEvent: $0) }
-        
-        // redactions
-        _ = events
-            .filter { $0.type == "m.room.redaction" }
-            .compactMap { createRedaction(roomEvent: $0) }
+    /// - State if `includeState` is true
+    func process(events: [RoomEvent], in room: Room, includeState: Bool) {
+        var messages = [Message]()
+            
+        events.forEach {
+            if $0.type == "m.room.message" {
+                if $0.content.relationship?.type != .replace {
+                    if let message = createMessage(roomEvent: $0) {
+                        messages.append(message)
+                    }
+                } else {
+                    createEdit(roomEvent: $0)
+                }
+            } else if $0.type == "m.reaction" {
+                createReaction(roomEvent: $0)
+            } else if $0.type == "m.room.redaction" {
+                createRedaction(roomEvent: $0)
+            } else if includeState {
+                processStateEvent($0, in: room)
+            }
+        }
         
         room.addToMessages(NSSet(array: messages))
     }
     
-    /// Processes any state events in the provided array for the specified room.
+    /// Processes an event for state in the specified room.
     /// NOTE: Calling this while paginating backwards will incorrectly update the room's current state.
     /// The following event types are currently processed:
     /// - Room Name
     /// - Membership Changes
-    func processState(events: [RoomEvent], in room: Room) {
-        let roomName = events
-            .filter { $0.type == "m.room.name" }
-            .sorted { $0.date > $1.date }
-            .first
-        
-        if let name = roomName?.content.name {
+    func processStateEvent(_ event: RoomEvent, in room: Room) {
+        if event.type == "m.room.name", let name = event.content.name {
             room.name = name.isEmpty ? nil : name
-        }
-        
-        // members
-        events.filter { $0.type == "m.room.member" }.forEach {
-            guard let userID = $0.stateKey, let membership = $0.content.membership else { return }
-            
-            if membership == .join {
-                let user = self.user(id: userID) ?? createUser(id: userID)
-                updateUser(user, from: $0)
-                room.addToMembers(user)             // this can be called even if the relationship already exists
-            } else {
-                if let user = self.user(id: userID) {
-                    room.removeFromMembers(user)    // this can be called even if the user isn't a member
+        } else if event.type == "m.room.member" {
+            if let userID = event.stateKey, let membership = event.content.membership {
+                if membership == .join {
+                    let user = self.user(id: userID) ?? createUser(id: userID)
+                    updateUser(user, from: event)
+                    room.addToMembers(user)             // this can be called even if the relationship already exists
+                } else {
+                    if let user = self.user(id: userID) {
+                        room.removeFromMembers(user)    // this can be called even if the user isn't a member
+                    }
                 }
             }
         }
