@@ -170,12 +170,12 @@ class DataController {
     /// - Returns: The `Reaction` object if successful or `nil` if the event was invalid.
     ///
     /// The reaction is created on the view context.
-    func createReaction(roomEvent: RoomEvent) -> Reaction? {
+    func createReaction(roomEvent: RoomEvent) {
         guard
             let relationship = roomEvent.content.relationship,
             let key = relationship.key,
             let messageID = relationship.eventID
-        else { return nil }
+        else { return }
         
         let reaction = Reaction(context: viewContext)
         reaction.key = key
@@ -183,8 +183,6 @@ class DataController {
         reaction.message = message(id: messageID) ?? createMessage(id: messageID)
         reaction.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
         reaction.date = roomEvent.date
-        
-        return reaction
     }
     
     /// Creates a message edit from a Matrix `RoomEvent`.
@@ -192,20 +190,18 @@ class DataController {
     /// - Returns: The `Edit` object if successful or `nil` if the event was invalid.
     ///
     /// The message edit is created on the view context.
-    func createEdit(roomEvent: RoomEvent) -> Edit? {
+    func createEdit(roomEvent: RoomEvent) {
         guard
             let relationship = roomEvent.content.relationship,
             let body = roomEvent.content.newContent?.body,
             let messageID = relationship.eventID
-        else { return nil }
+        else { return }
         
         let edit = Edit(context: viewContext)
         edit.body = body
         edit.id = roomEvent.eventID
         edit.date = roomEvent.date
         edit.message = message(id: messageID) ?? createMessage(id: messageID)
-        
-        return edit
     }
     
     /// Created a redaction from a Matrix `RoomEvent`.
@@ -213,18 +209,14 @@ class DataController {
     /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
     ///
     /// The redaction is created on the view context.
-    func createRedaction(roomEvent: RoomEvent) -> Redaction? {
-        guard
-            let messageID = roomEvent.redacts
-        else { return nil }
+    func createRedaction(roomEvent: RoomEvent) {
+        guard let messageID = roomEvent.redacts else { return }
         
         let redaction = Redaction(context: viewContext)
         redaction.id = roomEvent.eventID
         redaction.date = roomEvent.date
         redaction.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
         redaction.message = message(id: messageID) ?? createMessage(id: messageID)
-        
-        return redaction
     }
     
     
