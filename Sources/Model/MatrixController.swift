@@ -9,7 +9,7 @@ class MatrixController: ObservableObject {
     /// The Matrix client object used to interact with the homeserver
     var client = Client()
     
-    enum State { case signedOut, syncing, idle, syncError(error: MatrixError) }
+    enum State { case signedOut, initialSync, syncing, syncError(error: MatrixError) }
     
     /// The current state of the Matrix stack.
     @Published private(set) var state: State = .signedOut
@@ -58,20 +58,22 @@ class MatrixController: ObservableObject {
     /// Long poll the homeserver's sync endpoint, displaying an indefinite progress view if an initial sync needs to take place
     /// This will only take place if the client has an access token.
     func resumeSync() {
+        print("*** RESUME SYNC ***")
         guard client.accessToken != nil else { return }
         
         // shows an indefinite progress view for an initial sync otherwise shows the rooms list
         if syncState.nextBatch == nil {
-            state = .syncing
+            state = .initialSync
+            sync(isInitial: true)
         } else {
-            state = .idle
+            state = .syncing
+            sync()
         }
-        
-        longPoll()
     }
     
     /// Cancel the long poll on the homeserver's sync endpoint.
     func pauseSync() {
+        print("*** PAUSE SYNC ***")
         syncCancellable?.cancel()
     }
     
@@ -144,10 +146,22 @@ class MatrixController: ObservableObject {
     /// A cancellation token used for sync operations.
     private var syncCancellable: AnyCancellable?
     
+    /// A filter that lazy loads members and only a single event for a fast initial sync.
+    private let initialSyncFilter = """
+    {"room":{"state":{"lazy_load_members":true},"timeline":{"limit":1}}}
+    """
+    
+    /// A filter that lazy loads members.
+    private let lazyLoadMembersFilter = """
+    {"room":{"state":{"lazy_load_members":true}}}
+    """
+    
     /// Long poll the sync endpoint on the homeserver and process the response automatically. As soon as a response
     /// has been processed, this method calls itself to create a request loop.
-    func longPoll() {
-        syncCancellable = client.sync(since: syncState.nextBatch, timeout: 5000)
+    func sync(isInitial: Bool = false) {
+        let filter = isInitial ? initialSyncFilter : lazyLoadMembersFilter
+        
+        syncCancellable = client.sync(filter: filter, since: syncState.nextBatch, timeout: 5000)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
@@ -174,7 +188,6 @@ class MatrixController: ObservableObject {
                         room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
-                        self.getMembers(of: room, at: response.nextBatch)
                         self.getName(of: room)
                         self.loadMoreMessages(in: room)
                         room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
@@ -183,9 +196,9 @@ class MatrixController: ObservableObject {
                 
                 self.dataController.save()
                 
-                self.state = .idle
+                self.state = .syncing
                 self.syncState.nextBatch = response.nextBatch
-                self.longPoll()
+                self.sync()
             }
     }
     

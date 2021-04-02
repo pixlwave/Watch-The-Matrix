@@ -12,9 +12,9 @@ struct WatchTheMatrixApp: App {
             case .signedOut:
                 LoginView()
                     .environmentObject(matrix)
-            case .syncing:
+            case .initialSync:
                 ProgressView()
-            case .idle, .syncError:
+            case .syncing, .syncError:
                 NavigationView {
                     RootView()
                         .environment(\.managedObjectContext, matrix.dataController.viewContext)
@@ -29,9 +29,14 @@ struct WatchTheMatrixApp: App {
     
     func updateSyncState(for scenePhase: ScenePhase) {
         if scenePhase == .active {
-            matrix.resumeSync()
+            if case .initialSync = matrix.state {
+            } else {
+                matrix.resumeSync()
+            }
         } else {
-            matrix.pauseSync()
+            if case .syncing = matrix.state {
+                matrix.pauseSync()
+            }
         }
     }
 }
