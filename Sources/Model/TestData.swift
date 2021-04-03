@@ -1,6 +1,10 @@
 import CoreData
 
+// some data extensions for debugging purposes. these will be merged into
+// tests when the data layer is split out into a testable framework as
+// it is not currently possible to add tests for a watchos target.
 extension DataController {
+    /// Add a Room, User and Message to the data store.
     func addTestData1() {
         let room = Room(context: viewContext)
         room.id = "12345"
@@ -22,6 +26,8 @@ extension DataController {
         save()
     }
     
+    /// Add a second Message to the data store creating Room and User objects that were added
+    /// in `addTestData1()` with properties.
     func addTestData2() {
         let room = Room(context: viewContext)
         room.id = "12345"
@@ -39,6 +45,7 @@ extension DataController {
         save()
     }
     
+    /// Prints debug data about the store's contents to the console.
     func printStoreData() {
         print("********** Store Data Start **********")
         
