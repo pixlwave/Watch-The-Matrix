@@ -1,0 +1,26 @@
+{
+  "timeline": {
+    "events": [
+      {
+        "content": {
+          "body": "A message that arrived later",
+          "msgtype": "m.text"
+        },
+        "origin_server_ts": 1617304947090,
+        "sender": "@test:example.org",
+        "type": "m.room.message",
+        "event_id": "m23456"
+      }
+    ],
+    "prev_batch": "t25-1919",
+    "limited": true
+  },
+  "state": {
+    "events": []
+  },
+  "unread_notifications": {
+    "notification_count": 0,
+    "highlight_count": 0
+  },
+  "summary": {}
+}

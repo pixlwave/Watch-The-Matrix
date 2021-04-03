@@ -1,0 +1,52 @@
+{
+  "timeline": {
+    "events": [
+      {
+        "content": {
+          "body": "Hello, World",
+          "msgtype": "m.text"
+        },
+        "origin_server_ts": 1617208740474,
+        "sender": "@test:example.org",
+        "type": "m.room.message",
+        "event_id": "m12345"
+      }
+    ],
+    "prev_batch": "t25-1918",
+    "limited": true
+  },
+  "state": {
+    "events": [
+      {
+        "content": {
+          "avatar_url": null,
+          "displayname": "Test User",
+          "membership": "join"
+        },
+        "origin_server_ts": 1617202746245,
+        "sender": "@test:example.org",
+        "state_key": "@test:example.org",
+        "type": "m.room.member",
+        "event_id": "$YhnhOS"
+      },
+      {
+        "content": {
+          "name": "Test Room"
+        },
+        "origin_server_ts": 1617201759233,
+        "sender": "@test:example.org",
+        "state_key": "",
+        "type": "m.room.name",
+        "unsigned": {
+          "age": 253662581
+        },
+        "event_id": "$KMDLHCnz1Yy9QALFqe81zub_XUkympwRQSMkmvoJ-nQ"
+      }
+    ]
+  },
+  "unread_notifications": {
+    "notification_count": 0,
+    "highlight_count": 0
+  },
+  "summary": {}
+}

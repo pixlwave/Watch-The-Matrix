@@ -1,0 +1,23 @@
+import XCTest
+@testable import TestingHost
+import Matrix
+
+class BaseTestCase: XCTestCase {
+    var dataController: DataController!
+    var jsonDecoder: JSONDecoder!
+
+    override func setUpWithError() throws {
+        dataController = DataController(inMemory: true)
+        jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .millisecondsSince1970
+    }
+    
+    func loadJoinedRoomJSON(named fileName: String) -> JoinedRoom? {
+        guard
+            let url = Bundle(for: Self.self).url(forResource: fileName, withExtension: "json"),
+            let data = try? Data(contentsOf: url)
+        else { return nil }
+        
+        return try? jsonDecoder.decode(JoinedRoom.self, from: data)
+    }
+}

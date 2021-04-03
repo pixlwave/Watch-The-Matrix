@@ -66,7 +66,8 @@ extension Room {
     }
     
     /// Deletes all of the messages belonging to the room. In turn, the deletion will cascade
-    /// down to any edits, reactions and redactions in the room.
+    /// down to any edits, reactions and redactions in the room. This function uses a batch
+    /// delete request so won't have a visible effect until the managed object context is saved.
     func deleteAllMessages() {
         let request: NSFetchRequest<NSFetchRequestResult> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "room == %@", self)

@@ -30,6 +30,26 @@
 		A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */; };
 		A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6925DD6AC300B5EDAA /* Preview Assets.xcassets */; };
 		A59A0C8925DD6B7900B5EDAA /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A59A0C8825DD6B7900B5EDAA /* Matrix */; };
+		A59BB49F2618AFC600A91D68 /* TestingHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59BB49E2618AFC600A91D68 /* TestingHostApp.swift */; };
+		A59BB4A32618AFC700A91D68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59BB4A22618AFC700A91D68 /* Assets.xcassets */; };
+		A59BB4B22618AFE600A91D68 /* BaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */; };
+		A59BB4CF2618B07800A91D68 /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A59BB4CE2618B07800A91D68 /* Matrix */; };
+		A59BB4D12618B07C00A91D68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A59BB4D02618B07C00A91D68 /* KeychainAccess */; };
+		A59BB4DC2618B14E00A91D68 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCE25F5331900D43CDE /* Message.swift */; };
+		A59BB4DD2618B14E00A91D68 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
+		A59BB4DE2618B14E00A91D68 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
+		A59BB4DF2618B14E00A91D68 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
+		A59BB4E02618B14E00A91D68 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* User.swift */; };
+		A59BB4E12618B14E00A91D68 /* MatrixController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* MatrixController.swift */; };
+		A59BB4E22618B14E00A91D68 /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
+		A59BB4E32618B14E00A91D68 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
+		A59BB4E42618B14E00A91D68 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4CD260B588B00895426 /* TestData.swift */; };
+		A59BB4E52618B14E00A91D68 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
+		A59BB4EB2618B15100A91D68 /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
+		A59BB4F22618B1D400A91D68 /* RoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59BB4F12618B1D400A91D68 /* RoomTests.swift */; };
+		A59BB4F92618B22F00A91D68 /* EventProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */; };
+		A59BB5102618C15500A91D68 /* NewJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */; };
+		A59BB5262618C51500A91D68 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
 		A5A30C0C260BA53700861601 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
 		A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */; };
@@ -51,6 +71,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A59A0C5625DD6AC200B5EDAA;
 			remoteInfo = "Watch The Matrix WatchKit Extension";
+		};
+		A59BB4B42618AFE600A91D68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A59A0C4125DD6AC000B5EDAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A59BB49B2618AFC600A91D68;
+			remoteInfo = TestingHost;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -109,6 +136,17 @@
 		A59A0C6B25DD6AC300B5EDAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		A59A0C7D25DD6ACE00B5EDAA /* Matrix */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Matrix; path = ../Matrix; sourceTree = "<group>"; };
+		A59BB49C2618AFC600A91D68 /* TestingHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestingHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A59BB49E2618AFC600A91D68 /* TestingHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingHostApp.swift; sourceTree = "<group>"; };
+		A59BB4A22618AFC700A91D68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A59BB4A72618AFC700A91D68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A59BB4AF2618AFE600A91D68 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
+		A59BB4B32618AFE600A91D68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A59BB4F12618B1D400A91D68 /* RoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTests.swift; sourceTree = "<group>"; };
+		A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProcessingTests.swift; sourceTree = "<group>"; };
+		A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewJoinedRoom.json; sourceTree = "<group>"; };
+		A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SyncMessageJoinedRoom.json; sourceTree = "<group>"; };
 		A5A30C0B260BA53700861601 /* Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edit.swift; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
 		A5C6FD2C2611E9FB0096DF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -123,6 +161,22 @@
 			files = (
 				A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */,
 				A59A0C8925DD6B7900B5EDAA /* Matrix in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A59BB4992618AFC600A91D68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A59BB4D12618B07C00A91D68 /* KeychainAccess in Frameworks */,
+				A59BB4CF2618B07800A91D68 /* Matrix in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A59BB4AC2618AFE600A91D68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +226,8 @@
 				A5D9CF0A260B4CE200875D38 /* Resources */,
 				A59A0C6825DD6AC300B5EDAA /* Preview Content */,
 				A59A0C4F25DD6AC000B5EDAA /* Watch App */,
+				A59BB4B02618AFE600A91D68 /* Tests */,
+				A59BB49D2618AFC600A91D68 /* TestingHost */,
 				A59A0C4825DD6AC000B5EDAA /* Products */,
 				A59A0C7D25DD6ACE00B5EDAA /* Matrix */,
 			);
@@ -183,6 +239,8 @@
 				A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */,
 				A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */,
 				A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */,
+				A59BB49C2618AFC600A91D68 /* TestingHost.app */,
+				A59BB4AF2618AFE600A91D68 /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,6 +272,37 @@
 				A59A0C6925DD6AC300B5EDAA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A59BB49D2618AFC600A91D68 /* TestingHost */ = {
+			isa = PBXGroup;
+			children = (
+				A59BB49E2618AFC600A91D68 /* TestingHostApp.swift */,
+				A59BB4A22618AFC700A91D68 /* Assets.xcassets */,
+				A59BB4A72618AFC700A91D68 /* Info.plist */,
+			);
+			path = TestingHost;
+			sourceTree = "<group>";
+		};
+		A59BB4B02618AFE600A91D68 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A59BB50E2618C13E00A91D68 /* Fixtures */,
+				A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */,
+				A59BB4F12618B1D400A91D68 /* RoomTests.swift */,
+				A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */,
+				A59BB4B32618AFE600A91D68 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		A59BB50E2618C13E00A91D68 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */,
+				A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		A5D9CF06260B4CD000875D38 /* Views */ = {
@@ -296,6 +385,45 @@
 			productReference = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
 		};
+		A59BB49B2618AFC600A91D68 /* TestingHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A59BB4AA2618AFC700A91D68 /* Build configuration list for PBXNativeTarget "TestingHost" */;
+			buildPhases = (
+				A59BB4982618AFC600A91D68 /* Sources */,
+				A59BB4992618AFC600A91D68 /* Frameworks */,
+				A59BB49A2618AFC600A91D68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestingHost;
+			packageProductDependencies = (
+				A59BB4CE2618B07800A91D68 /* Matrix */,
+				A59BB4D02618B07C00A91D68 /* KeychainAccess */,
+			);
+			productName = TestingHost;
+			productReference = A59BB49C2618AFC600A91D68 /* TestingHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A59BB4AE2618AFE600A91D68 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A59BB4B62618AFE600A91D68 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				A59BB4AB2618AFE600A91D68 /* Sources */,
+				A59BB4AC2618AFE600A91D68 /* Frameworks */,
+				A59BB4AD2618AFE600A91D68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A59BB4B52618AFE600A91D68 /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = A59BB4AF2618AFE600A91D68 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -313,6 +441,13 @@
 					};
 					A59A0C5625DD6AC200B5EDAA = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					A59BB49B2618AFC600A91D68 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					A59BB4AE2618AFE600A91D68 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A59BB49B2618AFC600A91D68;
 					};
 				};
 			};
@@ -338,6 +473,8 @@
 				A59A0C4625DD6AC000B5EDAA /* Watch The Matrix */,
 				A59A0C4A25DD6AC000B5EDAA /* Watch The Matrix WatchKit App */,
 				A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */,
+				A59BB49B2618AFC600A91D68 /* TestingHost */,
+				A59BB4AE2618AFE600A91D68 /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -365,6 +502,23 @@
 				A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */,
 				A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */,
 				A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A59BB49A2618AFC600A91D68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A59BB4A32618AFC700A91D68 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A59BB4AD2618AFE600A91D68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A59BB5262618C51500A91D68 /* SyncMessageJoinedRoom.json in Resources */,
+				A59BB5102618C15500A91D68 /* NewJoinedRoom.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +552,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A59BB4982618AFC600A91D68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A59BB49F2618AFC600A91D68 /* TestingHostApp.swift in Sources */,
+				A59BB4DD2618B14E00A91D68 /* DataController.swift in Sources */,
+				A59BB4E02618B14E00A91D68 /* User.swift in Sources */,
+				A59BB4E42618B14E00A91D68 /* TestData.swift in Sources */,
+				A59BB4E22618B14E00A91D68 /* Redaction.swift in Sources */,
+				A59BB4DE2618B14E00A91D68 /* Reaction.swift in Sources */,
+				A59BB4E32618B14E00A91D68 /* Room.swift in Sources */,
+				A59BB4E52618B14E00A91D68 /* SyncState.swift in Sources */,
+				A59BB4EB2618B15100A91D68 /* Matrix.xcdatamodeld in Sources */,
+				A59BB4DF2618B14E00A91D68 /* Edit.swift in Sources */,
+				A59BB4E12618B14E00A91D68 /* MatrixController.swift in Sources */,
+				A59BB4DC2618B14E00A91D68 /* Message.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A59BB4AB2618AFE600A91D68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A59BB4F22618B1D400A91D68 /* RoomTests.swift in Sources */,
+				A59BB4B22618AFE600A91D68 /* BaseTestCase.swift in Sources */,
+				A59BB4F92618B22F00A91D68 /* EventProcessingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -410,6 +593,11 @@
 			isa = PBXTargetDependency;
 			target = A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */;
 			targetProxy = A59A0C5925DD6AC200B5EDAA /* PBXContainerItemProxy */;
+		};
+		A59BB4B52618AFE600A91D68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A59BB49B2618AFC600A91D68 /* TestingHost */;
+			targetProxy = A59BB4B42618AFE600A91D68 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -658,6 +846,90 @@
 			};
 			name = Release;
 		};
+		A59BB4A82618AFC700A91D68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU8A5Y875P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TestingHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.TestingHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A59BB4A92618AFC700A91D68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU8A5Y875P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TestingHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.TestingHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A59BB4B72618AFE600A91D68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU8A5Y875P;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingHost.app/TestingHost";
+			};
+			name = Debug;
+		};
+		A59BB4B82618AFE600A91D68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU8A5Y875P;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingHost.app/TestingHost";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -697,6 +969,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		A59BB4AA2618AFC700A91D68 /* Build configuration list for PBXNativeTarget "TestingHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A59BB4A82618AFC700A91D68 /* Debug */,
+				A59BB4A92618AFC700A91D68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A59BB4B62618AFE600A91D68 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A59BB4B72618AFE600A91D68 /* Debug */,
+				A59BB4B82618AFE600A91D68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -719,6 +1009,15 @@
 		A59A0C8825DD6B7900B5EDAA /* Matrix */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Matrix;
+		};
+		A59BB4CE2618B07800A91D68 /* Matrix */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Matrix;
+		};
+		A59BB4D02618B07C00A91D68 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 
