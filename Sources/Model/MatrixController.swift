@@ -173,15 +173,14 @@ class MatrixController: ObservableObject {
                     
                     if let room = self.dataController.room(id: key) {
                         #warning("Deleting old messages needs testing.")
-                        // delete existing messages when the timeline is limited and process state events from the sync gap
+                        // delete existing messages when the timeline is limited and reset the pagination token
                         if joinedRoom.timeline.isLimited {
                             room.deleteAllMessages()
-                            joinedRoom.state.events.forEach { self.dataController.processStateEvent($0, in: room) }
                             room.previousBatch = joinedRoom.timeline.previousBatch
                         }
                         
-                        let events = joinedRoom.timeline.events
-                        self.dataController.process(events: events, in: room, includeState: true)
+                        joinedRoom.state.events.forEach { self.dataController.processStateEvent($0, in: room) }
+                        self.dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
                         room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
                     } else {
                         let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
