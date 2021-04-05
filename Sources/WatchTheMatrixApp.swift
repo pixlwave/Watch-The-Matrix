@@ -29,7 +29,7 @@ struct WatchTheMatrixApp: App {
     
     /// Pauses or resumes syncing appropriately for the supplied scene phase.
     func updateSyncState(for scenePhase: ScenePhase) {
-        // leave an initial sync running, do pause or restart it
+        // leave an initial sync running, don't pause or restart it
         if case .initialSync = matrix.state { return }
         
         if scenePhase == .active {
