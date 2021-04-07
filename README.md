@@ -2,7 +2,7 @@
 
 A watchOS client for [matrix.org](https://www.matrix.org).
 
-You can use it to view rooms, read new messages and react to them so far.
+View rooms and read or react to messages on Apple Watch. Targets watchOS 7.
 
 ## Instructions
 
