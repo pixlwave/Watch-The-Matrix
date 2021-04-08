@@ -3,23 +3,24 @@ import XCTest
 
 class RoomTests: BaseTestCase {
     func testDeleteAllMessages() {
-        // given two room each with 20 messages
+        // given two rooms each with 20 messages
         let roomA = Room(context: dataController.viewContext)
         let roomB = Room(context: dataController.viewContext)
         roomA.id = "!testA:example.org"
         roomB.id = "!testB:example.org"
         
-        let user = dataController.createUser(id: "@test:example.org")
+        let userA = dataController.createUser(id: "@userA:example.org", in: roomA)
+        let userB = dataController.createUser(id: "@userB:example.org", in: roomB)
         
         for i in 0..<20 {
             let messageA = dataController.createMessage(id: "mA\(i)")
             messageA.body = "Message \(i)"
-            messageA.sender = user
+            messageA.sender = userA
             messageA.room = roomA
             
             let messageB = dataController.createMessage(id: "mB\(i)")
             messageB.body = "Message B \(i)"
-            messageB.sender = user
+            messageB.sender = userB
             messageB.room = roomB
         }
         

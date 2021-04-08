@@ -111,6 +111,9 @@ class DataController {
     
     /// Creates an empty message with the specified ID that can be updated at a later date
     /// when it's content is received from the server. The message is created on the view context.
+    ///
+    /// The message isn't assigned to a room so that it isn't shown until it's content has been filled
+    /// in from the server.
     func createMessage(id: String) -> Message {
         let message = Message(context: viewContext)
         message.id = id
@@ -121,16 +124,17 @@ class DataController {
     /// Creates a message from a Matrix `RoomEvent`. If the message already exists
     /// the store's merge policy will overwrite it's properties to match the `RoomEvent`.
     /// - Parameter roomEvent: A Matrix `RoomEvent`of type `m.room.message`.
+    /// - Parameter room: The room that the message belongs to.
     /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
     ///
     /// The message is created on the view context.
-    func createMessage(roomEvent: RoomEvent) -> Message? {
+    func createMessage(roomEvent: RoomEvent, in room: Room) -> Message? {
         guard let body = roomEvent.content.body else { return nil }
         
         let message = Message(context: viewContext)
         message.body = body
         message.id = roomEvent.eventID
-        message.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
+        message.sender = user(id: roomEvent.sender, in: room) ?? createUser(id: roomEvent.sender, in: room)
         message.date = roomEvent.date
         
         return message
@@ -138,22 +142,24 @@ class DataController {
     
     /// Creates an empty user with the specified ID that can be updated at a later date
     /// when their properties are received from the server. The user is created on the view context.
-    func createUser(id: String) -> User {
+    func createUser(id: String, in room: Room) -> User {
         let user = User(context: viewContext)
         user.id = id
+        user.room = room
         return user
     }
     
     /// Creates a user from a Matrix `RoomEvent`. If the user already exists
     /// store's merge policy will overwrite it's properties to match the `RoomEvent`.
     /// - Parameter event: A `RoomEvent` of type `m.room.member`.
+    /// - Parameter room: The room that the user belongs too.
     /// - Returns: The `User` object that was just created, or `nil` if the event was invalid.
     ///
     /// The user is created on the view context.
-    func createUser(event: RoomEvent) -> User? {
+    func createUser(event: RoomEvent, in room: Room) -> User? {
         guard let userID = event.stateKey else { return nil }
         
-        let user = createUser(id: userID)
+        let user = createUser(id: userID, in: room)
         updateUser(user, from: event)
         
         return user
@@ -173,10 +179,11 @@ class DataController {
     
     /// Creates a reaction from a Matrix `RoomEvent`.
     /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.reaction`.
+    /// - Parameter room: The room that the message being reacted to belongs in.
     /// - Returns: The `Reaction` object if successful or `nil` if the event was invalid.
     ///
     /// The reaction is created on the view context.
-    func createReaction(roomEvent: RoomEvent) {
+    func createReaction(roomEvent: RoomEvent, in room: Room) {
         guard
             let relationship = roomEvent.content.relationship,
             let key = relationship.key,
@@ -187,7 +194,7 @@ class DataController {
         reaction.key = key
         reaction.id = roomEvent.eventID
         reaction.message = message(id: messageID) ?? createMessage(id: messageID)
-        reaction.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
+        reaction.sender = user(id: roomEvent.sender, in: room) ?? createUser(id: roomEvent.sender, in: room)
         reaction.date = roomEvent.date
     }
     
@@ -212,16 +219,17 @@ class DataController {
     
     /// Created a redaction from a Matrix `RoomEvent`.
     /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.room.redaction`.
+    /// - Parameter room: The room that the message being redacted belongs to.
     /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
     ///
     /// The redaction is created on the view context.
-    func createRedaction(roomEvent: RoomEvent) {
+    func createRedaction(roomEvent: RoomEvent, in room: Room) {
         guard let messageID = roomEvent.redacts else { return }
         
         let redaction = Redaction(context: viewContext)
         redaction.id = roomEvent.eventID
         redaction.date = roomEvent.date
-        redaction.sender = user(id: roomEvent.sender) ?? createUser(id: roomEvent.sender)
+        redaction.sender = user(id: roomEvent.sender, in: room) ?? createUser(id: roomEvent.sender, in: room)
         redaction.message = message(id: messageID) ?? createMessage(id: messageID)
     }
     
@@ -240,16 +248,16 @@ class DataController {
         events.forEach {
             if $0.type == "m.room.message" {
                 if $0.content.relationship?.type != .replace {
-                    if let message = createMessage(roomEvent: $0) {
+                    if let message = createMessage(roomEvent: $0, in: room) {
                         messages.append(message)
                     }
                 } else {
                     createEdit(roomEvent: $0)
                 }
             } else if $0.type == "m.reaction" {
-                createReaction(roomEvent: $0)
+                createReaction(roomEvent: $0, in: room)
             } else if $0.type == "m.room.redaction" {
-                createRedaction(roomEvent: $0)
+                createRedaction(roomEvent: $0, in: room)
             } else if includeState {
                 processStateEvent($0, in: room)
             }
@@ -269,11 +277,10 @@ class DataController {
         } else if event.type == "m.room.member" {
             if let userID = event.stateKey, let membership = event.content.membership {
                 if membership == .join {
-                    let user = self.user(id: userID) ?? createUser(id: userID)
+                    let user = self.user(id: userID, in: room) ?? createUser(id: userID, in: room)
                     updateUser(user, from: event)
-                    room.addToMembers(user)             // this can be called even if the relationship already exists
                 } else {
-                    if let user = self.user(id: userID) {
+                    if let user = self.user(id: userID, in: room) {
                         room.removeFromMembers(user)    // this can be called even if the user isn't a member
                     }
                 }
@@ -298,9 +305,12 @@ class DataController {
     }
     
     /// Fetch the user with the matching ID from the data store.
-    func user(id: String) -> User? {
+    func user(id: String, in room: Room) -> User? {
         let request: NSFetchRequest<User> = User.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id)
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
+            NSPredicate(format: "id == %@", id),
+            NSPredicate(format: "room == %@", room)
+        ])
         return try? viewContext.fetch(request).first
     }
 }

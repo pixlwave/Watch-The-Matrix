@@ -43,7 +43,7 @@ class EventProcessingTests: BaseTestCase {
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 2, "There should be 2 messages.")
         
         let fetchedRoom = dataController.room(id: "!room:example.org")!
-        let fetchedUser = dataController.user(id: "@test:example.org")!
+        let fetchedUser = dataController.user(id: "@test:example.org", in: fetchedRoom)!
         
         XCTAssertEqual(dataController.count(for: fetchedRoom.messagesRequest), 2, "There should be 2 messages in the room.")
         XCTAssertEqual(fetchedRoom.members?.count, 1)

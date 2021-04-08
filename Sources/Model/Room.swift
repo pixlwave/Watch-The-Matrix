@@ -35,7 +35,7 @@ extension Room {
     /// The number of members in the room.
     var memberCount: Int {
         let request: NSFetchRequest<User> = User.fetchRequest()
-        request.predicate = NSPredicate(format: "ANY rooms == %@", self)
+        request.predicate = NSPredicate(format: "room == %@", self)
         return (try? managedObjectContext?.count(for: request)) ?? 0
     }
     
@@ -44,7 +44,7 @@ extension Room {
         // create a request for up to 5 users excluding the current user
         let request: NSFetchRequest<User> = User.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
-            NSPredicate(format: "ANY rooms == %@", self),
+            NSPredicate(format: "room == %@", self),
             NSPredicate(format: "id != %@", userID ?? "")
         ])
         request.fetchLimit = 5

@@ -44,7 +44,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
         <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="rooms" inverseEntity="User"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="room" inverseEntity="User"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="room" inverseEntity="Message"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -62,10 +62,11 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message"/>
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="sender" inverseEntity="Reaction"/>
         <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Redaction" inverseName="sender" inverseEntity="Redaction"/>
-        <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="members" inverseEntity="Room"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="members" inverseEntity="Room"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
+                <constraint value="room"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

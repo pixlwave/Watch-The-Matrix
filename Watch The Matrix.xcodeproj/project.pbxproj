@@ -19,6 +19,7 @@
 		A564A4CE260B588B00895426 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4CD260B588B00895426 /* TestData.swift */; };
 		A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */; };
 		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
+		A58B95E0261F918100A3E8F5 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58B95DF261F918100A3E8F5 /* UserTests.swift */; };
 		A59A0C4C25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */; };
 		A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -121,6 +122,7 @@
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		A564A4CD260B588B00895426 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
+		A58B95DF261F918100A3E8F5 /* UserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				A59BB50E2618C13E00A91D68 /* Fixtures */,
 				A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */,
 				A59BB4F12618B1D400A91D68 /* RoomTests.swift */,
+				A58B95DF261F918100A3E8F5 /* UserTests.swift */,
 				A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */,
 				A59BB4B32618AFE600A91D68 /* Info.plist */,
 			);
@@ -575,6 +578,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58B95E0261F918100A3E8F5 /* UserTests.swift in Sources */,
 				A59BB4F22618B1D400A91D68 /* RoomTests.swift in Sources */,
 				A59BB4B22618AFE600A91D68 /* BaseTestCase.swift in Sources */,
 				A59BB4F92618B22F00A91D68 /* EventProcessingTests.swift in Sources */,
