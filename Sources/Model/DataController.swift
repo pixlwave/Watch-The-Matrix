@@ -16,13 +16,8 @@ class DataController {
     /// - Parameter inMemory: A boolean indicating whether or not to store the database in memory.
     ///                       If this value is false the database will be stored to disk at it's default location.
     init(inMemory: Bool = false) {
-        guard
-            let modelURL = Bundle.main.url(forResource: "Matrix", withExtension: "momd"),
-            let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
-        else { fatalError("Unable to find Core Data Model") }
-        
         // create the persistent container and set the merge policy to allow for external property updates
-        container = NSPersistentContainer(name: "Matrix", managedObjectModel: managedObjectModel)
+        container = NSPersistentContainer(name: "Matrix", managedObjectModel: Self.model)
         #warning("This works for properties, but may not be suitable for relationships.")
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
@@ -42,6 +37,16 @@ class DataController {
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
     }
+    
+    /// A cached copy of the core data model, preventing any class conflicts between multiple data controllers.
+    static let model: NSManagedObjectModel = {
+        guard
+            let modelURL = Bundle.main.url(forResource: "Matrix", withExtension: "momd"),
+            let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
+        else { fatalError("Unable to find Core Data Model") }
+        
+        return managedObjectModel
+    }()
     
     /// Returns the count of items that would be returned by a fetch request.
     /// - Parameter request: The fetch request to be counted.
