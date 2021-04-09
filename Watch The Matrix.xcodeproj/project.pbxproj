@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A510767C26207890006362C0 /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A510767B26207890006362C0 /* DataControllerTests.swift */; };
 		A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
@@ -108,6 +109,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A510767B26207890006362C0 /* DataControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataControllerTests.swift; sourceTree = "<group>"; };
 		A515EAC12610D28C00D27C86 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncState.swift; sourceTree = "<group>"; };
 		A52BA37225DEC59800BBCCFC /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			children = (
 				A59BB50E2618C13E00A91D68 /* Fixtures */,
 				A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */,
+				A510767B26207890006362C0 /* DataControllerTests.swift */,
 				A59BB4F12618B1D400A91D68 /* RoomTests.swift */,
 				A58B95DF261F918100A3E8F5 /* UserTests.swift */,
 				A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */,
@@ -579,6 +582,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A58B95E0261F918100A3E8F5 /* UserTests.swift in Sources */,
+				A510767C26207890006362C0 /* DataControllerTests.swift in Sources */,
 				A59BB4F22618B1D400A91D68 /* RoomTests.swift in Sources */,
 				A59BB4B22618AFE600A91D68 /* BaseTestCase.swift in Sources */,
 				A59BB4F92618B22F00A91D68 /* EventProcessingTests.swift in Sources */,

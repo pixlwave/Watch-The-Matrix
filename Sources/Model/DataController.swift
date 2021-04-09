@@ -70,6 +70,11 @@ class DataController {
         try? container.viewContext.save()
     }
     
+    /// Deletes the specified room along with all of it's members and message contents.
+    func delete(_ room: Room) {
+        viewContext.delete(room)
+    }
+    
     /// Execute a batch delete request for all of objects of the specified type.
     /// - Parameter entity: The type of `NSManagedObject` to delete.
     ///
