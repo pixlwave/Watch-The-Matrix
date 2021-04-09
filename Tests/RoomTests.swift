@@ -68,6 +68,50 @@ class RoomTests: BaseTestCase {
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 8")
     }
     
+    func testMemberCount() throws {
+        // given the sample data set
+        try dataController.createSampleData()
+        
+        let firstRoom = dataController.room(id: "!test0:example.org")!
+        XCTAssertEqual(firstRoom.memberCount, 10, "There should be 10 users in the first room")
+        
+        // when adding one new member to the first room and another to the last room
+        _ = dataController.createUser(id: "@userA:example.org", in: firstRoom)
+        
+        let secondRoom = dataController.room(id: "!test1:example.org")!
+        _ = dataController.createUser(id: "@userB:example.org", in: secondRoom)
+        
+        // then there should be an additional member counted in the room
+        XCTAssertEqual(firstRoom.memberCount, 11, "There should be 11 users in the first room.")
+    }
+    
+    func testGenerateRoomName() {
+        // given an un-named room with 4 members
+        let room = Room(context: dataController.viewContext)
+        room.id = "!test:example.org"
+        
+        let userA = dataController.createUser(id: "@userA:example.org", in: room)
+        userA.displayName = "Apple"
+        
+        let userB = dataController.createUser(id: "@userB:example.org", in: room)
+        userB.displayName = "Banana"
+        
+        let userC = dataController.createUser(id: "@userC:example.org", in: room)
+        userC.displayName = "Coconut"
+        
+        let userD = dataController.createUser(id: "@userD:example.org", in: room)
+        userD.displayName = "Durian"
+        
+        dataController.save()
+        
+        // when the current user is the last of these users
+        let userID = userD.id
+        
+        // then the room name should contain the names of the first 3 users
+        // the exact format of this will change with system's region and language
+        XCTAssertEqual(room.generateName(for: userID), "Apple, Banana, and Coconut")
+    }
+    
     func testDeletingRoomCascadeDeletesRoomData() throws {
         // given the sample data set
         try dataController.createSampleData()

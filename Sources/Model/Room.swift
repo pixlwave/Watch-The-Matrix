@@ -47,6 +47,7 @@ extension Room {
             NSPredicate(format: "room == %@", self),
             NSPredicate(format: "id != %@", userID ?? "")
         ])
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \User.displayName, ascending: true)]
         request.fetchLimit = 5
         
         // fetch the names of the members
