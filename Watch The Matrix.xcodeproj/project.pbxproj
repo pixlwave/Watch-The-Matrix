@@ -233,7 +233,6 @@
 				A59A0C6825DD6AC300B5EDAA /* Preview Content */,
 				A59A0C4F25DD6AC000B5EDAA /* Watch App */,
 				A59BB4B02618AFE600A91D68 /* Tests */,
-				A59BB49D2618AFC600A91D68 /* TestingHost */,
 				A59A0C4825DD6AC000B5EDAA /* Products */,
 				A59A0C7D25DD6ACE00B5EDAA /* Matrix */,
 			);
@@ -293,6 +292,7 @@
 		A59BB4B02618AFE600A91D68 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A59BB49D2618AFC600A91D68 /* TestingHost */,
 				A59BB50E2618C13E00A91D68 /* Fixtures */,
 				A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */,
 				A510767B26207890006362C0 /* DataControllerTests.swift */,
@@ -866,13 +866,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = TestingHost/Info.plist;
+				INFOPLIST_FILE = Tests/TestingHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.TestingHost;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.TestingHost";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -887,13 +887,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = TestingHost/Info.plist;
+				INFOPLIST_FILE = Tests/TestingHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uk.pixlwave.TestingHost;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.TestingHost";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
