@@ -9,11 +9,11 @@ extension DataController {
             room.id = "!test\(i):example.org"
             room.name = "Room \(i)"
             
-            var users = [User]()
+            var users = [Member]()
             
             // add 10 users to each room
             for j in 0..<10 {
-                let user = createUser(id: "@user\(j):example.org", in: room)
+                let user = createMember(id: "@user\(j):example.org", in: room)
                 user.displayName = "User \(j)"
                 users.append(user)
             }
@@ -72,8 +72,8 @@ extension DataController {
         print("Room: \(count(for: Room.fetchRequest()))")
         print((try? viewContext.fetch(Room.fetchRequest())) ?? [])
         
-        print("Users: \(count(for: User.fetchRequest()))")
-        print((try? viewContext.fetch(User.fetchRequest())) ?? [])
+        print("Users: \(count(for: Member.fetchRequest()))")
+        print((try? viewContext.fetch(Member.fetchRequest())) ?? [])
         
         print("Messages: \(count(for: Message.fetchRequest()))")
         print((try? viewContext.fetch(Message.fetchRequest())) ?? [])

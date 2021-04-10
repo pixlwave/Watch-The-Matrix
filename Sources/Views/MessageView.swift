@@ -5,7 +5,7 @@ import Matrix
 /// any reactions and an indication of whether the message has been edited.
 struct MessageView: View {
     @ObservedObject var message: Message
-    @ObservedObject private var sender: User    // observe the sender for updates to their display name
+    @ObservedObject private var sender: Member    // observe the sender for updates to their display name
     
     let showSender: Bool
     

@@ -18,7 +18,7 @@ class EventProcessingTests: BaseTestCase {
         
         // then there should be one room, one user and one message created
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
-        XCTAssertEqual(dataController.count(for: User.fetchRequest()), 1, "There should be 1 user.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 user.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1, "There should be 1 message.")
     }
     
@@ -39,7 +39,7 @@ class EventProcessingTests: BaseTestCase {
         
         // then the only change should be one additional message in the data store
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
-        XCTAssertEqual(dataController.count(for: User.fetchRequest()), 1, "There should be 1 user.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 user.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 2, "There should be 2 messages.")
         
         let fetchedRoom = dataController.room(id: "!room:example.org")!

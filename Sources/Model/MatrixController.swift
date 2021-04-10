@@ -225,7 +225,7 @@ class MatrixController: ObservableObject {
                 //
             } receiveValue: { response in
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                                              .compactMap { self.dataController.createUser(event: $0, in: room) }
+                                              .compactMap { self.dataController.createMember(event: $0, in: room) }
                 
                 room.members = NSSet(array: members)
                 self.dataController.save()

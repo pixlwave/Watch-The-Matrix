@@ -13,7 +13,7 @@ class RoomTests: BaseTestCase {
         let message = dataController.createMessage(id: "new_message")
         message.body = "Hello, World!"
         message.date = Date()
-        message.sender = (room.members as? Set<User>)?.first
+        message.sender = (room.members as? Set<Member>)?.first
         message.room = room
         dataController.save()
         
@@ -25,7 +25,7 @@ class RoomTests: BaseTestCase {
         redaction.id = "redact_hello"
         redaction.date = Date()
         redaction.message = message
-        redaction.sender = (room.members as? Set<User>)?.first
+        redaction.sender = (room.members as? Set<Member>)?.first
         
         // then the last message should revert back to the sample data set
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 9")
@@ -42,7 +42,7 @@ class RoomTests: BaseTestCase {
         let oldMessage = dataController.createMessage(id: "old_message")
         oldMessage.body = "Can you see this?"
         oldMessage.date = Date(timeIntervalSinceNow: -60 * 60)
-        oldMessage.sender = (room.members as? Set<User>)?.first
+        oldMessage.sender = (room.members as? Set<Member>)?.first
         oldMessage.room = room
         dataController.save()
         
@@ -62,7 +62,7 @@ class RoomTests: BaseTestCase {
         redaction.id = "redact_hello"
         redaction.date = Date()
         redaction.message = room.lastMessage
-        redaction.sender = (room.members as? Set<User>)?.first
+        redaction.sender = (room.members as? Set<Member>)?.first
         
         // then the redacted message shouldn't be returned as the last message
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 8")
@@ -76,10 +76,10 @@ class RoomTests: BaseTestCase {
         XCTAssertEqual(firstRoom.memberCount, 10, "There should be 10 users in the first room")
         
         // when adding one new member to the first room and another to the last room
-        _ = dataController.createUser(id: "@userA:example.org", in: firstRoom)
+        _ = dataController.createMember(id: "@userA:example.org", in: firstRoom)
         
         let secondRoom = dataController.room(id: "!test1:example.org")!
-        _ = dataController.createUser(id: "@userB:example.org", in: secondRoom)
+        _ = dataController.createMember(id: "@userB:example.org", in: secondRoom)
         
         // then there should be an additional member counted in the room
         XCTAssertEqual(firstRoom.memberCount, 11, "There should be 11 users in the first room.")
@@ -90,16 +90,16 @@ class RoomTests: BaseTestCase {
         let room = Room(context: dataController.viewContext)
         room.id = "!test:example.org"
         
-        let userA = dataController.createUser(id: "@userA:example.org", in: room)
+        let userA = dataController.createMember(id: "@userA:example.org", in: room)
         userA.displayName = "Apple"
         
-        let userB = dataController.createUser(id: "@userB:example.org", in: room)
+        let userB = dataController.createMember(id: "@userB:example.org", in: room)
         userB.displayName = "Banana"
         
-        let userC = dataController.createUser(id: "@userC:example.org", in: room)
+        let userC = dataController.createMember(id: "@userC:example.org", in: room)
         userC.displayName = "Coconut"
         
-        let userD = dataController.createUser(id: "@userD:example.org", in: room)
+        let userD = dataController.createMember(id: "@userD:example.org", in: room)
         userD.displayName = "Durian"
         
         dataController.save()
@@ -123,7 +123,7 @@ class RoomTests: BaseTestCase {
         
         // then the room along with all of it's members, messages, reactions, edits and redactions should no longer exist
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 4, "There should be 4 rooms in the store.")
-        XCTAssertEqual(dataController.count(for: User.fetchRequest()), 40, "There should be 40 users for the remaining rooms.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 40, "There should be 40 users for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 800, "There should be 800 messages for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 8, "There should be 8 reactions for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Edit.fetchRequest()), 4, "There should be 4 edits for the remaining rooms.")
@@ -137,8 +137,8 @@ class RoomTests: BaseTestCase {
         roomA.id = "!testA:example.org"
         roomB.id = "!testB:example.org"
         
-        let userA = dataController.createUser(id: "@userA:example.org", in: roomA)
-        let userB = dataController.createUser(id: "@userB:example.org", in: roomB)
+        let userA = dataController.createMember(id: "@userA:example.org", in: roomA)
+        let userB = dataController.createMember(id: "@userB:example.org", in: roomB)
         
         for i in 0..<20 {
             let messageA = dataController.createMessage(id: "mA\(i)")

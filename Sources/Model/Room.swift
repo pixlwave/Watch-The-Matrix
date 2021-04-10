@@ -34,7 +34,7 @@ extension Room {
     
     /// The number of members in the room.
     var memberCount: Int {
-        let request: NSFetchRequest<User> = User.fetchRequest()
+        let request: NSFetchRequest<Member> = Member.fetchRequest()
         request.predicate = NSPredicate(format: "room == %@", self)
         return (try? managedObjectContext?.count(for: request)) ?? 0
     }
@@ -42,12 +42,12 @@ extension Room {
     /// Generate a name from the members in this room ignoring the user passed in.
     func generateName(for userID: String?) -> String {
         // create a request for up to 5 users excluding the current user
-        let request: NSFetchRequest<User> = User.fetchRequest()
+        let request: NSFetchRequest<Member> = Member.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "room == %@", self),
             NSPredicate(format: "id != %@", userID ?? "")
         ])
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \User.displayName, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Member.displayName, ascending: true)]
         request.fetchLimit = 5
         
         // fetch the names of the members

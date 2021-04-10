@@ -1,6 +1,6 @@
 import Matrix
 import CoreData
 
-extension User {
+extension Member {
     //
 }

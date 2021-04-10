@@ -12,7 +12,7 @@
 		A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
-		A54E5CDB25F5342700D43CDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* User.swift */; };
+		A54E5CDB25F5342700D43CDE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* Member.swift */; };
 		A54E5CDC25F5342700D43CDE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCE25F5331900D43CDE /* Message.swift */; };
 		A54E5CDD25F5342700D43CDE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
 		A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* MatrixController.swift */; };
@@ -42,7 +42,7 @@
 		A59BB4DD2618B14E00A91D68 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
 		A59BB4DE2618B14E00A91D68 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
 		A59BB4DF2618B14E00A91D68 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
-		A59BB4E02618B14E00A91D68 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* User.swift */; };
+		A59BB4E02618B14E00A91D68 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* Member.swift */; };
 		A59BB4E12618B14E00A91D68 /* MatrixController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* MatrixController.swift */; };
 		A59BB4E22618B14E00A91D68 /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
 		A59BB4E32618B14E00A91D68 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
@@ -122,7 +122,7 @@
 		A54E5CCD25F5331900D43CDE /* MatrixController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixController.swift; sourceTree = "<group>"; };
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		A54E5CD025F5331900D43CDE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		A564A4CD260B588B00895426 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 				A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */,
 				A54E5CCD25F5331900D43CDE /* MatrixController.swift */,
 				A54E5CCF25F5331900D43CDE /* Room.swift */,
-				A54E5CD025F5331900D43CDE /* User.swift */,
+				A54E5CD025F5331900D43CDE /* Member.swift */,
 				A54E5CCE25F5331900D43CDE /* Message.swift */,
 				A5E9E87225F673C00054D1A2 /* Reaction.swift */,
 				A5A30C0B260BA53700861601 /* Edit.swift */,
@@ -557,7 +557,7 @@
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
 				A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
-				A54E5CDB25F5342700D43CDE /* User.swift in Sources */,
+				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +567,7 @@
 			files = (
 				A59BB49F2618AFC600A91D68 /* TestingHostApp.swift in Sources */,
 				A59BB4DD2618B14E00A91D68 /* DataController.swift in Sources */,
-				A59BB4E02618B14E00A91D68 /* User.swift in Sources */,
+				A59BB4E02618B14E00A91D68 /* Member.swift in Sources */,
 				A59BB4E42618B14E00A91D68 /* TestData.swift in Sources */,
 				A59BB4E22618B14E00A91D68 /* Redaction.swift in Sources */,
 				A59BB4DE2618B14E00A91D68 /* Reaction.swift in Sources */,
