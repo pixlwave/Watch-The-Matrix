@@ -89,7 +89,7 @@ struct RoomCell: View {
                 if room.unreadCount > 0 {
                     Image(systemName: "circlebadge.fill")
                         .imageScale(.small)
-                        .foregroundColor(.purple)
+                        .foregroundColor(.accentColor)
                 }
                 
                 Text(room.name ?? room.generateName(for: matrix.userID))

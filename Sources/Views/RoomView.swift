@@ -35,7 +35,7 @@ struct RoomView: View {
                     // hide the message if it has been redacted
                     if !message.isRedacted {
                         MessageView(message: message, showSender: showSenders)
-                            .listRowPlatterColor(message.sender?.id == matrix.userID ? .purple : Color(.darkGray))
+                            .listRowPlatterColor(message.sender?.id == matrix.userID ? .accentColor : Color(.darkGray))
                             .onLongPressGesture { messageToReactTo = message }
                     } else {
                         Label("Deleted", systemImage: "trash")
@@ -108,7 +108,7 @@ struct RoomView_Previews: PreviewProvider {
                     .foregroundColor(Color.primary.opacity(0.667))
 //                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .listRowPlatterColor(.purple)
+            .listRowPlatterColor(.accentColor)
         }
     }
 }
