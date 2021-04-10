@@ -167,28 +167,8 @@ class MatrixController: ObservableObject {
                     self.state = .syncError(error: error)
                 }
             } receiveValue: { response in
-                let joinedRooms = response.rooms.joined
-                joinedRooms.keys.forEach { key in
-                    let joinedRoom = joinedRooms[key]!
-                    
-                    if let room = self.dataController.room(id: key) {
-                        #warning("Deleting old messages needs testing.")
-                        // delete existing messages when the timeline is limited and reset the pagination token
-                        if joinedRoom.timeline.isLimited {
-                            room.deleteAllMessages()
-                            room.previousBatch = joinedRoom.timeline.previousBatch
-                        }
-                        
-                        joinedRoom.state.events.forEach { self.dataController.processStateEvent($0, in: room) }
-                        self.dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
-                        room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
-                    } else {
-                        let room = self.dataController.createRoom(id: key, joinedRoom: joinedRoom)
-                        self.getName(of: room)
-                        self.loadMoreMessages(in: room)
-                        room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
-                    }
-                }
+                self.process(response.rooms.joined)
+                self.process(response.rooms.left)
                 
                 self.dataController.save()
                 
@@ -196,6 +176,40 @@ class MatrixController: ObservableObject {
                 self.syncState.nextBatch = response.nextBatch
                 self.sync()
             }
+    }
+    
+    /// Process the joined rooms from a sync response, creating new `Room` instances and updating
+    /// any existing instances as appropriate.
+    private func process(_ joinedRooms: [String: JoinedRoom]) {
+        joinedRooms.keys.forEach { roomID in
+            let joinedRoom = joinedRooms[roomID]!
+            
+            if let room = dataController.room(id: roomID) {
+                // delete existing messages when the timeline is limited and reset the pagination token
+                if joinedRoom.timeline.isLimited {
+                    room.deleteAllMessages()
+                    room.previousBatch = joinedRoom.timeline.previousBatch
+                }
+                
+                joinedRoom.state.events.forEach { dataController.processStateEvent($0, in: room) }
+                dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
+                room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
+            } else {
+                let room = dataController.createRoom(id: roomID, joinedRoom: joinedRoom)
+                getName(of: room)
+                loadMoreMessages(in: room)
+                room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
+            }
+        }
+    }
+    
+    /// Process the left rooms from a sync response, deleting `Room` instances to match.
+    private func process(_ leftRooms: [String: LeftRoom]) {
+        leftRooms.keys.forEach { roomID in
+            if let room = dataController.room(id: roomID) {
+                dataController.delete(room)
+            }
+        }
     }
     
     /// Requests the name of the room object passed in and updates it when a response is received.
