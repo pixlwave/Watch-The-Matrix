@@ -6,8 +6,8 @@ struct RootView: View {
     @EnvironmentObject var matrix: MatrixController
     
     // sheets and alerts
-    @State var isPresentingSignOutAlert = false
-    @State var syncError: MatrixError? = nil
+    @State private var isPresentingSignOutAlert = false
+    @State private var syncError: MatrixError? = nil
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(entity: Room.entity(),
@@ -105,7 +105,13 @@ struct RoomCell: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
+    
     static var previews: some View {
-        RootView()
+        NavigationView {
+            RootView()
+                .environmentObject(matrix)
+                .environment(\.managedObjectContext, matrix.dataController.viewContext)
+        }
     }
 }

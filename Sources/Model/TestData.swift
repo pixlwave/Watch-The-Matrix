@@ -1,5 +1,21 @@
 import CoreData
 
+extension MatrixController {
+    /// An instance of MatrixController with sample data ready for previews.
+    static var preview: MatrixController {
+        let matrix = MatrixController(inMemory: true)
+        
+        do {
+            try matrix.dataController.createSampleData()
+        } catch {
+            fatalError("Error creating preview data: \(error)")
+        }
+        
+        return matrix
+    }
+}
+
+
 extension DataController {
     /// Create example rooms, members and messages for development and testing purposes
     func createSampleData() throws {
@@ -8,6 +24,7 @@ extension DataController {
             let room = Room(context: viewContext)
             room.id = "!test\(i):example.org"
             room.name = "Room \(i)"
+            room.unreadCount = i > 2 ? 1 : 0
             
             var members = [Member]()
             

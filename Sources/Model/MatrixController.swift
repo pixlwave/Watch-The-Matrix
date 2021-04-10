@@ -21,18 +21,22 @@ class MatrixController: ObservableObject {
     private var syncState: SyncState
     
     /// The data controller used to format and persist synced data.
-    let dataController = DataController()
+    let dataController: DataController
     
     /// The keychain used to save and load user credentials from.
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
     /// Initialises the controller and starts communication with the homeserver if user credentials are found.
-    init() {
-        syncState = dataController.syncState()      // get the sync state from the data store
+    /// - Parameter inMemory: Whether to keep the data store in memory or persist it to disk.
+    init(inMemory: Bool = false) {
+        dataController = DataController(inMemory: inMemory)
         
+        // get the sync state from the data store and load any saved credentials
+        syncState = dataController.syncState()
         loadCredentials()
         
-        resumeSync()                                // resumes syncing if an access token was loaded
+        // resumes syncing if an access token was loaded
+        resumeSync()
     }
     
     /// Loads the user's access token, ID, device ID and homeserver information from the keychain

@@ -34,3 +34,12 @@ struct LoginView: View {
         matrix.login(username: username, password: password)
     }
 }
+
+struct LoginView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
+    
+    static var previews: some View {
+        LoginView()
+            .environmentObject(matrix)
+    }
+}

@@ -63,3 +63,13 @@ struct MessageView: View {
         .accessibilityElement(children: .combine)
     }
 }
+
+struct MessageView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
+    
+    static var previews: some View {
+        List {
+            MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!, showSender: true)
+        }
+    }
+}
