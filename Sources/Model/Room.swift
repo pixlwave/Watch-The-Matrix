@@ -41,7 +41,7 @@ extension Room {
     
     /// Generate a name from the members in this room ignoring the user passed in.
     func generateName(for userID: String?) -> String {
-        // create a request for up to 5 users excluding the current user
+        // create a request for up to 5 members excluding the specified user
         let request: NSFetchRequest<Member> = Member.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "room == %@", self),

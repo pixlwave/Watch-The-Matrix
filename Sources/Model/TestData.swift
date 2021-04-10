@@ -1,7 +1,7 @@
 import CoreData
 
 extension DataController {
-    /// Create example rooms, users and messages for development and testing purposes
+    /// Create example rooms, members and messages for development and testing purposes
     func createSampleData() throws {
         for i in 0..<5 {
             // create 5 rooms
@@ -9,23 +9,23 @@ extension DataController {
             room.id = "!test\(i):example.org"
             room.name = "Room \(i)"
             
-            var users = [Member]()
+            var members = [Member]()
             
-            // add 10 users to each room
+            // add 10 members to each room
             for j in 0..<10 {
-                let user = createMember(id: "@user\(j):example.org", in: room)
-                user.displayName = "User \(j)"
-                users.append(user)
+                let member = createMember(id: "@user\(j):example.org", in: room)
+                member.displayName = "User \(j)"
+                members.append(member)
             }
             
-            // add 20 messages to each room sent one by one from each user
+            // add 20 messages to each room sent one by one from each member
             for j in 0..<20 {
-                for k in 0..<users.count {
-                    let user = users[k]
+                for k in 0..<members.count {
+                    let sender = members[k]
                     let message = createMessage(id: "\(i)\(j)\(k)-\(room.id!)")
-                    message.body = "Hello \(room.name ?? "Room") from \(user.displayName ?? user.id!)"
+                    message.body = "Hello \(room.name ?? "Room") from \(sender.displayName ?? sender.id!)"
                     message.date = Date()
-                    message.sender = user
+                    message.sender = sender
                     message.room = room
                 }
                 
@@ -35,20 +35,20 @@ extension DataController {
                     reaction.id = "r\(i)\(j)-\(room.id!)"
                     reaction.key = "👍"
                     reaction.date = Date()
-                    reaction.sender = users.first
+                    reaction.sender = members.first
                     reaction.message = room.lastMessage
                 }
                 
-                // redact the 18th message from the 10th user
+                // redact the 18th message from the 10th member
                 if j == 17 {
                     let redaction = Redaction(context: viewContext)
                     redaction.id = "redact\(i)\(j)-\(room.id!)"
                     redaction.date = Date()
-                    redaction.sender = users.last
+                    redaction.sender = members.last
                     redaction.message = room.lastMessage
                 }
                 
-                // edit the 19th message from the 10th user
+                // edit the 19th message from the 10th member
                 if j == 18 {
                     let edit = Edit(context: viewContext)
                     edit.id = "ed\(i)\(j)-\(room.id!)"
@@ -72,7 +72,7 @@ extension DataController {
         print("Room: \(count(for: Room.fetchRequest()))")
         print((try? viewContext.fetch(Room.fetchRequest())) ?? [])
         
-        print("Users: \(count(for: Member.fetchRequest()))")
+        print("Members: \(count(for: Member.fetchRequest()))")
         print((try? viewContext.fetch(Member.fetchRequest())) ?? [])
         
         print("Messages: \(count(for: Message.fetchRequest()))")

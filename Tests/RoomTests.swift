@@ -73,16 +73,16 @@ class RoomTests: BaseTestCase {
         try dataController.createSampleData()
         
         let firstRoom = dataController.room(id: "!test0:example.org")!
-        XCTAssertEqual(firstRoom.memberCount, 10, "There should be 10 users in the first room")
+        XCTAssertEqual(firstRoom.memberCount, 10, "The first room should have 10 members.")
         
         // when adding one new member to the first room and another to the last room
-        _ = dataController.createMember(id: "@userA:example.org", in: firstRoom)
+        _ = dataController.createMember(id: "@a:example.org", in: firstRoom)
         
         let secondRoom = dataController.room(id: "!test1:example.org")!
-        _ = dataController.createMember(id: "@userB:example.org", in: secondRoom)
+        _ = dataController.createMember(id: "@b:example.org", in: secondRoom)
         
         // then there should be an additional member counted in the room
-        XCTAssertEqual(firstRoom.memberCount, 11, "There should be 11 users in the first room.")
+        XCTAssertEqual(firstRoom.memberCount, 11, "The first room should have 11 members.")
     }
     
     func testGenerateRoomName() {
@@ -90,24 +90,24 @@ class RoomTests: BaseTestCase {
         let room = Room(context: dataController.viewContext)
         room.id = "!test:example.org"
         
-        let userA = dataController.createMember(id: "@userA:example.org", in: room)
-        userA.displayName = "Apple"
+        let memberA = dataController.createMember(id: "@a:example.org", in: room)
+        memberA.displayName = "Apple"
         
-        let userB = dataController.createMember(id: "@userB:example.org", in: room)
-        userB.displayName = "Banana"
+        let memberB = dataController.createMember(id: "@b:example.org", in: room)
+        memberB.displayName = "Banana"
         
-        let userC = dataController.createMember(id: "@userC:example.org", in: room)
-        userC.displayName = "Coconut"
+        let memberC = dataController.createMember(id: "@c:example.org", in: room)
+        memberC.displayName = "Coconut"
         
-        let userD = dataController.createMember(id: "@userD:example.org", in: room)
-        userD.displayName = "Durian"
+        let memberD = dataController.createMember(id: "@d:example.org", in: room)
+        memberD.displayName = "Durian"
         
         dataController.save()
         
-        // when the current user is the last of these users
-        let userID = userD.id
+        // when the current user is the last of these members
+        let userID = memberD.id
         
-        // then the room name should contain the names of the first 3 users
+        // then the room name should contain the names of the first 3 members
         // the exact format of this will change with system's region and language
         XCTAssertEqual(room.generateName(for: userID), "Apple, Banana, and Coconut")
     }
@@ -123,7 +123,7 @@ class RoomTests: BaseTestCase {
         
         // then the room along with all of it's members, messages, reactions, edits and redactions should no longer exist
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 4, "There should be 4 rooms in the store.")
-        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 40, "There should be 40 users for the remaining rooms.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 40, "There should be 40 members for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 800, "There should be 800 messages for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 8, "There should be 8 reactions for the remaining rooms.")
         XCTAssertEqual(dataController.count(for: Edit.fetchRequest()), 4, "There should be 4 edits for the remaining rooms.")
@@ -131,24 +131,24 @@ class RoomTests: BaseTestCase {
     }
     
     func testDeleteAllMessages() {
-        // given 2 rooms each with 1 user and 20 messages
+        // given 2 rooms each with 1 member and 20 messages
         let roomA = Room(context: dataController.viewContext)
         let roomB = Room(context: dataController.viewContext)
         roomA.id = "!testA:example.org"
         roomB.id = "!testB:example.org"
         
-        let userA = dataController.createMember(id: "@userA:example.org", in: roomA)
-        let userB = dataController.createMember(id: "@userB:example.org", in: roomB)
+        let memberA = dataController.createMember(id: "@a:example.org", in: roomA)
+        let memberB = dataController.createMember(id: "@b:example.org", in: roomB)
         
         for i in 0..<20 {
             let messageA = dataController.createMessage(id: "mA\(i)")
             messageA.body = "Message \(i)"
-            messageA.sender = userA
+            messageA.sender = memberA
             messageA.room = roomA
             
             let messageB = dataController.createMessage(id: "mB\(i)")
             messageB.body = "Message B \(i)"
-            messageB.sender = userB
+            messageB.sender = memberB
             messageB.room = roomB
         }
         

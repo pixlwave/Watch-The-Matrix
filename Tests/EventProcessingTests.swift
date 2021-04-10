@@ -4,7 +4,7 @@ import Matrix
 
 class EventProcessingTests: BaseTestCase {
     func testProcessNewJoinedRoom() {
-        // given a joined room response with one user and one message
+        // given a joined room response with one member and one message
         let joinedRoom = loadJoinedRoomJSON(named: "NewJoinedRoom")!
         
         let room = Room(context: dataController.viewContext)
@@ -16,20 +16,20 @@ class EventProcessingTests: BaseTestCase {
         
         dataController.save()
         
-        // then there should be one room, one user and one message created
+        // then there should be one room, one member and one message created
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
-        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 user.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 member.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1, "There should be 1 message.")
     }
     
     
     func testProcessNewMessageForExistingRoom() {
-        // given a room with one message and one user
+        // given a room with one message and one member
         testProcessNewJoinedRoom()
         
         let joinedRoom = loadJoinedRoomJSON(named: "SyncMessageJoinedRoom")!
         
-        // when processing a sync response with one new message for the room from the same user
+        // when processing a sync response with one new message for the room from the same member
         let room = dataController.room(id: "!room:example.org")!
         
         joinedRoom.state.events.forEach { dataController.processStateEvent($0, in: room) }
@@ -39,16 +39,16 @@ class EventProcessingTests: BaseTestCase {
         
         // then the only change should be one additional message in the data store
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
-        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 user.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 member.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 2, "There should be 2 messages.")
         
         let fetchedRoom = dataController.room(id: "!room:example.org")!
-        let fetchedUser = dataController.user(id: "@test:example.org", in: fetchedRoom)!
+        let fetchedMember = dataController.member(id: "@test:example.org", in: fetchedRoom)!
         
         XCTAssertEqual(dataController.count(for: fetchedRoom.messagesRequest), 2, "There should be 2 messages in the room.")
         XCTAssertEqual(fetchedRoom.members?.count, 1)
         XCTAssertEqual(fetchedRoom.name, "Test Room", "The room's name should be \"Test Room\" and shouldn't have changed.")
-        XCTAssertEqual(fetchedUser.displayName, "Test User", "The user's name should be \"Test User\" and shouldn't have changed.")
+        XCTAssertEqual(fetchedMember.displayName, "Test User", "The member's name should be \"Test User\" and shouldn't have changed.")
     }
     
 }

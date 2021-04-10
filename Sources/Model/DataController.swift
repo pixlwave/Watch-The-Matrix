@@ -139,46 +139,46 @@ class DataController {
         let message = Message(context: viewContext)
         message.body = body
         message.id = roomEvent.eventID
-        message.sender = user(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        message.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
         message.date = roomEvent.date
         
         return message
     }
     
-    /// Creates an empty user with the specified ID that can be updated at a later date
-    /// when their properties are received from the server. The user is created on the view context.
+    /// Creates an empty member with the specified ID that can be updated at a later date
+    /// when their properties are received from the server. The member is created on the view context.
     func createMember(id: String, in room: Room) -> Member {
-        let user = Member(context: viewContext)
-        user.id = id
-        user.room = room
-        return user
+        let member = Member(context: viewContext)
+        member.id = id
+        member.room = room
+        return member
     }
     
-    /// Creates a user from a Matrix `RoomEvent`. If the user already exists
+    /// Creates a member from a Matrix `RoomEvent`. If the member already exists
     /// store's merge policy will overwrite it's properties to match the `RoomEvent`.
     /// - Parameter event: A `RoomEvent` of type `m.room.member`.
-    /// - Parameter room: The room that the user belongs too.
+    /// - Parameter room: The room that the member belongs too.
     /// - Returns: The `Member` object that was just created, or `nil` if the event was invalid.
     ///
-    /// The user is created on the view context.
+    /// The member is created on the view context.
     func createMember(event: RoomEvent, in room: Room) -> Member? {
         guard let userID = event.stateKey else { return nil }
         
-        let user = createMember(id: userID, in: room)
-        updateMember(user, from: event)
+        let member = createMember(id: userID, in: room)
+        updateMember(member, from: event)
         
-        return user
+        return member
     }
     
-    /// Updates an existing user from a Matrix `RoomEvent`.
-    func updateMember(_ user: Member, from event: RoomEvent) {
-        user.displayName = event.content.displayName
+    /// Updates an existing member from a Matrix `RoomEvent`.
+    func updateMember(_ member: Member, from event: RoomEvent) {
+        member.displayName = event.content.displayName
         
         if let urlString = event.content.avatarURL, var components = URLComponents(string: urlString) {
             components.scheme = "https"
-            user.avatarURL = components.url
+            member.avatarURL = components.url
         } else {
-            user.avatarURL = nil
+            member.avatarURL = nil
         }
     }
     
@@ -199,7 +199,7 @@ class DataController {
         reaction.key = key
         reaction.id = roomEvent.eventID
         reaction.message = message(id: messageID) ?? createMessage(id: messageID)
-        reaction.sender = user(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        reaction.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
         reaction.date = roomEvent.date
     }
     
@@ -234,7 +234,7 @@ class DataController {
         let redaction = Redaction(context: viewContext)
         redaction.id = roomEvent.eventID
         redaction.date = roomEvent.date
-        redaction.sender = user(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        redaction.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
         redaction.message = message(id: messageID) ?? createMessage(id: messageID)
     }
     
@@ -282,11 +282,11 @@ class DataController {
         } else if event.type == "m.room.member" {
             if let userID = event.stateKey, let membership = event.content.membership {
                 if membership == .join {
-                    let user = self.user(id: userID, in: room) ?? createMember(id: userID, in: room)
-                    updateMember(user, from: event)
+                    let member = self.member(id: userID, in: room) ?? createMember(id: userID, in: room)
+                    updateMember(member, from: event)
                 } else {
-                    if let user = self.user(id: userID, in: room) {
-                        room.removeFromMembers(user)    // this can be called even if the user isn't a member
+                    if let member = self.member(id: userID, in: room) {
+                        room.removeFromMembers(member)    // this can be called even if the relationship doesn't exist
                     }
                 }
             }
@@ -309,8 +309,8 @@ class DataController {
         return try? viewContext.fetch(request).first
     }
     
-    /// Fetch the user with the matching ID from the data store.
-    func user(id: String, in room: Room) -> Member? {
+    /// Fetch the member with the matching ID from the data store.
+    func member(id: String, in room: Room) -> Member? {
         let request: NSFetchRequest<Member> = Member.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "id == %@", id),

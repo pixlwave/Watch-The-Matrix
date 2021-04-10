@@ -6,7 +6,7 @@ class DataControllerTests: BaseTestCase {
         try dataController.createSampleData()
         
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 5, "There should be 5 rooms in the sample data.")
-        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 50, "There should be 50 users in the sample data.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 50, "There should be 50 members in the sample data.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1000, "There should be 1000 messages in the sample data.")
         XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 10, "There should be 10 reactions in the sample data.")
         XCTAssertEqual(dataController.count(for: Edit.fetchRequest()), 5, "There should be 5 edits in the sample data.")
@@ -20,7 +20,7 @@ class DataControllerTests: BaseTestCase {
         dataController.deleteAll()
         
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 0, "There should no rooms left over.")
-        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 0, "There should be no users left over.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 0, "There should be no members left over.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 0, "There should be no messages left over.")
         XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 0, "There should be no reactions left over.")
         XCTAssertEqual(dataController.count(for: Edit.fetchRequest()), 0, "There should be no edits left over.")
