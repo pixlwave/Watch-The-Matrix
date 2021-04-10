@@ -37,6 +37,7 @@ struct MessageView: View {
                 Text(sender.displayName ?? sender.id ?? "")
                     .font(.footnote)
                     .foregroundColor(Color.primary.opacity(0.667))
+                    .accessibilitySortPriority(1)
             }
             
             if !reactions.isEmpty {
@@ -52,11 +53,13 @@ struct MessageView: View {
                             .padding(.vertical, 2)
                             .padding(.horizontal, 4)
                             .background(Capsule().foregroundColor(.black))
+                            .accessibilityElement(children: .combine);      #warning("This accessibility element isn't surfaced.")
                         }
                     }
                 }
             }
         }
         .id(message.id)     // give the view it's message's id for programatic scrolling
+        .accessibilityElement(children: .combine)
     }
 }
