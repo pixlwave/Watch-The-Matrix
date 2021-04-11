@@ -174,10 +174,15 @@ class MatrixController: ObservableObject {
                 self.process(response.rooms.joined)
                 self.process(response.rooms.left)
                 
+                self.syncState.nextBatch = response.nextBatch
                 self.dataController.save()
                 
-                self.state = .syncing
-                self.syncState.nextBatch = response.nextBatch
+                // updating state causes the entire view hierarchy to be computed
+                // so only change it when required
+                if case .syncing = self.state { } else {
+                    self.state = .syncing
+                }
+                
                 self.sync()
             }
     }

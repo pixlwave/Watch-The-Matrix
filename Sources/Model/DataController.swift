@@ -18,8 +18,6 @@ class DataController {
     init(inMemory: Bool = false) {
         // create the persistent container and set the merge policy to allow for external property updates
         container = NSPersistentContainer(name: "Matrix", managedObjectModel: Self.model)
-        #warning("This works for properties, but may not be suitable for relationships.")
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
@@ -36,6 +34,9 @@ class DataController {
         container.loadPersistentStores { storeDescription, error in
             if let error = error { fatalError("Core Data container error: \(error)") }
         }
+        
+        #warning("This works for properties, but may not be suitable for relationships.")
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     /// A cached copy of the core data model, preventing any class conflicts between multiple data controllers.
