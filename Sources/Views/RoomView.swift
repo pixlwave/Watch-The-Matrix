@@ -7,6 +7,8 @@ struct RoomView: View {
     @EnvironmentObject var matrix: MatrixController
     @ObservedObject var room: Room
     
+    /// A boolean indicating  whether `.onAppear` has been called.
+    @State private var hasAppeared = false
     /// The id of the last message in the room. This is stored to determine whether new messages
     /// have been added to the the room from a sync operation or a back pagination.
     @State private var lastMessageID: String?
@@ -56,12 +58,17 @@ struct RoomView: View {
                 }
                 .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
                 .onAppear {
-                    // update the last message id and display the last message
-                    lastMessageID = messages.last?.id
-                    reader.scrollTo(lastMessageID, anchor: .bottom)
-                    
-                    // mark the last message in the room as read
-                    markRoomAsRead()
+                    if !hasAppeared {
+                        // update the last message id and display the last message
+                        lastMessageID = messages.last?.id
+                        reader.scrollTo(lastMessageID, anchor: .bottom)
+                        
+                        // mark the last message in the room as read
+                        markRoomAsRead()
+                        
+                        // prevent the closure from running after the reaction sheet has been shown
+                        hasAppeared = true
+                    }
                 }
                 .onReceive(messages.publisher) { _ in
                     // if a more recent message has been added, show that message
