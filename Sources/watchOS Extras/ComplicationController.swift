@@ -7,7 +7,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         let descriptors = [
-            CLKComplicationDescriptor(identifier: "complication", displayName: "Watch The Matrix", supportedFamilies: CLKComplicationFamily.allCases)
+            CLKComplicationDescriptor(identifier: "complication", displayName: "Watch The Matrix", supportedFamilies:[
+                .circularSmall,
+                .modularSmall,
+                .utilitarianLarge,
+                .extraLarge
+            ])
             // Multiple complication support can be added here with more descriptors
         ]
         
@@ -34,8 +39,27 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
+        let timelineEntry: CLKComplicationTimelineEntry
+        switch complication.family {
+        case .circularSmall:
+            let template = CLKComplicationTemplateCircularSmallSimpleText(textProvider: CLKTextProvider(format: "[  ]"))
+            timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+        case .modularSmall:
+            let template = CLKComplicationTemplateModularSmallSimpleText(textProvider: CLKTextProvider(format: "[  ]"))
+            timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+        case .utilitarianLarge:
+            let template = CLKComplicationTemplateUtilitarianLargeFlat(textProvider: CLKTextProvider(format: "Watch The Matrix"))
+            timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+        case .extraLarge:
+            let template = CLKComplicationTemplateExtraLargeSimpleText(textProvider: CLKTextProvider(format: "[   ]"))
+            timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+        default:
+            handler(nil)
+            return
+        }
+        
         // Call the handler with the current timeline entry
-        handler(nil)
+        handler(timelineEntry)
     }
     
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
