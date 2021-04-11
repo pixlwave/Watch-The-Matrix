@@ -250,11 +250,11 @@ class MatrixController: ObservableObject {
             })
     }
     
-    /// Loads 10 more events at the start of the specified room.
+    /// Loads 20 more events at the start of the specified room.
     func loadMoreMessages(in room: Room) {
         guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
-        client.loadMessages(in: roomID, from: previousBatch)
+        client.getMessages(in: roomID, from: previousBatch, limit: 20)
             .receive(on: DispatchQueue.main)
             .subscribe(Subscribers.Sink { completion in
                 //
