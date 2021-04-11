@@ -261,7 +261,9 @@ class MatrixController: ObservableObject {
             } receiveValue: { response in
                 guard let events = response.events else { return }
                 
-                self.dataController.process(events: events, in: room, includeState: false)
+                // the events are reversed to prevent a template message being created for a
+                // relationship and then being created again from if it's event is in the response.
+                self.dataController.process(events: events.reversed(), in: room, includeState: false)
                 room.previousBatch = response.endToken
                 
                 self.dataController.save()

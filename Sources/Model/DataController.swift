@@ -132,15 +132,16 @@ class DataController {
     /// - Parameter room: The room that the message belongs to.
     /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
     ///
-    /// The message is created on the view context.
+    /// The message is created on the view context and will be added to the room.
     func createMessage(roomEvent: RoomEvent, in room: Room) -> Message? {
         guard let body = roomEvent.content.body else { return nil }
         
         let message = Message(context: viewContext)
-        message.body = body
         message.id = roomEvent.eventID
-        message.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        message.body = body
         message.date = roomEvent.date
+        message.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        message.room = room
         
         return message
     }
@@ -267,8 +268,6 @@ class DataController {
                 processStateEvent($0, in: room)
             }
         }
-        
-        room.addToMessages(NSSet(array: messages))
     }
     
     /// Processes an event for state in the specified room.
