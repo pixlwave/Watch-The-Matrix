@@ -8,14 +8,16 @@ struct MessageView: View {
     @ObservedObject private var sender: Member    // observe the sender for updates to their display name
     
     let showSender: Bool
+    let bubbleColor: Color
     
-    init?(message: Message, showSender: Bool) {
+    init?(message: Message, showSender: Bool, bubbleColor: Color) {
         #warning("Can this init be made non-optional?")
         guard let sender = message.sender else { return nil }
         
         _message = ObservedObject(wrappedValue: message)
         _sender = ObservedObject(wrappedValue: sender)
         self.showSender = showSender
+        self.bubbleColor = bubbleColor
     }
     
     var body: some View {
@@ -23,21 +25,23 @@ struct MessageView: View {
         let lastEdit = message.lastEdit
         let reactions = message.reactionsViewModel
         
-        VStack(alignment: .leading) {
-            Text(lastEdit?.body ?? message.body ?? "")
-            
-            // show an indication that a message has been edited
-            if lastEdit != nil {
-                Text("Edited")
-                    .font(.footnote)
-            }
-            
+        VStack(alignment: .leading, spacing: 2) {
             if showSender {
                 // show the sender's name or id if requested
                 Text(sender.displayName ?? sender.id ?? "")
                     .font(.footnote)
                     .foregroundColor(Color.primary.opacity(0.667))
-                    .accessibilitySortPriority(1)
+                    .padding(.horizontal, 4)    // match the indentation of the message text
+            }
+            
+            Text(lastEdit?.body ?? message.body ?? "")
+                .padding(4)
+                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(bubbleColor))
+            
+            // show an indication that a message has been edited
+            if lastEdit != nil {
+                Text("Edited")
+                    .font(.footnote)
             }
             
             if !reactions.isEmpty {
@@ -52,11 +56,12 @@ struct MessageView: View {
                             }
                             .padding(.vertical, 2)
                             .padding(.horizontal, 4)
-                            .background(Capsule().foregroundColor(.black))
+                            .background(Capsule().foregroundColor(Color(.darkGray)))
                             .accessibilityElement(children: .combine);      #warning("This accessibility element isn't surfaced.")
                         }
                     }
                 }
+                .padding(.top, 2)
             }
         }
         .id(message.id)     // give the view it's message's id for programatic scrolling
@@ -68,8 +73,8 @@ struct MessageView_Previews: PreviewProvider {
     static let matrix = MatrixController.preview
     
     static var previews: some View {
-        List {
-            MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!, showSender: true)
-        }
+        MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+                    showSender: true,
+                    bubbleColor: .accentColor)
     }
 }

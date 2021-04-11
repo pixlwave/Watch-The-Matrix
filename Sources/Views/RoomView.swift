@@ -24,60 +24,73 @@ struct RoomView: View {
         let showSenders = room.memberCount > 2
         
         ScrollViewReader { reader in
-            List {
-                if room.hasMoreMessages {
-                    Button("Load More…") {
-                        matrix.loadMoreMessages(in: room)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 6) {
+                    if room.hasMoreMessages {
+                        Button("Load More…") {
+                            matrix.loadMoreMessages(in: room)
+                        }
                     }
-                }
-                
-                ForEach(messages) { message in
-                    // hide the message if it has been redacted
-                    if !message.isRedacted {
-                        MessageView(message: message, showSender: showSenders)
-                            .listRowPlatterColor(message.sender?.id == matrix.userID ? .accentColor : Color(.darkGray))
+                    
+                    ForEach(messages.indices, id: \.self) { index in
+                        let message = messages[index]
+                        
+                        // figure out whether the sender's name is the same to avoid duplicate labels
+                        let previousMessage = messages.indices.contains(index - 1) ? messages[index - 1] : nil
+                        let senderHasChanged = previousMessage?.sender != message.sender
+                        
+                        // hide the message if it has been redacted
+                        if !message.isRedacted {
+                            MessageView(message: message,
+                                        showSender: showSenders ? senderHasChanged : false,
+                                        bubbleColor: message.sender?.id == matrix.userID ? .accentColor : Color(.darkGray)
+                            )
                             .onLongPressGesture { messageToReactTo = message }
-                    } else {
-                        Label("Deleted", systemImage: "trash")
-                    }
-                }
-            }
-            .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
-            .onAppear {
-                // update the last message id and display the last message
-                lastMessageID = messages.last?.id
-                reader.scrollTo(lastMessageID, anchor: .bottom)
-                
-                // mark the last message in the room as read
-                markRoomAsRead()
-            }
-            .onReceive(messages.publisher) { _ in
-                // if a more recent message has been added, show that message
-                #warning("This should additionally check whether the last message is on screen.")
-                if messages.last?.id != lastMessageID {
-                    withAnimation {
-                        lastMessageID = messages.last?.id
-                        reader.scrollTo(lastMessageID, anchor: .bottom)
-                    }
-                }
-                
-                // keep the room marked as read
-                // outside of the condition above to include edits to the last message
-                markRoomAsRead()
-            }
-            .sheet(item: $messageToReactTo) { message in
-                // displays a two column reaction picker with 6 emoji to choose from
-                LazyVGrid(columns: [GridItem(), GridItem()]) {
-                    ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
-                        Button {
-                            matrix.sendReaction(reaction, to: message, in: room)
-                            messageToReactTo = nil
-                        } label: {
-                            Text(reaction)
-                                .font(.system(size: 21))
+                            .transition(.move(edge: .bottom))
+                        } else {
+                            Label("Deleted", systemImage: "trash")
+                                .padding()
+                                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(Color(.darkGray).opacity(1 / 3)))
                         }
                     }
                 }
+                .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
+                .onAppear {
+                    // update the last message id and display the last message
+                    lastMessageID = messages.last?.id
+                    reader.scrollTo(lastMessageID, anchor: .bottom)
+                    
+                    // mark the last message in the room as read
+                    markRoomAsRead()
+                }
+                .onReceive(messages.publisher) { _ in
+                    // if a more recent message has been added, show that message
+                    #warning("This should additionally check whether the last message is on screen.")
+                    if messages.last?.id != lastMessageID {
+                        withAnimation {
+                            lastMessageID = messages.last?.id
+                            reader.scrollTo(lastMessageID, anchor: .bottom)
+                        }
+                    }
+                    
+                    // keep the room marked as read
+                    // outside of the condition above to include edits to the last message
+                    markRoomAsRead()
+                }
+                .sheet(item: $messageToReactTo) { message in
+                    // displays a two column reaction picker with 6 emoji to choose from
+                    LazyVGrid(columns: [GridItem(), GridItem()]) {
+                        ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
+                            Button {
+                                matrix.sendReaction(reaction, to: message, in: room)
+                                messageToReactTo = nil
+                            } label: {
+                                Text(reaction)
+                                    .font(.system(size: 21))
+                            }
+                        }
+                    }
+            }
             }
         }
     }
