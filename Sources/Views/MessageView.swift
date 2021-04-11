@@ -73,7 +73,7 @@ struct MessageView_Previews: PreviewProvider {
     static let matrix = MatrixController.preview
     
     static var previews: some View {
-        MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+        MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org", context: matrix.dataController.viewContext)!,
                     showSender: true,
                     bubbleColor: .accentColor)
     }

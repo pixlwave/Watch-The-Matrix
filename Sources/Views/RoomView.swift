@@ -103,7 +103,7 @@ struct RoomView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
+            RoomView(room: matrix.dataController.room(id: "!test0:example.org", context: matrix.dataController.viewContext)!)
                 .environmentObject(matrix)
                 .environment(\.managedObjectContext, matrix.dataController.viewContext)
         }

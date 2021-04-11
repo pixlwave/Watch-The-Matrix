@@ -23,6 +23,8 @@ class MatrixController: ObservableObject {
     /// The data controller used to format and persist synced data.
     let dataController: DataController
     
+    let backgroundQueue = DispatchQueue(label: "uk.pixlwave.Matrix", qos: .userInitiated)
+    
     /// The keychain used to save and load user credentials from.
     private let keychain = Keychain(service: "uk.pixlwave.Matrix")
     
@@ -164,7 +166,7 @@ class MatrixController: ObservableObject {
         let filter = isInitial ? initialSyncFilter : lazyLoadMembersFilter
         
         syncCancellable = client.sync(filter: filter, since: syncState.nextBatch, timeout: 5000)
-            .receive(on: DispatchQueue.main)
+            .receive(on: backgroundQueue)
             .sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
@@ -174,16 +176,20 @@ class MatrixController: ObservableObject {
                 self.process(response.rooms.joined)
                 self.process(response.rooms.left)
                 
-                self.syncState.nextBatch = response.nextBatch
-                self.dataController.save()
+                self.dataController.backgroundSave()
                 
-                // updating state causes the entire view hierarchy to be computed
-                // so only change it when required
-                if case .syncing = self.state { } else {
-                    self.state = .syncing
+                DispatchQueue.main.async {
+                    // syncState exists on the main thread
+                    self.syncState.nextBatch = response.nextBatch
+                    self.dataController.save()
+                    
+                    // updating state causes the entire view hierarchy to be computed
+                    // so only change it when required
+                    if case .syncing = self.state { } else {
+                        self.state = .syncing
+                    }
+                    self.sync()
                 }
-                
-                self.sync()
             }
     }
     
@@ -193,7 +199,7 @@ class MatrixController: ObservableObject {
         joinedRooms.keys.forEach { roomID in
             let joinedRoom = joinedRooms[roomID]!
             
-            if let room = dataController.room(id: roomID) {
+            if let room = dataController.room(id: roomID, context: dataController.backgroundContext) {
                 // delete existing messages when the timeline is limited and reset the pagination token
                 if joinedRoom.timeline.isLimited {
                     room.deleteAllMessages()
@@ -215,7 +221,7 @@ class MatrixController: ObservableObject {
     /// Process the left rooms from a sync response, deleting `Room` instances to match.
     private func process(_ leftRooms: [String: LeftRoom]) {
         leftRooms.keys.forEach { roomID in
-            if let room = dataController.room(id: roomID) {
+            if let room = dataController.room(id: roomID, context: dataController.backgroundContext) {
                 dataController.delete(room)
             }
         }
@@ -226,14 +232,18 @@ class MatrixController: ObservableObject {
         guard let roomID = room.id else { return }
         
         client.getName(of: roomID)
-            .receive(on: DispatchQueue.main)
+            .receive(on: backgroundQueue)
             .subscribe(Subscribers.Sink { completion in
                 if case .failure(let error) = completion {
                     print(error)
                 }
             } receiveValue: { response in
-                room.name = response.name.isEmpty ? nil : response.name
-                self.dataController.save()
+                // ensure the name will be set on a room instance that's registered with the background context
+                let backgroundContext = self.dataController.backgroundContext
+                let room = room.managedObjectContext == backgroundContext ? room : self.dataController.room(id: roomID, context: backgroundContext)
+                
+                room?.name = response.name.isEmpty ? nil : response.name
+                self.dataController.backgroundSave()
             })
     }
     
@@ -243,15 +253,14 @@ class MatrixController: ObservableObject {
         guard let roomID = room.id else { return }
         
         client.getMembers(of: roomID, at: paginationToken)
-            .receive(on: DispatchQueue.main)
+            .receive(on: backgroundQueue)
             .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
                 let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
                                               .compactMap { self.dataController.createMember(event: $0, in: room) }
                 
-                room.members = NSSet(array: members)
-                self.dataController.save()
+                self.dataController.backgroundSave()
             })
     }
     
@@ -260,18 +269,23 @@ class MatrixController: ObservableObject {
         guard let roomID = room.id, let previousBatch = room.previousBatch else { return }
         
         client.getMessages(in: roomID, from: previousBatch, limit: 20)
-            .receive(on: DispatchQueue.main)
+            .receive(on: backgroundQueue)
             .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
                 guard let events = response.events else { return }
+                
+                // ensure the events will be processed for a room instance that's registered with the background context
+                let backgroundContext = self.dataController.backgroundContext
+                #warning("Ensure this force unwrap is actually safe.")
+                let room = room.managedObjectContext == backgroundContext ? room : self.dataController.room(id: roomID, context: backgroundContext)!
                 
                 // the events are reversed to prevent a template message being created for a
                 // relationship and then being created again from if it's event is in the response.
                 self.dataController.process(events: events.reversed(), in: room, includeState: false)
                 room.previousBatch = response.endToken
                 
-                self.dataController.save()
+                self.dataController.backgroundSave()
             })
     }
     
