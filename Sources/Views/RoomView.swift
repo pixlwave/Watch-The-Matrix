@@ -77,20 +77,9 @@ struct RoomView: View {
                     // outside of the condition above to include edits to the last message
                     markRoomAsRead()
                 }
-                .sheet(item: $messageToReactTo) { message in
-                    // displays a two column reaction picker with 6 emoji to choose from
-                    LazyVGrid(columns: [GridItem(), GridItem()]) {
-                        ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
-                            Button {
-                                matrix.sendReaction(reaction, to: message, in: room)
-                                messageToReactTo = nil
-                            } label: {
-                                Text(reaction)
-                                    .font(.system(size: 21))
-                            }
-                        }
-                    }
-            }
+                .sheet(item: $messageToReactTo) { _ in
+                    ReactionPicker(message: $messageToReactTo)
+                }
             }
         }
     }
