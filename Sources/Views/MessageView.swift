@@ -45,23 +45,8 @@ struct MessageView: View {
             }
             
             if !reactions.isEmpty {
-                // a horizontally scrolling list of any reactions to the message
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(0..<reactions.count, id: \.self) { index in
-                            HStack {
-                                Text(reactions[index].key)
-                                Text(String(reactions[index].count))
-                                    .font(.footnote)
-                            }
-                            .padding(.vertical, 2)
-                            .padding(.horizontal, 4)
-                            .background(Capsule().foregroundColor(Color(.darkGray)))
-                            .accessibilityElement(children: .combine);      #warning("This accessibility element isn't surfaced.")
-                        }
-                    }
-                }
-                .padding(.top, 2)
+                ReactionsView(reactions: reactions)
+                    .padding(.top, 2)
             }
         }
         .id(message.id)     // give the view it's message's id for programatic scrolling
