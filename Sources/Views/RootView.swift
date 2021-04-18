@@ -38,7 +38,7 @@ struct RootView: View {
             }
             
             ForEach(sortedRooms) { room in
-                NavigationLink(destination: RoomView(room: room)
+                NavigationLink(destination: RoomView(room: room, viewModel: RoomView.ViewModel(room: room, matrix: matrix))
                                 .environmentObject(matrix)
                                 .environment(\.managedObjectContext, viewContext)) {
                     RoomCell(room: room)
