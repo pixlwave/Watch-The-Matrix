@@ -21,7 +21,7 @@ struct RoomView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     if room.hasMoreMessages {
                         Button("Load More…") {
-                            matrix.loadMoreMessages(in: room)
+                            viewModel.loadMoreMessages()
                         }
                     }
                     

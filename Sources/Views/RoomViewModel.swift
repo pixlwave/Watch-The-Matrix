@@ -26,6 +26,7 @@ extension RoomView {
                                                          sectionNameKeyPath: nil,
                                                          cacheName: nil)
             
+            
             super.init()
             
             roomsController.delegate = self
@@ -38,6 +39,16 @@ extension RoomView {
             } catch {
                 print("Failed to fetch messages.")
             }
+        }
+        
+        /// Sends a read receipt for the last message in the room when the room has an unread count.
+        func markRoomAsRead() {
+            guard room.unreadCount > 0, let lastMessage = room.lastMessage else { return }
+            matrix.sendReadReceipt(for: lastMessage, in: room)
+        }
+        
+        func loadMoreMessages() {
+            matrix.loadMoreMessages(in: room)
         }
         
         
@@ -58,13 +69,6 @@ extension RoomView {
                 // outside of the condition above to include edits to the last message
                 markRoomAsRead()
             }
-        }
-        
-        
-        /// Sends a read receipt for the last message in the room when the room has an unread count.
-        func markRoomAsRead() {
-            guard room.unreadCount > 0, let lastMessage = room.lastMessage else { return }
-            matrix.sendReadReceipt(for: lastMessage, in: room)
         }
     }
 }
