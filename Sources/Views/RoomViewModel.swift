@@ -47,6 +47,7 @@ extension RoomView {
             matrix.sendReadReceipt(for: lastMessage, in: room)
         }
         
+        /// Fetches more messages from the server for the start of the room.
         func loadMoreMessages() {
             matrix.loadMoreMessages(in: room)
         }
