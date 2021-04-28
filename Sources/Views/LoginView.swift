@@ -27,12 +27,15 @@ struct LoginView: View {
         Form {
             Section(footer: homeserverFooter) {
                 TextField("Username", text: $username, onCommit: parseUsername)
+                    .textContentType(.username)
                 SecureField("Password", text: $password)
+                    .textContentType(.password)
             }
             
             if !homeserverFieldIsHidden {
                 Section {
                     TextField("Homeserver", text: $homeserverAddress, onCommit: parseHomeserverAddress)
+                        .textContentType(.URL)
                 }
             }
             
