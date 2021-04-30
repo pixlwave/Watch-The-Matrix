@@ -8,14 +8,16 @@ struct WatchTheMatrixApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch matrix.state {
-            case .signedOut:
-                LoginView()
-                    .environmentObject(matrix)
-            case .initialSync:
-                ProgressView()
-            case .syncing, .syncError:
-                NavigationView {
+            // navigation view prevents overlap with the time when scrolling the login form
+            // doesn't have any effect on the progress view's layout so use it all the time
+            NavigationView {
+                switch matrix.state {
+                case .signedOut:
+                    LoginView()
+                        .environmentObject(matrix)
+                case .initialSync:
+                    ProgressView()
+                case .syncing, .syncError:
                     RootView()
                         .environment(\.managedObjectContext, matrix.dataController.viewContext)
                         .environmentObject(matrix)

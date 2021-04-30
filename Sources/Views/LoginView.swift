@@ -42,6 +42,7 @@ struct LoginView: View {
             Button("Login", action: login)
                 .disabled(username.isEmpty || password.isEmpty || homeserver == nil)
         }
+        .navigationTitle("Login")
     }
     
     /// Log in to the homeserver using the supplied username and password.
