@@ -17,6 +17,7 @@
 		A54E5CDD25F5342700D43CDE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCF25F5331900D43CDE /* Room.swift */; };
 		A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCD25F5331900D43CDE /* MatrixController.swift */; };
 		A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
+		A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56329DF263C3861003D0E67 /* LoginViewModel.swift */; };
 		A564A4C6260B4E6B00895426 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
 		A564A4CE260B588B00895426 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4CD260B588B00895426 /* TestData.swift */; };
 		A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */; };
@@ -125,6 +126,7 @@
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		A56329DF263C3861003D0E67 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		A564A4CD260B588B00895426 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				A58015272623280800C61D25 /* ReactionPicker.swift */,
 				A5DCA2B3262B85F7004A328B /* ReactionsView.swift */,
 				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
+				A56329DF263C3861003D0E67 /* LoginViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */,
 				A59A0C6125DD6AC200B5EDAA /* NotificationController.swift in Sources */,
 				A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */,
 				A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */,

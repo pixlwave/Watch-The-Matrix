@@ -13,8 +13,7 @@ struct WatchTheMatrixApp: App {
             NavigationView {
                 switch matrix.state {
                 case .signedOut:
-                    LoginView()
-                        .environmentObject(matrix)
+                    LoginView(matrix: matrix)
                 case .initialSync:
                     ProgressView()
                 case .syncing, .syncError:
