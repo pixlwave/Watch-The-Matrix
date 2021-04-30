@@ -37,6 +37,11 @@ struct LoginView: View {
                 .disabled(viewModel.hasIncompleteCredentials)
         }
         .navigationTitle("Login")
+        .sheet(item: $viewModel.loginError) { loginError in
+            Text(loginError.description)
+                .foregroundColor(.red)
+                .multilineTextAlignment(.center)
+        }
     }
 }
 

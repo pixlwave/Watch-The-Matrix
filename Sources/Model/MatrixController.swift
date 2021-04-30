@@ -100,11 +100,15 @@ class MatrixController: ObservableObject {
     
     /// Login to the homeserver using the supplied username and password.
     /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
-    func login(username: String, password: String) {
-        authCancellable = client.login(username: username, password: password, displayName: "Watch")
+    /// - Returns: A shared publisher that can be used to inform the user if any errors have occured.
+    func login(username: String, password: String) -> AnyPublisher<LoginUserResponse, MatrixError> {
+        let loginPublisher = client.login(username: username, password: password, displayName: "Watch")
+            .share()
+        
+        authCancellable = loginPublisher
             .receive(on: DispatchQueue.main)
-            .sink { completion in
-                //
+            .sink { _ in
+                // this publisher is shared with the view model which will handle failures
             } receiveValue: { response in
                 self.userID = response.userID
                 self.deviceID = response.deviceID
@@ -112,6 +116,8 @@ class MatrixController: ObservableObject {
                 self.saveCredentials()
                 self.resumeSync()
             }
+        
+        return loginPublisher.eraseToAnyPublisher()
     }
     
     /// Logout of the homeserver. If successful the user's credentials will be reset and the state

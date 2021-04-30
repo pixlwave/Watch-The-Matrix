@@ -20,6 +20,9 @@ extension LoginView {
             username.isEmpty || password.isEmpty || homeserver == nil
         }
         
+        private var loginCancellable: AnyCancellable?
+        @Published var loginError: MatrixError?
+        
         init(matrix: MatrixController) {
             self.matrix = matrix
         }
@@ -87,7 +90,15 @@ extension LoginView {
             guard let homeserver = homeserver else { return }
             
             matrix.client.homeserver = homeserver
-            matrix.login(username: username, password: password)
+            
+            loginCancellable = matrix.login(username: username, password: password)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case let .failure(error) = completion {
+                        self.loginError = error
+                    }
+                } receiveValue: { _ in }
+
         }
     }
 }
