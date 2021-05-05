@@ -281,11 +281,27 @@ class MatrixController: ObservableObject {
             })
     }
     
+    /// An integer representing the number of room events that have been sent.
+    /// This is used to generate a transaction ID.
+    private var transactionNumber = UserDefaults.standard.integer(forKey: "transactionNumber") {
+        didSet { UserDefaults.standard.set(transactionNumber, forKey: "transactionNumber") }
+    }
+    
+    /// Generates a new unique transaction ID for this device session.
+    private func generateTransactionID() -> String {
+        #warning("MXTools uses a random prefix here instead of user defaults 🤔.")
+        let id = String(transactionNumber, radix: 36)
+        transactionNumber &+= 1
+        
+        return id
+    }
+    
     /// Sends a reaction to the event in the specified room.
     func sendReaction(_ reaction: String, to event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
+        let transactionID = generateTransactionID()
         
-        client.sendReaction(reaction, to: eventID, in: roomID)
+        client.sendReaction(reaction, to: eventID, in: roomID, with: transactionID)
             .print()
             .subscribe(Subscribers.Sink { _ in } receiveValue: { _ in })
     }
@@ -293,8 +309,9 @@ class MatrixController: ObservableObject {
     /// Sends a message to the specified room.
     func sendMessage(_ message: String, in room: Room) {
         guard let roomID = room.id else { return }
+        let transactionID = generateTransactionID()
         
-        client.sendMessage(message, in: roomID)
+        client.sendMessage(message, in: roomID, with: transactionID)
             .print()
             .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
     }
