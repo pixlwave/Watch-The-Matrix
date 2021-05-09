@@ -27,23 +27,27 @@ extension LoginView {
             self.matrix = matrix
         }
         
-        /// Parse the username for a hostname and lookup the .well-known if one is found.
+        /// Parse the username and attempt to automatically set the homeserver.
         func parseUsername() {
             let usernameComponents = username.split(separator: ":")
             
-            if usernameComponents.count == 1 {          // assume logging into matrix.org
+            // assume logging into matrix.org
+            if usernameComponents.count == 1 {
                 withAnimation {
                     if username.hasPrefix("@") { username = String(username.dropFirst()) }
                     homeserver = .default
                 }
                 
                 return
-            } else if usernameComponents.count > 2 {    // invalid username entered
-                return
             }
             
+            // at this stage there must be 2 components otherwise the username is invalid
+            guard usernameComponents.count == 2 else { return }
+            
+            // prepend an @ if it was missed off
             if !username.hasPrefix("@") { username = "@\(username)"}
             
+            // get the hostname and lookup it's homeserver
             let host = String(usernameComponents[1])
             
             lookupCancellable = matrix.client.lookupHomeserver(for: host)
