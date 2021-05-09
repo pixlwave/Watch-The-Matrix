@@ -6,13 +6,6 @@ struct RoomCell: View {
     @ObservedObject var room: Room
     @EnvironmentObject var matrix: MatrixController
     
-    /// The body of the last message, taking into account any edits. This will return
-    /// an empty string if there isn't a valid body to return.
-    var lastMessageBody: String {
-        guard let lastMessage = room.lastMessage else { return "" }
-        return lastMessage.lastEdit?.body ?? lastMessage.body ?? ""
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -28,11 +21,13 @@ struct RoomCell: View {
                     .lineLimit(1)
             }
             
-            Text(lastMessageBody)
+            let lastMessage = room.lastMessage
+            
+            Text(lastMessage?.lastEdit?.body ?? lastMessage?.body ?? "")
                 .lineLimit(1)
                 .foregroundColor(.secondary)
             
-            Text(room.lastMessage?.date?.relativeString ?? "")
+            Text(lastMessage?.date?.relativeString ?? "")
                 .font(.footnote)
                 .foregroundColor(.secondary)
         }
