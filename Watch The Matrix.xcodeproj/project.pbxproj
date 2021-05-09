@@ -56,6 +56,8 @@
 		A59BB5102618C15500A91D68 /* NewJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */; };
 		A59BB5262618C51500A91D68 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
 		A5A30C0C260BA53700861601 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
+		A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0826482CA3005384AF /* RoomCell.swift */; };
+		A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0A264831F4005384AF /* Date-Formatting.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
 		A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */; };
 		A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCA2B3262B85F7004A328B /* ReactionsView.swift */; };
@@ -159,6 +161,8 @@
 		A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewJoinedRoom.json; sourceTree = "<group>"; };
 		A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SyncMessageJoinedRoom.json; sourceTree = "<group>"; };
 		A5A30C0B260BA53700861601 /* Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edit.swift; sourceTree = "<group>"; };
+		A5B43C0826482CA3005384AF /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
+		A5B43C0A264831F4005384AF /* Date-Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Formatting.swift"; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
 		A5C6FD2C2611E9FB0096DF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5DCA2B3262B85F7004A328B /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */,
+				A5B43C0A264831F4005384AF /* Date-Formatting.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
+				A5B43C0826482CA3005384AF /* RoomCell.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
 				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
 				A58015272623280800C61D25 /* ReactionPicker.swift */,
@@ -557,6 +563,7 @@
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
 				A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */,
+				A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */,
 				A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */,
 				A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
@@ -569,6 +576,7 @@
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
 				A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
+				A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */,
 				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
