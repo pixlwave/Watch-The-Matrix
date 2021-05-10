@@ -9,6 +9,15 @@
           "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
           "version": "4.2.2"
         }
+      },
+      {
+        "package": "Matrix",
+        "repositoryURL": "https://github.com/pixlwave/Matrix",
+        "state": {
+          "branch": "main",
+          "revision": "b75fa9e702fa8004e2e9274e2c3224e8636aa1f1",
+          "version": null
+        }
       }
     ]
   },
