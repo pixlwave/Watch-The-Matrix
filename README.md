@@ -8,14 +8,13 @@ Join the discussion at [#watchthe:matrix.org](https://matrix.to/#/#watchthe:matr
 
 ## Instructions
 
-On the sign in screen (sorry it needs a better method to do this), leaving the homeserver field empty will use matrix.org by default.
+On the sign in screen, enter your username in it's complete form such as @user:server.org and your homeserver should be discovered automatically. If not, a field will appear for you to enter it manually (ensure to include https:// at the start). If you're signing in to the matrix.org homeserver, you can alternatively just enter the first part of your username. 
 
 ## Building
 
-Currently to build Watch The Matrix, you will also need a local copy of [pixlwave/Matrix](https://github.com/pixlwave/Matrix) alongside this repo:
+All dependencies are handled by Xcode as Swift packages. To build Watch The Matrix, simply open the Xcode project and click run.
 
 ```
-git clone https://github.com/pixlwave/Matrix
 git clone https://github.com/pixlwave/Watch-The-Matrix
 cd Watch-The-Matrix
 xed .
