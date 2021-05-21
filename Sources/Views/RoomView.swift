@@ -55,6 +55,8 @@ struct RoomView: View {
                                 .background(RoundedRectangle(cornerRadius: 6).foregroundColor(Color(.darkGray).opacity(1 / 3)))
                         }
                     }
+                    
+                    MessageComposer(room: room)
                 }
                 .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
                 .onAppear {

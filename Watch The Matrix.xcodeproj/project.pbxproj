@@ -10,6 +10,7 @@
 		A510767C26207890006362C0 /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A510767B26207890006362C0 /* DataControllerTests.swift */; };
 		A51076882620A74A006362C0 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51076872620A74A006362C0 /* MessageTests.swift */; };
 		A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
+		A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51EA1722657BD160067A708 /* MessageComposer.swift */; };
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
 		A54E5CDB25F5342700D43CDE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CD025F5331900D43CDE /* Member.swift */; };
@@ -118,6 +119,7 @@
 		A510767B26207890006362C0 /* DataControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataControllerTests.swift; sourceTree = "<group>"; };
 		A51076872620A74A006362C0 /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		A515EAC12610D28C00D27C86 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncState.swift; sourceTree = "<group>"; };
+		A51EA1722657BD160067A708 /* MessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposer.swift; sourceTree = "<group>"; };
 		A52BA37225DEC59800BBCCFC /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A53EF81A2611ED9F00DED74F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				A5B43C0826482CA3005384AF /* RoomCell.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
 				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
+				A51EA1722657BD160067A708 /* MessageComposer.swift */,
 				A58015272623280800C61D25 /* ReactionPicker.swift */,
 				A5DCA2B3262B85F7004A328B /* ReactionsView.swift */,
 				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
@@ -559,6 +562,7 @@
 				A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */,
 				A564A4CE260B588B00895426 /* TestData.swift in Sources */,
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
+				A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */,
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
 				A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */,
