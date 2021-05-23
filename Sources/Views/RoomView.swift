@@ -57,6 +57,7 @@ struct RoomView: View {
                     }
                     
                     MessageComposer(room: room)
+                        .padding(.top)
                 }
                 .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
                 .onAppear {
