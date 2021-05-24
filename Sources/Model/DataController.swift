@@ -258,8 +258,10 @@ class DataController {
                     if let message = createMessage(roomEvent: $0, in: room) {
                         messages.append(message)
                         
-                        #warning("This should use the event's transaction ID instead.")
-                        room.transactionStore.remove(message)
+                        // if the event has a transaction id, remove its local echo
+                        if let transactionID = $0.unsigned?.transactionID {
+                            room.transactionStore.removeTransaction(with: transactionID)
+                        }
                     }
                 } else {
                     createEdit(roomEvent: $0)

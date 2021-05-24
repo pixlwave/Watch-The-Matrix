@@ -10,8 +10,8 @@ class TransactionStore: ObservableObject {
         messages.append(message)
     }
     
-    /// Remove the transaction that corresponds to the remote echo `Message`.
-    func remove(_ message: Message) {
-        messages.removeAll { $0.eventID == message.id }
+    /// Remove the transaction with the specified transaction ID.
+    func removeTransaction(with id: String) {
+        messages.removeAll { $0.id == id }
     }
 }
