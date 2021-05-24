@@ -32,6 +32,11 @@ extension Room {
         return try? managedObjectContext?.fetch(request).first
     }
     
+    /// The room's transaction store for outgoing messages.
+    var transactionStore: TransactionStore {
+        TransactionManager.shared.store(for: id ?? "")
+    }
+    
     /// The number of members in the room.
     var memberCount: Int {
         let request: NSFetchRequest<Member> = Member.fetchRequest()

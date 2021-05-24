@@ -257,6 +257,9 @@ class DataController {
                 if $0.content.relationship?.type != .replace {
                     if let message = createMessage(roomEvent: $0, in: room) {
                         messages.append(message)
+                        
+                        #warning("This should use the event's transaction ID instead.")
+                        room.transactionStore.remove(message)
                     }
                 } else {
                     createEdit(roomEvent: $0)

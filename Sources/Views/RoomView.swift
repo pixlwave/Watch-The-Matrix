@@ -6,6 +6,7 @@ import CoreData
 struct RoomView: View {
     @EnvironmentObject var matrix: MatrixController
     @ObservedObject var room: Room
+    @ObservedObject var transactionStore: TransactionStore
     
     /// A boolean indicating  whether `.onAppear` has been called.
     @State private var hasAppeared = false
@@ -19,6 +20,9 @@ struct RoomView: View {
     init(room: Room) {
         self.room = room
         _messages = FetchRequest(fetchRequest: room.messagesRequest, animation: .default)
+        
+        // observe outgoing transactions to display local echoes
+        transactionStore = room.transactionStore
     }
     
     var body: some View {
@@ -56,6 +60,12 @@ struct RoomView: View {
                         }
                     }
                     
+                    // show a local echo for outgoing messages
+                    ForEach(transactionStore.messages) { transaction in
+                        Text(transaction.message)
+                            .foregroundColor(.secondary)
+                    }
+ 
                     MessageComposer(room: room)
                         .padding(.top)
                 }

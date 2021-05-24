@@ -281,27 +281,10 @@ class MatrixController: ObservableObject {
             })
     }
     
-    /// An integer representing the number of room events that have been sent.
-    /// This is used to generate a transaction ID.
-    private var transactionNumber = UserDefaults.standard.integer(forKey: "transactionNumber") {
-        didSet { UserDefaults.standard.set(transactionNumber, forKey: "transactionNumber") }
-    }
-    
-    /// Generates a new unique transaction ID for this device session.
-    private func generateTransactionID() -> String {
-        #warning("MXTools uses a random prefix here instead of user defaults 🤔.")
-        let id = String(transactionNumber, radix: 36)
-        
-        // Currently only used from the main thread, but potentially a good place try out actors when they land?
-        transactionNumber &+= 1
-        
-        return id
-    }
-    
     /// Sends a reaction to the event in the specified room.
     func sendReaction(_ reaction: String, to event: Message, in room: Room) {
         guard let eventID = event.id, let roomID = room.id else { return }
-        let transactionID = generateTransactionID()
+        let transactionID = TransactionManager.shared.generateTransactionID()
         
         client.sendReaction(reaction, to: eventID, in: roomID, with: transactionID)
             .print()
@@ -311,11 +294,24 @@ class MatrixController: ObservableObject {
     /// Sends a message to the specified room.
     func sendMessage(_ message: String, in room: Room) {
         guard let roomID = room.id else { return }
-        let transactionID = generateTransactionID()
         
-        client.sendMessage(message, in: roomID, with: transactionID)
-            .print()
-            .subscribe(Subscribers.Sink { completion in } receiveValue: { _ in })
+        // create a message transaction
+        let transactionManager = TransactionManager.shared
+        let transaction = MessageTransaction(id: transactionManager.generateTransactionID(), message: message)
+        
+        // send the message, updating the transaction based on the response
+        transaction.token = client.sendMessage(message, in: roomID, with: transaction.id)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    transaction.error = error
+                }
+            } receiveValue: { response in
+                transaction.eventID = response.eventID
+            }
+        
+        // store the transaction in order to display a local echo
+        transactionManager.store(for: roomID).add(transaction)
     }
     
     /// Creates a new room with the specified name.

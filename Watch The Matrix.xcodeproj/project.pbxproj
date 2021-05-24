@@ -27,6 +27,10 @@
 		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A58015282623280800C61D25 /* ReactionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58015272623280800C61D25 /* ReactionPicker.swift */; };
 		A58B95E0261F918100A3E8F5 /* MemberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58B95DF261F918100A3E8F5 /* MemberTests.swift */; };
+		A5989DFB265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
+		A5989DFC265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
+		A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */; };
+		A5989DFF265AE2E200DAD57C /* MessageTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */; };
 		A59A0C4C25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */; };
 		A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -57,6 +61,8 @@
 		A59BB5102618C15500A91D68 /* NewJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */; };
 		A59BB5262618C51500A91D68 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
 		A5A30C0C260BA53700861601 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
+		A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A77A74265833C000B683FF /* TransactionManager.swift */; };
+		A5A77A76265833C000B683FF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A77A74265833C000B683FF /* TransactionManager.swift */; };
 		A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0826482CA3005384AF /* RoomCell.swift */; };
 		A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0A264831F4005384AF /* Date-Formatting.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
@@ -136,6 +142,8 @@
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
 		A58015272623280800C61D25 /* ReactionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPicker.swift; sourceTree = "<group>"; };
 		A58B95DF261F918100A3E8F5 /* MemberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTests.swift; sourceTree = "<group>"; };
+		A5989DFA265AE28100DAD57C /* TransactionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStore.swift; sourceTree = "<group>"; };
+		A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTransaction.swift; sourceTree = "<group>"; };
 		A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,6 +170,7 @@
 		A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewJoinedRoom.json; sourceTree = "<group>"; };
 		A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SyncMessageJoinedRoom.json; sourceTree = "<group>"; };
 		A5A30C0B260BA53700861601 /* Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edit.swift; sourceTree = "<group>"; };
+		A5A77A74265833C000B683FF /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		A5B43C0826482CA3005384AF /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
 		A5B43C0A264831F4005384AF /* Date-Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Formatting.swift"; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
@@ -213,6 +222,7 @@
 				A5A30C0B260BA53700861601 /* Edit.swift */,
 				A5BCCB59260C9DAB00CBC29B /* Redaction.swift */,
 				A515EAC12610D28C00D27C86 /* SyncState.swift */,
+				A5989DF9265AE26B00DAD57C /* Transactions */,
 				A564A4CD260B588B00895426 /* TestData.swift */,
 			);
 			path = Model;
@@ -235,6 +245,16 @@
 				A5B43C0A264831F4005384AF /* Date-Formatting.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A5989DF9265AE26B00DAD57C /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				A5A77A74265833C000B683FF /* TransactionManager.swift */,
+				A5989DFA265AE28100DAD57C /* TransactionStore.swift */,
+				A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */,
+			);
+			path = Transactions;
 			sourceTree = "<group>";
 		};
 		A59A0C4025DD6AC000B5EDAA = {
@@ -569,7 +589,9 @@
 				A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */,
 				A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */,
 				A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */,
+				A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
+				A5989DFC265AE28100DAD57C /* TransactionStore.swift in Sources */,
 				A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */,
 				A5A30C0C260BA53700861601 /* Edit.swift in Sources */,
 				A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */,
@@ -579,6 +601,7 @@
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
 				A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
+				A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */,
 				A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */,
 				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,
 			);
@@ -590,16 +613,19 @@
 			files = (
 				A59BB49F2618AFC600A91D68 /* TestingHostApp.swift in Sources */,
 				A59BB4DD2618B14E00A91D68 /* DataController.swift in Sources */,
+				A5989DFB265AE28100DAD57C /* TransactionStore.swift in Sources */,
 				A59BB4E02618B14E00A91D68 /* Member.swift in Sources */,
 				A59BB4E42618B14E00A91D68 /* TestData.swift in Sources */,
 				A59BB4E22618B14E00A91D68 /* Redaction.swift in Sources */,
 				A59BB4DE2618B14E00A91D68 /* Reaction.swift in Sources */,
 				A59BB4E32618B14E00A91D68 /* Room.swift in Sources */,
+				A5989DFF265AE2E200DAD57C /* MessageTransaction.swift in Sources */,
 				A59BB4E52618B14E00A91D68 /* SyncState.swift in Sources */,
 				A59BB4EB2618B15100A91D68 /* Matrix.xcdatamodeld in Sources */,
 				A59BB4DF2618B14E00A91D68 /* Edit.swift in Sources */,
 				A59BB4E12618B14E00A91D68 /* MatrixController.swift in Sources */,
 				A59BB4DC2618B14E00A91D68 /* Message.swift in Sources */,
+				A5A77A76265833C000B683FF /* TransactionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
