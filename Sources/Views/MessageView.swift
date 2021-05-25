@@ -34,9 +34,7 @@ struct MessageView: View {
                     .padding(.horizontal, 4)    // match the indentation of the message text
             }
             
-            Text(lastEdit?.body ?? message.body ?? "")
-                .padding(4)
-                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(bubbleColor))
+            MessageBubble(text: lastEdit?.body ?? message.body ?? "", color: bubbleColor)
             
             // show an indication that a message has been edited
             if lastEdit != nil {

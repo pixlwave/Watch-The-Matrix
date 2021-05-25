@@ -62,8 +62,7 @@ struct RoomView: View {
                     
                     // show a local echo for outgoing messages
                     ForEach(transactionStore.messages) { transaction in
-                        Text(transaction.message)
-                            .foregroundColor(.secondary)
+                        MessageTransactionView(transaction: transaction)
                     }
  
                     MessageComposer(room: room)

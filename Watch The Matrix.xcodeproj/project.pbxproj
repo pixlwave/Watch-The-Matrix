@@ -27,6 +27,8 @@
 		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A58015282623280800C61D25 /* ReactionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58015272623280800C61D25 /* ReactionPicker.swift */; };
 		A58B95E0261F918100A3E8F5 /* MemberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58B95DF261F918100A3E8F5 /* MemberTests.swift */; };
+		A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */; };
+		A59437F6265D05DA00A81E1E /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F5265D05DA00A81E1E /* MessageBubble.swift */; };
 		A5989DFB265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
 		A5989DFC265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
 		A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */; };
@@ -142,6 +144,8 @@
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
 		A58015272623280800C61D25 /* ReactionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPicker.swift; sourceTree = "<group>"; };
 		A58B95DF261F918100A3E8F5 /* MemberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTests.swift; sourceTree = "<group>"; };
+		A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTransactionView.swift; sourceTree = "<group>"; };
+		A59437F5265D05DA00A81E1E /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		A5989DFA265AE28100DAD57C /* TransactionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStore.swift; sourceTree = "<group>"; };
 		A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTransaction.swift; sourceTree = "<group>"; };
 		A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,6 +356,8 @@
 				A5B43C0826482CA3005384AF /* RoomCell.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
 				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
+				A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */,
+				A59437F5265D05DA00A81E1E /* MessageBubble.swift */,
 				A51EA1722657BD160067A708 /* MessageComposer.swift */,
 				A58015272623280800C61D25 /* ReactionPicker.swift */,
 				A5DCA2B3262B85F7004A328B /* ReactionsView.swift */,
@@ -581,6 +587,7 @@
 				A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */,
 				A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */,
 				A564A4CE260B588B00895426 /* TestData.swift in Sources */,
+				A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */,
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
 				A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */,
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
@@ -599,6 +606,7 @@
 				A59A0C5D25DD6AC200B5EDAA /* WatchTheMatrixApp.swift in Sources */,
 				A58015282623280800C61D25 /* ReactionPicker.swift in Sources */,
 				A59A0C6325DD6AC200B5EDAA /* NotificationView.swift in Sources */,
+				A59437F6265D05DA00A81E1E /* MessageBubble.swift in Sources */,
 				A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
 				A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */,
