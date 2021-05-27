@@ -19,7 +19,7 @@ struct MessageBubble: View {
             footnote.map {
                 Text($0)
                     .font(.footnote)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.primary.opacity(0.6))
             }
         }
         .padding(4)
