@@ -14,4 +14,9 @@ class TransactionStore: ObservableObject {
     func removeTransaction(with id: String) {
         messages.removeAll { $0.id == id }
     }
+    
+    /// Remove the specified transaction.
+    func remove(_ transaction: MessageTransaction) {
+        removeTransaction(with: transaction.id)
+    }
 }

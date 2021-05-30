@@ -7,6 +7,8 @@ class MessageTransaction: ObservableObject, Identifiable {
     let id: String
     /// The content of the message.
     let message: String
+    /// The ID of the room that the message is for.
+    let roomID: String
     
     /// A cancellable token for the send operation.
     var token: AnyCancellable?
@@ -19,8 +21,9 @@ class MessageTransaction: ObservableObject, Identifiable {
         eventID != nil
     }
     
-    init(id: String, message: String) {
+    init(id: String, message: String, roomID: String) {
         self.id = id
         self.message = message
+        self.roomID = roomID
     }
 }

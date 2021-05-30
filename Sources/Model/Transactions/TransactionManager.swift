@@ -36,4 +36,8 @@ class TransactionManager {
         
         return id
     }
+    
+    func remove(_ transaction: MessageTransaction) {
+        store(for: transaction.roomID).remove(transaction)
+    }
 }

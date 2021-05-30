@@ -297,7 +297,9 @@ class MatrixController: ObservableObject {
         
         // create a message transaction
         let transactionManager = TransactionManager.shared
-        let transaction = MessageTransaction(id: transactionManager.generateTransactionID(), message: message)
+        let transaction = MessageTransaction(id: transactionManager.generateTransactionID(),
+                                             message: message,
+                                             roomID: roomID)
         
         // send the message, updating the transaction based on the response
         transaction.token = client.sendMessage(message, in: roomID, with: transaction.id)
@@ -312,6 +314,25 @@ class MatrixController: ObservableObject {
         
         // store the transaction in order to display a local echo
         transactionManager.store(for: roomID).add(transaction)
+    }
+    
+    /// Attempts to re-send a failed transaction.
+    func retryTransaction(_ transaction: MessageTransaction) {
+        guard transaction.error != nil else { return }
+        
+        // clear the previous send error
+        transaction.error = nil
+        
+        // send the message, updating the transaction based on the response
+        transaction.token = client.sendMessage(transaction.message, in: transaction.roomID, with: transaction.id)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    transaction.error = error
+                }
+            } receiveValue: { response in
+                transaction.eventID = response.eventID
+            }
     }
     
     /// Creates a new room with the specified name.
