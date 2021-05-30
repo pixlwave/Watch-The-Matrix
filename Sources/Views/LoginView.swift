@@ -10,8 +10,7 @@ struct LoginView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    @ViewBuilder
-    var homeserverFooter: some View {
+    @ViewBuilder var homeserverFooter: some View {
         if !viewModel.requiresManualHomeserverEntry {
             viewModel.homeserver?.description.map { Text($0) }
         }

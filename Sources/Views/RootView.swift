@@ -43,6 +43,7 @@ struct RootView: View {
                                 .environment(\.managedObjectContext, viewContext)) {
                     RoomCell(room: room)
                 }
+                .disabled(room.isEncrypted)
             }
         }
         .navigationTitle("Rooms")

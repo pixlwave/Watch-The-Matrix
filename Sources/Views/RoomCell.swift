@@ -6,30 +6,53 @@ struct RoomCell: View {
     @ObservedObject var room: Room
     @EnvironmentObject var matrix: MatrixController
     
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                // show a badge before the name if there are any unread messages
-                if room.unreadCount > 0 {
-                    Image(systemName: "circlebadge.fill")
-                        .imageScale(.small)
-                        .foregroundColor(.accentColor)
-                }
-                
-                Text(room.name ?? room.generateName(for: matrix.userID))
-                    .fontWeight(.medium)
-                    .lineLimit(1)
+    var title: some View {
+        HStack {
+            // show a badge before the name if there are any unread messages
+            if room.unreadCount > 0 {
+                Image(systemName: "circlebadge.fill")
+                    .imageScale(.small)
+                    .foregroundColor(.accentColor)
             }
             
-            let lastMessage = room.lastMessage
-            
-            Text(lastMessage?.lastEdit?.body ?? lastMessage?.body ?? "")
+            Text(room.name ?? room.generateName(for: matrix.userID))
+                .fontWeight(.medium)
                 .lineLimit(1)
-                .foregroundColor(.secondary)
+        }
+    }
+    
+    @ViewBuilder var detail: some View {
+        let lastMessage = room.lastMessage
+        
+        Text(lastMessage?.lastEdit?.body ?? lastMessage?.body ?? "")
+            .lineLimit(1)
+            .foregroundColor(.secondary)
+        
+        Text(lastMessage?.date?.relativeString ?? "")
+            .font(.footnote)
+            .foregroundColor(.secondary)
+    }
+    
+    @ViewBuilder var encryptionNotice: some View {
+        (Text("Encrypted ") + Text(Image(systemName: "lock")))
+            .lineLimit(1)
+            .foregroundColor(.secondary)
+        
+        Text("Unsupported Room")
+            .lineLimit(1)
+            .font(.footnote)
+            .foregroundColor(.secondary)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            title
             
-            Text(lastMessage?.date?.relativeString ?? "")
-                .font(.footnote)
-                .foregroundColor(.secondary)
+            if room.isEncrypted {
+                encryptionNotice
+            } else {
+                detail
+            }
         }
     }
 }

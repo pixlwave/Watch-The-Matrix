@@ -295,6 +295,8 @@ class DataController {
                     }
                 }
             }
+        } else if event.type == "m.room.encryption" {
+            room.isEncrypted = true
         }
     }
     
