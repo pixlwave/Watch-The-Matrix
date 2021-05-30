@@ -4,6 +4,9 @@ import Matrix
 
 /// A class that handles persistence and updates to core data objects.
 class DataController {
+    /// A version number that is incremented when breaking changes are made
+    /// to the data model, processing or storage logic to force a resync.
+    private let version = 1
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
@@ -21,14 +24,20 @@ class DataController {
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            #if DEBUG
+            // delete the database from disk when the app is launched with a specific argument
+            if CommandLine.arguments.contains("--delete-persistent-store"), let url = container.persistentStoreDescriptions.first?.url {
+                try! FileManager.default.removeItem(at: url)
+            }
+            #endif
+            
+            // delete the database from disk if the version number has been incremented
+            if UserDefaults.standard.integer(forKey: "DataControllerVersion") < version, let url = container.persistentStoreDescriptions.first?.url {
+                try? FileManager.default.removeItem(at: url)
+                UserDefaults.standard.set(version, forKey: "DataControllerVersion")
+            }
         }
-        
-        #if DEBUG
-        // delete the database from disk when the app is launched with a specific argument
-        if CommandLine.arguments.contains("--delete-persistent-store"), let url = container.persistentStoreDescriptions.first?.url {
-            try! FileManager.default.removeItem(at: url)
-        }
-        #endif
         
         // finally load the persistent stores into the container
         container.loadPersistentStores { storeDescription, error in
