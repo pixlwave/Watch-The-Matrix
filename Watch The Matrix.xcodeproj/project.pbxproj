@@ -27,6 +27,8 @@
 		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A58015282623280800C61D25 /* ReactionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58015272623280800C61D25 /* ReactionPicker.swift */; };
 		A58B95E0261F918100A3E8F5 /* MemberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58B95DF261F918100A3E8F5 /* MemberTests.swift */; };
+		A59430712673D4E900A47018 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59430702673D4E900A47018 /* ExtensionDelegate.swift */; };
+		A59430742673D53300A47018 /* FlickTypeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A59430732673D53300A47018 /* FlickTypeKit */; };
 		A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */; };
 		A59437F6265D05DA00A81E1E /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F5265D05DA00A81E1E /* MessageBubble.swift */; };
 		A5989DFB265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
@@ -144,6 +146,8 @@
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
 		A58015272623280800C61D25 /* ReactionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPicker.swift; sourceTree = "<group>"; };
 		A58B95DF261F918100A3E8F5 /* MemberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTests.swift; sourceTree = "<group>"; };
+		A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Watch The Matrix WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		A59430702673D4E900A47018 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTransactionView.swift; sourceTree = "<group>"; };
 		A59437F5265D05DA00A81E1E /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		A5989DFA265AE28100DAD57C /* TransactionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStore.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */,
+				A59430742673D53300A47018 /* FlickTypeKit in Frameworks */,
 				A5620D55264915E500EAF88B /* Matrix in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				A59A0C5C25DD6AC200B5EDAA /* WatchTheMatrixApp.swift */,
+				A59430702673D4E900A47018 /* ExtensionDelegate.swift */,
 				A5D9CF06260B4CD000875D38 /* Views */,
 				A54E5CCA25F5331900D43CDE /* Model */,
 				A56C7FB12614AF670067CB3B /* Extensions */,
@@ -373,6 +379,7 @@
 				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
 				A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */,
 				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
+				A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */,
 				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
 			);
 			path = Resources;
@@ -431,6 +438,7 @@
 			packageProductDependencies = (
 				A5799D3525FC205C00D4B940 /* KeychainAccess */,
 				A5620D54264915E500EAF88B /* Matrix */,
+				A59430732673D53300A47018 /* FlickTypeKit */,
 			);
 			productName = "Watch The Matrix WatchKit Extension";
 			productReference = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */;
@@ -517,6 +525,7 @@
 			packageReferences = (
 				A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				A5620D53264915E500EAF88B /* XCRemoteSwiftPackageReference "Matrix" */,
+				A59430722673D53300A47018 /* XCRemoteSwiftPackageReference "FlickTypeKit" */,
 			);
 			productRefGroup = A59A0C4825DD6AC000B5EDAA /* Products */;
 			projectDirPath = "";
@@ -591,6 +600,7 @@
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
 				A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */,
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
+				A59430712673D4E900A47018 /* ExtensionDelegate.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
 				A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */,
 				A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */,
@@ -805,6 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
@@ -830,6 +841,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
@@ -1081,6 +1093,14 @@
 				minimumVersion = 4.2.2;
 			};
 		};
+		A59430722673D53300A47018 /* XCRemoteSwiftPackageReference "FlickTypeKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FlickType/FlickTypeKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1098,6 +1118,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		A59430732673D53300A47018 /* FlickTypeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A59430722673D53300A47018 /* XCRemoteSwiftPackageReference "FlickTypeKit" */;
+			productName = FlickTypeKit;
 		};
 		A59BB4D02618B07C00A91D68 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

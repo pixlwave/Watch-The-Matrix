@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "FlickTypeKit",
+        "repositoryURL": "https://github.com/FlickType/FlickTypeKit",
+        "state": {
+          "branch": "main",
+          "revision": "3ba87b3b30a3de1fdd7995476f1df48b38d7aaed",
+          "version": null
+        }
+      },
+      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {

@@ -1,4 +1,5 @@
 import SwiftUI
+import FlickTypeKit
 
 /// A view that displays a text field to send messages from.
 struct MessageComposer: View {
@@ -8,7 +9,7 @@ struct MessageComposer: View {
     @State private var message = ""
     
     var body: some View {
-        TextField("Message", text: $message, onEditingChanged: { _ in }, onCommit: send)
+        FlickTypeTextEditor(title: "Message", text: $message, onCommit: send)
     }
     
     func send() {
