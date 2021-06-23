@@ -11,8 +11,8 @@ class EventProcessingTests: BaseTestCase {
         room.id = "!room:example.org"
         
         // when processing the events from this response
-        joinedRoom.state.events.forEach { dataController.processStateEvent($0, in: room) }
-        dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
+        joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
+        dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
         
         dataController.save()
         
@@ -32,8 +32,8 @@ class EventProcessingTests: BaseTestCase {
         // when processing a sync response with one new message for the room from the same member
         let room = dataController.room(id: "!room:example.org")!
         
-        joinedRoom.state.events.forEach { dataController.processStateEvent($0, in: room) }
-        dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
+        joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
+        dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
         
         dataController.save()
         
