@@ -117,9 +117,9 @@ class DataController {
         let room = Room(context: viewContext)
         room.id = id
         
-        joinedRoom.state.events.forEach { processStateEvent($0, in: room) }
-        process(events: joinedRoom.timeline.events, in: room, includeState: true)
-        room.previousBatch = joinedRoom.timeline.previousBatch
+        joinedRoom.state?.events?.forEach { processStateEvent($0, in: room) }
+        process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+        room.previousBatch = joinedRoom.timeline?.previousBatch
         
         return room
     }

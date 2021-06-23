@@ -177,8 +177,8 @@ class MatrixController: ObservableObject {
                     self.state = .syncError(error: error)
                 }
             } receiveValue: { response in
-                self.process(response.rooms.joined)
-                self.process(response.rooms.left)
+                self.process(response.rooms?.joined ?? [:])
+                self.process(response.rooms?.left ?? [:])
                 
                 self.syncState.nextBatch = response.nextBatch
                 self.dataController.save()
@@ -201,19 +201,28 @@ class MatrixController: ObservableObject {
             
             if let room = dataController.room(id: roomID) {
                 // delete existing messages when the timeline is limited and reset the pagination token
-                if joinedRoom.timeline.isLimited {
+                if let timeline = joinedRoom.timeline, timeline.isLimited == true {
                     room.deleteAllMessages()
-                    room.previousBatch = joinedRoom.timeline.previousBatch
+                    room.previousBatch = timeline.previousBatch
                 }
                 
-                joinedRoom.state.events.forEach { dataController.processStateEvent($0, in: room) }
-                dataController.process(events: joinedRoom.timeline.events, in: room, includeState: true)
-                room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
+                // process state events first as these occured before any state events included in the timeline
+                joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
+                
+                // process the timeline events
+                dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+                
+                if let unreadCount = joinedRoom.unreadNotifications?.notificationCount {
+                    room.unreadCount = Int32(unreadCount)
+                }
             } else {
                 let room = dataController.createRoom(id: roomID, joinedRoom: joinedRoom)
                 getName(of: room)
                 loadMoreMessages(in: room)
-                room.unreadCount = Int32(joinedRoom.unreadNotifications.notificationCount)
+                
+                if let unreadCount = joinedRoom.unreadNotifications?.notificationCount {
+                    room.unreadCount = Int32(unreadCount)
+                }
             }
         }
     }
