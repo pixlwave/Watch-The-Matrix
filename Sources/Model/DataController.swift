@@ -192,9 +192,8 @@ class DataController {
     func updateMember(_ member: Member, from event: RoomEvent) {
         member.displayName = event.content.displayName
         
-        if let urlString = event.content.avatarURL, var components = URLComponents(string: urlString) {
-            components.scheme = "https"
-            member.avatarURL = components.url
+        if let urlString = event.content.avatarURL, !urlString.isEmpty {
+            member.avatarURL = URL(string: urlString)
         } else {
             member.avatarURL = nil
         }
