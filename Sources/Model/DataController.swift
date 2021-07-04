@@ -6,7 +6,7 @@ import Matrix
 class DataController {
     /// A version number that is incremented when breaking changes are made
     /// to the data model, processing or storage logic to force a resync.
-    private let version = 1
+    private let version = 2
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
@@ -144,15 +144,22 @@ class DataController {
     ///
     /// The message is created on the view context and will be added to the room.
     func createMessage(roomEvent: RoomEvent, in room: Room) -> Message? {
-        guard let body = roomEvent.content.body else { return nil }
+        guard
+            let body = roomEvent.content.body,
+            let type = roomEvent.content.type
+        else { return nil }
         
         let message = Message(context: viewContext)
         message.id = roomEvent.eventID
         message.body = body
+        message.typeString = type.rawValue
         message.date = roomEvent.date
         message.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
         message.room = room
         
+        // message type dependent properties
+        message.url = roomEvent.content.url
+
         return message
     }
     

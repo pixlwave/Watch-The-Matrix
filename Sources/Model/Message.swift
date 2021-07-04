@@ -2,6 +2,11 @@ import Matrix
 import CoreData
 
 extension Message {
+    /// The type of content that this message contains such as text, image etc.
+    var type: RoomEvent.RoomEventContent.MessageType {
+        RoomEvent.RoomEventContent.MessageType(rawValue: typeString ?? "") ?? .unknown
+    }
+    
     /// A request that will fetch any reactions that have been made to this message.
     private var reactionsRequest: NSFetchRequest<Reaction> {
         let request: NSFetchRequest<Reaction> = Reaction.fetchRequest()
@@ -25,7 +30,7 @@ extension Message {
         }
     }
     
-    /// The newest edit made to the message, or nil if no edits have been made.
+    /// The newest edit made to this message, or nil if no edits have been made.
     var lastEdit: Edit? {
         let request: NSFetchRequest<Edit> = Edit.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)

@@ -30,6 +30,8 @@
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="typeString" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
         <relationship name="edits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Edit" inverseName="message" inverseEntity="Edit"/>
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
         <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Redaction" inverseName="message" inverseEntity="Redaction"/>
@@ -74,7 +76,7 @@
     <elements>
         <element name="Edit" positionX="0" positionY="0" width="128" height="89"/>
         <element name="Member" positionX="0" positionY="0" width="128" height="134"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="149"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="179"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="0" positionY="0" width="128" height="89"/>
         <element name="Room" positionX="0" positionY="0" width="128" height="134"/>
