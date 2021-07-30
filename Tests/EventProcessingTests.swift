@@ -1,5 +1,5 @@
 import XCTest
-@testable import TestingHost
+@testable import Watch_The_Matrix_WatchKit_Extension
 import Matrix
 
 class EventProcessingTests: BaseTestCase {
