@@ -2,7 +2,7 @@
 
 A watchOS client for [matrix.org](https://www.matrix.org).
 
-View rooms and read or react to messages on Apple Watch. Targets watchOS 7.
+View rooms and send messages & reactions on Apple Watch. Targets watchOS 7.
 
 Join the discussion and get the TestFlight at [#watchthe:matrix.org](https://matrix.to/#/#watchthe:matrix.org).
 
