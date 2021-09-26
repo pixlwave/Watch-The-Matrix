@@ -34,9 +34,13 @@ struct MessageView: View {
                     .padding(.horizontal, 4)    // match the indentation of the message text
             }
             
-            MessageBubble(text: lastEdit?.body ?? message.body ?? "",
-                          footnote: lastEdit.map { _ in "Edited" },     // indicate that the message has been edited
-                          color: bubbleColor)
+            if message.type == .image && message.mediaURL != nil {
+                ImageBubble(message: message)
+            } else {
+                MessageBubble(text: lastEdit?.body ?? message.body ?? "",
+                              footnote: lastEdit.map { _ in "Edited" },     // indicate that the message has been edited
+                              color: bubbleColor)
+            }
             
             if !reactions.isEmpty {
                 ReactionsView(reactions: reactions)

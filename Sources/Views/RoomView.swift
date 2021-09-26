@@ -69,6 +69,7 @@ struct RoomView: View {
                         .padding(.top)
                 }
                 .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
+                .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
                     if !hasAppeared {
                         // update the last message id and display the last message

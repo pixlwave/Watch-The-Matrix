@@ -6,7 +6,7 @@ import Matrix
 class DataController {
     /// A version number that is incremented when breaking changes are made
     /// to the data model, processing or storage logic to force a resync.
-    private let version = 2
+    private let version = 3
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
@@ -157,8 +157,14 @@ class DataController {
         message.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
         message.room = room
         
-        // message type dependent properties
-        message.url = event.content.url
+        // media related properties
+        message.mediaURL = event.content.mediaURL
+        if let mediaWidth = event.content.mediaInfo?.width {
+            message.mediaWidth = Double(mediaWidth)
+        }
+        if let mediaHeight = event.content.mediaInfo?.height {
+            message.mediaHeight = Double(mediaHeight)
+        }
 
         return message
     }

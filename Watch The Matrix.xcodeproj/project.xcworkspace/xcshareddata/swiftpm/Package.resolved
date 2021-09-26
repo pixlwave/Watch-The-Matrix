@@ -23,8 +23,8 @@
         "package": "Matrix",
         "repositoryURL": "https://github.com/pixlwave/Matrix",
         "state": {
-          "branch": "main",
-          "revision": "afd026b9326988b532640b4b5f5812a08ff9ca25",
+          "branch": "polymorphic-decoding",
+          "revision": "dd81ced81a5cfe8e0aa768d0de1ae6e065c52e90",
           "version": null
         }
       }

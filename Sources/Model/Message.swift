@@ -3,8 +3,8 @@ import CoreData
 
 extension Message {
     /// The type of content that this message contains such as text, image etc.
-    var type: RoomMessageEvent.Content.MessageType {
-        RoomMessageEvent.Content.MessageType(rawValue: typeString ?? "") ?? .unknown
+    var type: MessageContent.MessageType {
+        MessageContent.MessageType(rawValue: typeString ?? "") ?? .unknown
     }
     
     /// A request that will fetch any reactions that have been made to this message.
@@ -51,5 +51,10 @@ extension Message {
     var isRedacted: Bool {
         // check if there is at least 1 redaction
         return (try? managedObjectContext?.count(for: redactionsRequest)) ?? 0 > 0
+    }
+    
+    var mediaAspectRadio: Double? {
+        guard mediaWidth > 0 && mediaHeight > 0 else { return nil }
+        return mediaWidth / mediaHeight
     }
 }

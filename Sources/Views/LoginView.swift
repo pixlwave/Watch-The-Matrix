@@ -19,8 +19,9 @@ struct LoginView: View {
     var body: some View {
         Form {
             Section(footer: homeserverFooter) {
-                TextField("Username", text: $viewModel.username, onCommit: viewModel.parseUsername)
+                TextField("Username", text: $viewModel.username)
                     .textContentType(.username)
+                    .onSubmit(viewModel.parseUsername)
                 SecureField("Password", text: $viewModel.password)
                     .textContentType(.password)
             }

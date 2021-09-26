@@ -51,6 +51,7 @@
 		A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A77A74265833C000B683FF /* TransactionManager.swift */; };
 		A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0826482CA3005384AF /* RoomCell.swift */; };
 		A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0A264831F4005384AF /* Date-Formatting.swift */; };
+		A5BC73C72700B97E00AF5AF9 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
 		A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */; };
 		A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCA2B3262B85F7004A328B /* ReactionsView.swift */; };
@@ -159,6 +160,7 @@
 		A5A77A74265833C000B683FF /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		A5B43C0826482CA3005384AF /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
 		A5B43C0A264831F4005384AF /* Date-Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Formatting.swift"; sourceTree = "<group>"; };
+		A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
 		A5C6FD2C2611E9FB0096DF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5DCA2B3262B85F7004A328B /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				A5E9E87A25F676730054D1A2 /* MessageView.swift */,
 				A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */,
 				A59437F5265D05DA00A81E1E /* MessageBubble.swift */,
+				A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */,
 				A51EA1722657BD160067A708 /* MessageComposer.swift */,
 				A58015272623280800C61D25 /* ReactionPicker.swift */,
 				A5DCA2B3262B85F7004A328B /* ReactionsView.swift */,
@@ -545,6 +548,7 @@
 				A54E5CDE25F5342700D43CDE /* MatrixController.swift in Sources */,
 				A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */,
 				A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */,
+				A5BC73C72700B97E00AF5AF9 /* ImageBubble.swift in Sources */,
 				A5989DFC265AE28100DAD57C /* TransactionStore.swift in Sources */,
 				A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */,
 				A5A30C0C260BA53700861601 /* Edit.swift in Sources */,
@@ -779,7 +783,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -805,7 +809,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -826,7 +830,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -847,7 +851,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -932,7 +936,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pixlwave/Matrix";
 			requirement = {
-				branch = main;
+				branch = "polymorphic-decoding";
 				kind = branch;
 			};
 		};
