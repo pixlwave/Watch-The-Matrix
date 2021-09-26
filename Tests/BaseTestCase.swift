@@ -1,6 +1,6 @@
 import XCTest
 @testable import Watch_The_Matrix_WatchKit_Extension
-import Matrix
+@testable import Matrix
 
 class BaseTestCase: XCTestCase {
     var dataController: DataController!
@@ -10,6 +10,7 @@ class BaseTestCase: XCTestCase {
         dataController = DataController(inMemory: true)
         jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .millisecondsSince1970
+        jsonDecoder.userInfo[.roomEventTypes] = Client.eventTypes
     }
     
     func loadJoinedRoomJSON(named fileName: String) -> JoinedRoom? {

@@ -136,29 +136,29 @@ class DataController {
         return message
     }
     
-    /// Creates a message from a Matrix `RoomEvent`. If the message already exists
-    /// the store's merge policy will overwrite it's properties to match the `RoomEvent`.
-    /// - Parameter roomEvent: A Matrix `RoomEvent`of type `m.room.message`.
+    /// Creates a message from a Matrix `RoomMessageEvent`. If the message already exists
+    /// the store's merge policy will overwrite it's properties to match the `RoomMessageEvent`.
+    /// - Parameter event: A Matrix event of type `RoomMessageEvent`.
     /// - Parameter room: The room that the message belongs to.
     /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
     ///
     /// The message is created on the view context and will be added to the room.
-    func createMessage(roomEvent: RoomEvent, in room: Room) -> Message? {
+    func createMessage(event: RoomMessageEvent, in room: Room) -> Message? {
         guard
-            let body = roomEvent.content.body,
-            let type = roomEvent.content.type
+            let body = event.content.body,
+            let type = event.content.type
         else { return nil }
         
         let message = Message(context: viewContext)
-        message.id = roomEvent.eventID
+        message.id = event.eventID
         message.body = body
         message.typeString = type.rawValue
-        message.date = roomEvent.date
-        message.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        message.date = event.date
+        message.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
         message.room = room
         
         // message type dependent properties
-        message.url = roomEvent.content.url
+        message.url = event.content.url
 
         return message
     }
@@ -172,14 +172,14 @@ class DataController {
         return member
     }
     
-    /// Creates a member from a Matrix `RoomEvent`. If the member already exists
-    /// store's merge policy will overwrite it's properties to match the `RoomEvent`.
-    /// - Parameter event: A `RoomEvent` of type `m.room.member`.
-    /// - Parameter room: The room that the member belongs too.
+    /// Creates a member from a Matrix `RoomMemberEvent`. If the member already exists
+    /// store's merge policy will overwrite it's properties to match the `RoomMemberEvent`.
+    /// - Parameter event: A Matrix event of type `RoomMemberEvent`.
+    /// - Parameter room: The room that the member belongs to.
     /// - Returns: The `Member` object that was just created, or `nil` if the event was invalid.
     ///
     /// The member is created on the view context.
-    func createMember(event: RoomEvent, in room: Room) -> Member? {
+    func createMember(event: RoomMemberEvent, in room: Room) -> Member? {
         guard let userID = event.stateKey else { return nil }
         
         let member = createMember(id: userID, in: room)
@@ -188,8 +188,8 @@ class DataController {
         return member
     }
     
-    /// Updates an existing member from a Matrix `RoomEvent`.
-    func updateMember(_ member: Member, from event: RoomEvent) {
+    /// Updates an existing member from a Matrix `RoomMemberEvent`.
+    func updateMember(_ member: Member, from event: RoomMemberEvent) {
         member.displayName = event.content.displayName
         
         if let urlString = event.content.avatarURL, !urlString.isEmpty {
@@ -199,59 +199,59 @@ class DataController {
         }
     }
     
-    /// Creates a reaction from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.reaction`.
+    /// Creates a reaction from a Matrix `RoomReactionEvent`.
+    /// - Parameter event: A Matrix event of type `RoomReactionEvent`.
     /// - Parameter room: The room that the message being reacted to belongs in.
     /// - Returns: The `Reaction` object if successful or `nil` if the event was invalid.
     ///
     /// The reaction is created on the view context.
-    func createReaction(roomEvent: RoomEvent, in room: Room) {
+    func createReaction(event: RoomReactionEvent, in room: Room) {
         guard
-            let relationship = roomEvent.content.relationship,
+            let relationship = event.content.relationship,
             let key = relationship.key,
             let messageID = relationship.eventID
         else { return }
         
         let reaction = Reaction(context: viewContext)
         reaction.key = key
-        reaction.id = roomEvent.eventID
+        reaction.id = event.eventID
         reaction.message = message(id: messageID) ?? createMessage(id: messageID)
-        reaction.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
-        reaction.date = roomEvent.date
+        reaction.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
+        reaction.date = event.date
     }
     
-    /// Creates a message edit from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: A Matrix `RoomEvent` with a `replace` relationship.
+    /// Creates a message edit from a Matrix `RoomMessageEvent`.
+    /// - Parameter event: A Matrix `RoomMessageEvent` with a `replace` relationship.
     /// - Returns: The `Edit` object if successful or `nil` if the event was invalid.
     ///
     /// The message edit is created on the view context.
-    func createEdit(roomEvent: RoomEvent) {
+    func createEdit(event: RoomMessageEvent) {
         guard
-            let relationship = roomEvent.content.relationship,
-            let body = roomEvent.content.newContent?.body,
+            let relationship = event.content.relationship,
+            let body = event.content.newContent?.body,
             let messageID = relationship.eventID
         else { return }
         
         let edit = Edit(context: viewContext)
         edit.body = body
-        edit.id = roomEvent.eventID
-        edit.date = roomEvent.date
+        edit.id = event.eventID
+        edit.date = event.date
         edit.message = message(id: messageID) ?? createMessage(id: messageID)
     }
     
-    /// Created a redaction from a Matrix `RoomEvent`.
-    /// - Parameter roomEvent: A Matrix `RoomEvent` of type `m.room.redaction`.
+    /// Created a redaction from a Matrix `RoomRedactionEvent`.
+    /// - Parameter event: A Matrix event of type `RoomRedactionEvent`.
     /// - Parameter room: The room that the message being redacted belongs to.
     /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
     ///
     /// The redaction is created on the view context.
-    func createRedaction(roomEvent: RoomEvent, in room: Room) {
-        guard let messageID = roomEvent.redacts else { return }
+    func createRedaction(event: RoomRedactionEvent, in room: Room) {
+        guard let messageID = event.redacts else { return }
         
         let redaction = Redaction(context: viewContext)
-        redaction.id = roomEvent.eventID
-        redaction.date = roomEvent.date
-        redaction.sender = member(id: roomEvent.sender, in: room) ?? createMember(id: roomEvent.sender, in: room)
+        redaction.id = event.eventID
+        redaction.date = event.date
+        redaction.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
         redaction.message = message(id: messageID) ?? createMessage(id: messageID)
     }
     
@@ -268,23 +268,23 @@ class DataController {
         var messages = [Message]()
             
         events.forEach {
-            if $0.type == "m.room.message" {
-                if $0.content.relationship?.type != .replace {
-                    if let message = createMessage(roomEvent: $0, in: room) {
+            if let messageEvent = $0 as? RoomMessageEvent {
+                if messageEvent.content.relationship?.type != .replace {
+                    if let message = createMessage(event: messageEvent, in: room) {
                         messages.append(message)
                         
                         // if the event has a transaction id, remove its local echo
-                        if let transactionID = $0.unsigned?.transactionID {
+                        if let transactionID = messageEvent.unsigned?.transactionID {
                             room.transactionStore.removeTransaction(with: transactionID)
                         }
                     }
                 } else {
-                    createEdit(roomEvent: $0)
+                    createEdit(event: messageEvent)
                 }
-            } else if $0.type == "m.reaction" {
-                createReaction(roomEvent: $0, in: room)
-            } else if $0.type == "m.room.redaction" {
-                createRedaction(roomEvent: $0, in: room)
+            } else if let reactionEvent = $0 as? RoomReactionEvent {
+                createReaction(event: reactionEvent, in: room)
+            } else if let redactionEvent = $0 as? RoomRedactionEvent {
+                createRedaction(event: redactionEvent, in: room)
             } else if includeState {
                 processStateEvent($0, in: room)
             }
@@ -297,20 +297,20 @@ class DataController {
     /// - Room Name
     /// - Membership Changes
     func processStateEvent(_ event: RoomEvent, in room: Room) {
-        if event.type == "m.room.name", let name = event.content.name {
+        if let nameEvent = event as? RoomNameEvent, let name = nameEvent.content.name {
             room.name = name.isEmpty ? nil : name
-        } else if event.type == "m.room.member" {
-            if let userID = event.stateKey, let membership = event.content.membership {
+        } else if let memberEvent = event as? RoomMemberEvent {
+            if let userID = memberEvent.stateKey, let membership = memberEvent.content.membership {
                 if membership == .join {
                     let member = self.member(id: userID, in: room) ?? createMember(id: userID, in: room)
-                    updateMember(member, from: event)
+                    updateMember(member, from: memberEvent)
                 } else {
                     if let member = self.member(id: userID, in: room) {
                         room.removeFromMembers(member)    // this can be called even if the relationship doesn't exist
                     }
                 }
             }
-        } else if event.type == "m.room.encryption" {
+        } else if event is RoomEncryptionEvent {
             room.isEncrypted = true
         }
     }

@@ -262,10 +262,14 @@ class MatrixController: ObservableObject {
             .subscribe(Subscribers.Sink { completion in
                 //
             } receiveValue: { response in
-                let members = response.members.filter { $0.type == "m.room.member" && $0.content.membership == .join }
-                                              .compactMap { self.dataController.createMember(event: $0, in: room) }
+                guard let events = response.members else { return }
                 
-                room.members = NSSet(array: members)
+                let members = events.compactMap { $0 as? RoomMemberEvent }
+                                    .filter { $0.content.membership == .join }
+                                    .compactMap { self.dataController.createMember(event: $0, in: room) }
+                                    .lazy
+                
+                room.members = NSSet(set: Set(members))
                 self.dataController.save()
             })
     }

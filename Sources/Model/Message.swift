@@ -3,8 +3,8 @@ import CoreData
 
 extension Message {
     /// The type of content that this message contains such as text, image etc.
-    var type: RoomEvent.RoomEventContent.MessageType {
-        RoomEvent.RoomEventContent.MessageType(rawValue: typeString ?? "") ?? .unknown
+    var type: RoomMessageEvent.Content.MessageType {
+        RoomMessageEvent.Content.MessageType(rawValue: typeString ?? "") ?? .unknown
     }
     
     /// A request that will fetch any reactions that have been made to this message.
