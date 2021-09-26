@@ -14,8 +14,9 @@ struct ImageBubble: View {
                 .scaledToFit()
         } placeholder: {
             Rectangle()
-                .foregroundColor(.gray)
+                .foregroundStyle(.tertiary)
                 .aspectRatio(message.mediaAspectRadio ?? 1, contentMode: .fit)
+                .overlay(ProgressView())
         }
         .cornerRadius(6)
     }

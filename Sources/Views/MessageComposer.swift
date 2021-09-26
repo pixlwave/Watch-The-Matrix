@@ -9,7 +9,7 @@ struct MessageComposer: View {
     @State private var message = ""
     
     var body: some View {
-        FlickTypeTextEditor(title: "Message", text: $message, onCommit: send)
+        FlickTypeTextEditor("Message", text: $message, onCommit: send)
     }
     
     func send() {

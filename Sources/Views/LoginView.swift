@@ -21,6 +21,8 @@ struct LoginView: View {
             Section(footer: homeserverFooter) {
                 TextField("Username", text: $viewModel.username)
                     .textContentType(.username)
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
                     .onSubmit(viewModel.parseUsername)
                 SecureField("Password", text: $viewModel.password)
                     .textContentType(.password)
