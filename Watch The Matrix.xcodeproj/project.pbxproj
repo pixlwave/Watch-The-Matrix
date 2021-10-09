@@ -57,6 +57,7 @@
 		A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCA2B3262B85F7004A328B /* ReactionsView.swift */; };
 		A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
 		A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87A25F676730054D1A2 /* MessageView.swift */; };
+		A5FEEBEA27118E4200B57B84 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FEEBE927118E4200B57B84 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,7 @@
 		A5DCA2B3262B85F7004A328B /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		A5E9E87225F673C00054D1A2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		A5E9E87A25F676730054D1A2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		A5FEEBE927118E4200B57B84 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +331,7 @@
 				A5DCA2B3262B85F7004A328B /* ReactionsView.swift */,
 				A52BA38625DECCDD00BBCCFC /* LoginView.swift */,
 				A56329DF263C3861003D0E67 /* LoginViewModel.swift */,
+				A5FEEBE927118E4200B57B84 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */,
 				A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */,
 				A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */,
+				A5FEEBEA27118E4200B57B84 /* SettingsView.swift in Sources */,
 				A564A4CE260B588B00895426 /* TestData.swift in Sources */,
 				A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */,
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
@@ -936,7 +940,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pixlwave/Matrix";
 			requirement = {
-				branch = "polymorphic-decoding";
+				branch = main;
 				kind = branch;
 			};
 		};

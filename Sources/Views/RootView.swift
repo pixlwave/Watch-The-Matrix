@@ -6,7 +6,7 @@ struct RootView: View {
     @EnvironmentObject var matrix: MatrixController
     
     // sheets and alerts
-    @State private var isPresentingSignOutAlert = false
+    @State private var isPresentingSettings = false
     @State private var syncError: MatrixError? = nil
     
     @Environment(\.managedObjectContext) var viewContext
@@ -49,18 +49,13 @@ struct RootView: View {
         .navigationTitle("Rooms")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button { isPresentingSignOutAlert = true } label: {
+                Button { isPresentingSettings = true } label: {
                     Image(systemName: "person")
                 }
             }
         }
-        .alert(isPresented: $isPresentingSignOutAlert) {
-            Alert(title: Text("Sign Out?"),
-                  primaryButton: .destructive(Text("Sign out")) {
-                    matrix.logout()
-                  },
-                  secondaryButton: .cancel()
-            )
+        .sheet(isPresented: $isPresentingSettings) {
+            SettingsView()
         }
         .sheet(item: $syncError) { syncError in
             Text(syncError.description)
