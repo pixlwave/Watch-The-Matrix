@@ -196,12 +196,12 @@ class DataController {
     
     /// Updates an existing member from a Matrix `RoomMemberEvent`.
     func updateMember(_ member: Member, from event: RoomMemberEvent) {
-        member.displayName = event.content.displayName
+        if let name = event.content.displayName {
+            member.displayName = name.isEmpty ? nil : name
+        }
         
-        if let urlString = event.content.avatarURL, !urlString.isEmpty {
-            member.avatarURL = URL(string: urlString)
-        } else {
-            member.avatarURL = nil
+        if let urlString = event.content.avatarURL {
+            member.avatarURL = urlString.isEmpty ? nil : URL(string: urlString)
         }
     }
     

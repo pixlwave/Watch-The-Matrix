@@ -2,9 +2,6 @@ import Matrix
 import CoreData
 
 extension Room {
-    /// A list formatter that's used to generate a room name from (some of) the members of the room.
-    static let nameFormatter = ListFormatter()
-    
     /// Whether or not there are any older messages for the room available on the server.
     #warning("Checking whether a previous batch exists doesn't appear to be the correct method.")
     var hasMoreMessages: Bool { previousBatch != nil }
@@ -63,12 +60,8 @@ extension Room {
             return NSLocalizedString("Empty Room", comment: "There is no-one else in the room")
         }
         
-        // generate a room name using a list formatter
-        guard let generatedName = Room.nameFormatter.string(from: names), !generatedName.isEmpty else {
-            return NSLocalizedString("Unknown Room", comment: "A room name could not be generated")
-        }
-        
-        return generatedName
+        // format the member names in a list
+        return names.formatted(.list(type: .and))
     }
     
     /// Deletes all of the messages belonging to the room. In turn, the deletion will cascade
