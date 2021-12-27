@@ -24,6 +24,7 @@
 		A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
 		A559560726B47B2600AB1499 /* NewJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */; };
 		A559560826B47B2600AB1499 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
+		A561B753277A320600CEAF26 /* MessageAligner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561B752277A320600CEAF26 /* MessageAligner.swift */; };
 		A5620D55264915E500EAF88B /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A5620D54264915E500EAF88B /* Matrix */; };
 		A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56329DF263C3861003D0E67 /* LoginViewModel.swift */; };
 		A564A4C6260B4E6B00895426 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
@@ -31,6 +32,7 @@
 		A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */; };
 		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A58015282623280800C61D25 /* ReactionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58015272623280800C61D25 /* ReactionPicker.swift */; };
+		A581EB90277A4CEB0083B24A /* AlignedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A581EB8F277A4CEB0083B24A /* AlignedScrollView.swift */; };
 		A59430712673D4E900A47018 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59430702673D4E900A47018 /* ExtensionDelegate.swift */; };
 		A59430742673D53300A47018 /* FlickTypeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A59430732673D53300A47018 /* FlickTypeKit */; };
 		A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */; };
@@ -126,11 +128,13 @@
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		A561B752277A320600CEAF26 /* MessageAligner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAligner.swift; sourceTree = "<group>"; };
 		A56329DF263C3861003D0E67 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		A564A4CD260B588B00895426 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatrixError-Identifiable.swift"; sourceTree = "<group>"; };
 		A58015272623280800C61D25 /* ReactionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPicker.swift; sourceTree = "<group>"; };
+		A581EB8F277A4CEB0083B24A /* AlignedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedScrollView.swift; sourceTree = "<group>"; };
 		A58B95DF261F918100A3E8F5 /* MemberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTests.swift; sourceTree = "<group>"; };
 		A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Watch The Matrix WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		A59430702673D4E900A47018 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
@@ -244,6 +248,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A581EB8E277A4CD10083B24A /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				A561B752277A320600CEAF26 /* MessageAligner.swift */,
+				A581EB8F277A4CEB0083B24A /* AlignedScrollView.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		A5989DF9265AE26B00DAD57C /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +332,7 @@
 		A5D9CF06260B4CD000875D38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A581EB8E277A4CD10083B24A /* Layout */,
 				A59A0C5E25DD6AC200B5EDAA /* RootView.swift */,
 				A5B43C0826482CA3005384AF /* RoomCell.swift */,
 				A52BA37225DEC59800BBCCFC /* RoomView.swift */,
@@ -544,6 +558,7 @@
 				A54E5CDC25F5342700D43CDE /* Message.swift in Sources */,
 				A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */,
 				A54E5CDD25F5342700D43CDE /* Room.swift in Sources */,
+				A561B753277A320600CEAF26 /* MessageAligner.swift in Sources */,
 				A59430712673D4E900A47018 /* ExtensionDelegate.swift in Sources */,
 				A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */,
 				A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */,
@@ -564,6 +579,7 @@
 				A59437F6265D05DA00A81E1E /* MessageBubble.swift in Sources */,
 				A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */,
 				A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */,
+				A581EB90277A4CEB0083B24A /* AlignedScrollView.swift in Sources */,
 				A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */,
 				A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */,
 				A54E5CDB25F5342700D43CDE /* Member.swift in Sources */,

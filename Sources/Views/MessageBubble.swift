@@ -3,17 +3,12 @@ import SwiftUI
 /// A view that displays a string inside a colored bubble with an optional footnote.
 struct MessageBubble: View {
     let text: String
-    let footnote: String?
+    var footnote: String? = nil
     let color: Color
-    
-    init(text: String, footnote: String? = nil, color: Color) {
-        self.text = text
-        self.footnote = footnote
-        self.color = color
-    }
+    var alignment: HorizontalAlignment = .leading
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: alignment) {
             Text(text)
             
             footnote.map {

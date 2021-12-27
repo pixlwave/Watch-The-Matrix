@@ -9,23 +9,26 @@ struct MessageView: View {
     
     let showSender: Bool
     let bubbleColor: Color
+    let isCurrentUser: Bool
     
-    init?(message: Message, showSender: Bool, bubbleColor: Color) {
+    init?(message: Message, showSender: Bool, isCurrentUser: Bool) {
         #warning("Can this init be made non-optional?")
         guard let sender = message.sender else { return nil }
         
         _message = ObservedObject(wrappedValue: message)
         _sender = ObservedObject(wrappedValue: sender)
         self.showSender = showSender
-        self.bubbleColor = bubbleColor
+        self.bubbleColor = isCurrentUser ? .accentColor : Color(.darkGray)
+        self.isCurrentUser = isCurrentUser
     }
     
     var body: some View {
         // get the most recent edit and any reactions to the message
         let lastEdit = message.lastEdit
         let reactions = message.reactionsViewModel
+        let alignment: HorizontalAlignment = isCurrentUser ? .trailing : .leading
         
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: alignment, spacing: 2) {
             if showSender {
                 // show the sender's name or id if requested
                 Text(sender.displayName ?? sender.id ?? "")
@@ -34,20 +37,22 @@ struct MessageView: View {
                     .padding(.horizontal, 4)    // match the indentation of the message text
             }
             
-            if message.type == .image && message.mediaURL != nil {
-                ImageBubble(message: message)
-            } else {
-                MessageBubble(text: lastEdit?.body ?? message.body ?? "",
-                              footnote: lastEdit.map { _ in "Edited" },     // indicate that the message has been edited
-                              color: bubbleColor)
+            MessageAligner(isCurrentUser: isCurrentUser) {
+                if message.type == .image && message.mediaURL != nil {
+                    ImageBubble(message: message)
+                } else {
+                    MessageBubble(text: lastEdit?.body ?? message.body ?? "",
+                                  footnote: lastEdit.map { _ in "Edited" },     // indicate that the message has been edited
+                                  color: bubbleColor,
+                                  alignment: alignment)
+                }
             }
             
             if !reactions.isEmpty {
-                ReactionsView(reactions: reactions)
+                ReactionsView(reactions: reactions, alignment: alignment)
                     .padding(.top, 2)
             }
         }
-        .id(message.id)     // give the view it's message's id for programatic scrolling
         .accessibilityElement(children: .combine)
     }
 }
@@ -56,8 +61,15 @@ struct MessageView_Previews: PreviewProvider {
     static let matrix = MatrixController.preview
     
     static var previews: some View {
-        MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
-                    showSender: true,
-                    bubbleColor: .accentColor)
+        ScrollView {
+            VStack {
+                MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+                            showSender: true,
+                            isCurrentUser: false)
+                MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+                            showSender: true,
+                            isCurrentUser: true)
+            }
+        }
     }
 }

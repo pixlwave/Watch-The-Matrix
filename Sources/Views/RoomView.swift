@@ -44,25 +44,29 @@ struct RoomView: View {
                         // figure out whether the sender's name is the same to avoid duplicate labels
                         let previousMessage = messages.indices.contains(index - 1) ? messages[index - 1] : nil
                         let senderHasChanged = previousMessage?.sender != message.sender
+                        let isCurrentUser = message.sender?.id == matrix.userID
                         
                         // hide the message if it has been redacted
                         if !message.isRedacted {
                             MessageView(message: message,
                                         showSender: showSenders ? senderHasChanged : false,
-                                        bubbleColor: message.sender?.id == matrix.userID ? .accentColor : Color(.darkGray)
-                            )
+                                        isCurrentUser: isCurrentUser)
+                            .id(message.id)     // give the view it's message's id for programatic scrolling
                             .onLongPressGesture { messageToReactTo = message }
                             .transition(.move(edge: .bottom))
                         } else {
                             Label("Deleted", systemImage: "trash")
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 6).foregroundColor(Color(.darkGray).opacity(1 / 3)))
+                                .id(message.id) // give the view it's message's id for programatic scrolling
                         }
                     }
                     
                     // show a local echo for outgoing messages
                     ForEach(transactionStore.messages) { transaction in
-                        MessageTransactionView(transaction: transaction)
+                        MessageAligner(isCurrentUser: true) {
+                            MessageTransactionView(transaction: transaction)
+                        }
                     }
  
                     MessageComposer(room: room)

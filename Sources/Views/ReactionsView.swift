@@ -3,9 +3,10 @@ import SwiftUI
 /// A view that displays a horizontally scrolling list of grouped reactions
 struct ReactionsView: View {
     let reactions: [(key: String, count: Int)]
+    let alignment: HorizontalAlignment
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+        AlignedScrollView(alignment: alignment, showsIndicators: false) {
             HStack {
                 ForEach(0..<reactions.count, id: \.self) { index in
                     HStack {
