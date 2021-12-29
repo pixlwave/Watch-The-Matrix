@@ -51,7 +51,8 @@ struct RoomView: View {
                             MessageView(message: message,
                                         showSender: showSenders ? senderHasChanged : false,
                                         isCurrentUser: isCurrentUser)
-                            .id(message.id)     // give the view it's message's id for programatic scrolling
+                            .id(message.id)     // give the view its message's id for programatic scrolling
+                            .onTapGesture(count: 2) { messageToReactTo = message }
                             .onLongPressGesture { messageToReactTo = message }
                             .transition(.move(edge: .bottom))
                         } else {
@@ -68,7 +69,7 @@ struct RoomView: View {
                             MessageTransactionView(transaction: transaction)
                         }
                     }
- 
+                    
                     MessageComposer(room: room)
                         .padding(.top)
                 }

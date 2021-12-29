@@ -23,9 +23,9 @@
         "package": "Matrix",
         "repositoryURL": "https://github.com/pixlwave/Matrix",
         "state": {
-          "branch": null,
-          "revision": "d333a9b4f4c2ae95178efab2adcdd8da074bcebe",
-          "version": "0.1.1"
+          "branch": "main",
+          "revision": "129ea9b8980e95672c9041bb044a6ae79b8ba6b9",
+          "version": null
         }
       }
     ]

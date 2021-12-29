@@ -956,8 +956,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pixlwave/Matrix";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 		A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {

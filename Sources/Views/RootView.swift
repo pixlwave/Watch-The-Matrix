@@ -12,6 +12,7 @@ struct RootView: View {
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(entity: Room.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)],
+                  predicate: NSPredicate(format: "isSpace != true"),
                   animation: .default) var rooms: FetchedResults<Room>
     
     var body: some View {

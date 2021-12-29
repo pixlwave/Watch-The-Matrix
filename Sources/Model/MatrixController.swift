@@ -217,6 +217,7 @@ class MatrixController: ObservableObject {
                 }
             } else {
                 let room = dataController.createRoom(id: roomID, joinedRoom: joinedRoom)
+                getType(of: room)
                 getName(of: room)
                 loadMoreMessages(in: room)
                 
@@ -236,6 +237,22 @@ class MatrixController: ObservableObject {
         }
     }
     
+    private func getType(of room: Room) {
+        /// Requests the type of the room object passed in and updates it when a response is received.
+        guard let roomID = room.id else { return }
+        
+        client.getCreateEvent(for: roomID)
+            .receive(on: DispatchQueue.main)
+            .subscribe(Subscribers.Sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { response in
+                room.isSpace = response.type == .space
+                self.dataController.save()
+            })
+    }
+    
     /// Requests the name of the room object passed in and updates it when a response is received.
     private func getName(of room: Room) {
         guard let roomID = room.id else { return }
@@ -247,8 +264,10 @@ class MatrixController: ObservableObject {
                     print(error)
                 }
             } receiveValue: { response in
-                room.name = response.name.isEmpty ? nil : response.name
-                self.dataController.save()
+                defer { self.dataController.save() }
+                
+                guard let name = response.name, !name.isEmpty else { room.name = nil; return }
+                room.name = name
             })
     }
     
@@ -305,7 +324,7 @@ class MatrixController: ObservableObject {
     }
     
     /// Sends a message to the specified room.
-    func sendMessage(_ message: String, in room: Room) {
+    func sendMessage(_ message: String, in room: Room, asReplyTo originalMessage: Message? = nil) {
         guard let roomID = room.id else { return }
         
         // create a message transaction
@@ -315,7 +334,8 @@ class MatrixController: ObservableObject {
                                              roomID: roomID)
         
         // send the message, updating the transaction based on the response
-        transaction.token = client.sendMessage(message, in: roomID, with: transaction.id)
+        #warning("Messages MUST be formatted as a rich reply.")
+        transaction.token = client.sendMessage(message, in: roomID, asReplyTo: originalMessage?.id, with: transaction.id)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {

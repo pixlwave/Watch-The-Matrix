@@ -61,6 +61,7 @@
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
         <attribute name="isEncrypted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSpace" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
         <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -81,7 +82,7 @@
         <element name="Message" positionX="0" positionY="0" width="128" height="209"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="0" positionY="0" width="128" height="89"/>
-        <element name="Room" positionX="0" positionY="0" width="128" height="134"/>
+        <element name="Room" positionX="0" positionY="0" width="128" height="149"/>
         <element name="SyncState" positionX="0" positionY="0" width="128" height="44"/>
     </elements>
 </model>

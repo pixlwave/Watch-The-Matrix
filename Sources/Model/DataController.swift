@@ -6,7 +6,7 @@ import Matrix
 class DataController {
     /// A version number that is incremented when breaking changes are made
     /// to the data model, processing or storage logic to force a resync.
-    private let version = 3
+    private let version = 4
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
