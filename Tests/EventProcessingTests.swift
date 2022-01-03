@@ -3,9 +3,9 @@ import XCTest
 import Matrix
 
 class EventProcessingTests: BaseTestCase {
-    func testProcessNewJoinedRoom() {
+    func testProcessNewJoinedRoom() throws {
         // given a joined room response with one member and one message
-        let joinedRoom = loadJoinedRoomJSON(named: "NewJoinedRoom")!
+        let joinedRoom = try loadJSON(named: "NewJoinedRoom", as: JoinedRoom.self)
         
         let room = Room(context: dataController.viewContext)
         room.id = "!room:example.org"
@@ -23,11 +23,11 @@ class EventProcessingTests: BaseTestCase {
     }
     
     
-    func testProcessNewMessageForExistingRoom() {
+    func testProcessNewMessageForExistingRoom() throws {
         // given a room with one message and one member
-        testProcessNewJoinedRoom()
+        try testProcessNewJoinedRoom()
         
-        let joinedRoom = loadJoinedRoomJSON(named: "SyncMessageJoinedRoom")!
+        let joinedRoom = try loadJSON(named: "SyncMessageJoinedRoom", as: JoinedRoom.self)
         
         // when processing a sync response with one new message for the room from the same member
         let room = dataController.room(id: "!room:example.org")!

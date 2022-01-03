@@ -1,4 +1,5 @@
 import XCTest
+import Matrix
 @testable import Watch_The_Matrix_WatchKit_Extension
 
 class MessageTests: BaseTestCase {
@@ -68,5 +69,27 @@ class MessageTests: BaseTestCase {
         
         // then the message should indicate it has been redacted
         XCTAssertTrue(message.isRedacted, "The message should be redacted.")
+    }
+    
+    func testFormattingMessageAsReply() throws {
+        try dataController.createSampleData()
+        
+        // given a set of message events that reply to a message event
+        let room = dataController.room(id: "!test0:example.org")!
+        let messages = try loadJSON(named: "MessageReplies", as: [RoomMessageEvent].self)
+        
+        // when loading the events as messages
+        let rootMessage = dataController.createMessage(event: messages[0], in: room)!
+        let richReply = dataController.createMessage(event: messages[1], in: room)!
+        dataController.save()
+        
+        // then the messages should be correctly identified as replies and formatted appropriately
+        XCTAssertFalse(rootMessage.isReply, "The root message should not be a reply.")
+        XCTAssertNil(rootMessage.replyQuote, "The root message should not have a reply quote.")
+        XCTAssertEqual(rootMessage.body, "Hello, World!", "The root message body should not be altered.")
+        
+        XCTAssertTrue(richReply.isReply, "The message with rich reply content should be a reply.")
+        XCTAssertEqual(richReply.replyQuote, "Hello, World!", "The reply quote from the rich reply should contain the original message.")
+        XCTAssertEqual(richReply.body, "This message is a reply.", "The message body should only contain the reply content from the rich reply.")
     }
 }

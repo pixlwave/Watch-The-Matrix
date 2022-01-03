@@ -57,4 +57,44 @@ extension Message {
         guard mediaWidth > 0 && mediaHeight > 0 else { return nil }
         return mediaWidth / mediaHeight
     }
+    
+    var isReply: Bool {
+        repliesToEventID != nil
+    }
+    
+    func formatAsReply() {
+        guard isReply, let body = body else { return }
+        
+        let components = body.components(separatedBy: .newlines)
+        
+        guard
+            let separatingLine = components.firstIndex(of: ""),
+            separatingLine > 0,                     // The quote should have at least 1 line
+            separatingLine < components.count - 1   // The reply should have at least 1 line
+        else { return }
+        
+        var quoteComponents = components[0..<separatingLine]
+        
+        var validQuote = true
+        for (index, line) in quoteComponents.enumerated() {
+            guard line.hasPrefix("> ") else { validQuote = false; break }
+            let unquoted = line.dropFirst(2)
+            
+            if index == 0 {
+                guard
+                    let senderEndRange = unquoted.range(of: "> "),
+                    let firstIndex = unquoted.indices.first
+                else { validQuote = false; break }
+                
+                quoteComponents[index] = unquoted.replacingCharacters(in: firstIndex..<senderEndRange.upperBound, with: "")
+            } else {
+                quoteComponents[index] = String(unquoted)
+            }
+        }
+        
+        guard validQuote else { return }
+        
+        self.body = components[(separatingLine + 1)...].joined(separator: "\n")
+        self.replyQuote = quoteComponents.joined(separator: "\n")
+    }
 }

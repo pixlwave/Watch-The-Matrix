@@ -33,6 +33,8 @@
         <attribute name="mediaHeight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mediaURL" optional="YES" attributeType="URI"/>
         <attribute name="mediaWidth" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="repliesToEventID" optional="YES" attributeType="String"/>
+        <attribute name="replyQuote" optional="YES" attributeType="String"/>
         <attribute name="typeString" optional="YES" attributeType="String"/>
         <relationship name="edits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Edit" inverseName="message" inverseEntity="Edit"/>
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
@@ -51,12 +53,22 @@
         <attribute name="key" attributeType="String"/>
         <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="reactions" inverseEntity="Message"/>
         <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="reactions" inverseEntity="Member"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Redaction" representedClassName="Redaction" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
         <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="redactions" inverseEntity="Message"/>
         <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="redactions" inverseEntity="Member"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
@@ -79,7 +91,7 @@
     <elements>
         <element name="Edit" positionX="0" positionY="0" width="128" height="89"/>
         <element name="Member" positionX="0" positionY="0" width="128" height="134"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="209"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="239"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="0" positionY="0" width="128" height="89"/>
         <element name="Room" positionX="0" positionY="0" width="128" height="149"/>

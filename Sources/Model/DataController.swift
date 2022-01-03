@@ -165,6 +165,12 @@ class DataController {
         if let mediaHeight = event.content.mediaInfo?.height {
             message.mediaHeight = Double(mediaHeight)
         }
+        
+        // reply handling
+        if let relationship = event.content.relationship, relationship.type == .reply {
+            message.repliesToEventID = relationship.eventID
+            message.formatAsReply()
+        }
 
         return message
     }

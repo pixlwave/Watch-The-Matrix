@@ -5,6 +5,10 @@ import XCTest
 class BaseTestCase: XCTestCase {
     var dataController: DataController!
     var jsonDecoder: JSONDecoder!
+    
+    enum TestError: Error {
+        case missingFile
+    }
 
     override func setUpWithError() throws {
         dataController = DataController(inMemory: true)
@@ -13,12 +17,12 @@ class BaseTestCase: XCTestCase {
         jsonDecoder.userInfo[.roomEventTypes] = Client.eventTypes
     }
     
-    func loadJoinedRoomJSON(named fileName: String) -> JoinedRoom? {
-        guard
-            let url = Bundle(for: Self.self).url(forResource: fileName, withExtension: "json"),
-            let data = try? Data(contentsOf: url)
-        else { return nil }
+    func loadJSON<T: Decodable>(named fileName: String, `as` type: T.Type) throws -> T {
+        guard let url = Bundle(for: Self.self).url(forResource: fileName, withExtension: "json") else {
+            throw TestError.missingFile
+        }
         
-        return try? jsonDecoder.decode(JoinedRoom.self, from: data)
+        let data = try Data(contentsOf: url)
+        return try jsonDecoder.decode(T.self, from: data)
     }
 }

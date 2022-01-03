@@ -56,6 +56,7 @@
 		A5BC73C72700B97E00AF5AF9 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
 		A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */; };
+		A5D54D442780BEC300B01C8B /* MessageReplies.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D54D432780B8CC00B01C8B /* MessageReplies.json */; };
 		A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCA2B3262B85F7004A328B /* ReactionsView.swift */; };
 		A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
 		A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87A25F676730054D1A2 /* MessageView.swift */; };
@@ -168,6 +169,7 @@
 		A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
 		A5C6FD2C2611E9FB0096DF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A5D54D432780B8CC00B01C8B /* MessageReplies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MessageReplies.json; sourceTree = "<group>"; };
 		A5DCA2B3262B85F7004A328B /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		A5E9E87225F673C00054D1A2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		A5E9E87A25F676730054D1A2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			children = (
 				A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */,
 				A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */,
+				A5D54D432780B8CC00B01C8B /* MessageReplies.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5D54D442780BEC300B01C8B /* MessageReplies.json in Resources */,
 				A559560826B47B2600AB1499 /* SyncMessageJoinedRoom.json in Resources */,
 				A559560726B47B2600AB1499 /* NewJoinedRoom.json in Resources */,
 			);

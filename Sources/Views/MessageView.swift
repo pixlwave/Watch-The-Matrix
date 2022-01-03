@@ -9,6 +9,7 @@ struct MessageView: View {
     
     let showSender: Bool
     let bubbleColor: Color
+    let alignment: HorizontalAlignment
     let isCurrentUser: Bool
     
     init?(message: Message, showSender: Bool, isCurrentUser: Bool) {
@@ -19,23 +20,49 @@ struct MessageView: View {
         _sender = ObservedObject(wrappedValue: sender)
         self.showSender = showSender
         self.bubbleColor = isCurrentUser ? .accentColor : Color(.darkGray)
+        self.alignment = isCurrentUser ? .trailing : .leading
         self.isCurrentUser = isCurrentUser
+    }
+    
+    @ViewBuilder
+    var header: some View {
+        let insetEdge: Edge.Set = isCurrentUser ? .trailing : .leading
+        let replyQuote = message.replyQuote
+        
+        VStack(alignment: alignment, spacing: 0) {
+            replyQuote.map {
+                MessageBubble(text: $0, color: .secondary.opacity(0.667), isReply: true)
+                    .padding(.top, 8)
+            }
+            
+            HStack(spacing: 0) {
+                replyQuote.map { _ in
+                    RoundedRectangle(cornerRadius: 2)
+                        .foregroundStyle(.tertiary)
+                        .frame(width: 4, height: 16)
+                        .padding(insetEdge)
+                        .padding(.vertical, 4)
+                }
+
+                if showSender {
+                    // show the sender's name or id if requested
+                    Text(sender.displayName ?? sender.id ?? "")
+                        .font(.footnote)
+                        .foregroundColor(.primary.opacity(0.667))
+                        .padding(.horizontal, 4)    // match the indentation of the message text
+                        .padding(.vertical, 2)
+                }
+            }
+        }
     }
     
     var body: some View {
         // get the most recent edit and any reactions to the message
         let lastEdit = message.lastEdit
         let reactions = message.reactionsViewModel
-        let alignment: HorizontalAlignment = isCurrentUser ? .trailing : .leading
         
-        VStack(alignment: alignment, spacing: 2) {
-            if showSender {
-                // show the sender's name or id if requested
-                Text(sender.displayName ?? sender.id ?? "")
-                    .font(.footnote)
-                    .foregroundColor(Color.primary.opacity(0.667))
-                    .padding(.horizontal, 4)    // match the indentation of the message text
-            }
+        VStack(alignment: alignment, spacing: 0) {
+            header
             
             MessageAligner(isCurrentUser: isCurrentUser) {
                 if message.type == .image && message.mediaURL != nil {
@@ -50,7 +77,7 @@ struct MessageView: View {
             
             if !reactions.isEmpty {
                 ReactionsView(reactions: reactions, alignment: alignment)
-                    .padding(.top, 2)
+                    .padding(.top, 4)
             }
         }
         .accessibilityElement(children: .combine)

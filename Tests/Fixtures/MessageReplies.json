@@ -1,0 +1,27 @@
+[
+  {
+    "content": {
+      "body": "Hello, World!",
+      "msgtype": "m.text"
+    },
+    "origin_server_ts": 1617304947090,
+    "sender": "@test:example.org",
+    "type": "m.room.message",
+    "event_id": "m1"
+  },
+  {
+    "content": {
+      "body": "> <@test:example.org> Hello, World!\n\nThis message is a reply.",
+      "msgtype": "m.text",
+      "m.relates_to": {
+        "m.in_reply_to": {
+          "event_id": "m1"
+        }
+      }
+    },
+    "origin_server_ts": 1617304947090,
+    "sender": "@test2:example.org",
+    "type": "m.room.message",
+    "event_id": "m2"
+  }
+]
