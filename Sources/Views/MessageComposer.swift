@@ -19,14 +19,14 @@ struct MessageComposer: View {
     }
     
     var body: some View {
-        switch flickTypeMode {
-        case .ask, .always:
-            FlickTypeTextEditor(placeholder, text: $message, mode: flickTypeMode, onCommit: send)
-        case .off:
+        // FlickType fails when presented from a sheet so disable it for replies
+        if flickTypeMode == .off || messageToReplyTo != nil {
             TextField(placeholder, text: $message)
                 .submitLabel(.send)
                 .onSubmit(send)
                 .onChange(of: shouldClearMessage, perform: clearMessage)
+        } else {
+            FlickTypeTextEditor(placeholder, text: $message, mode: flickTypeMode, onCommit: send)
         }
     }
     

@@ -100,7 +100,7 @@ class MatrixController: ObservableObject {
     
     /// Login to the homeserver using the supplied username and password.
     /// If successful the user's credentials will be saved to the keychain and an initial sync will begin.
-    /// - Returns: A shared publisher that can be used to inform the user if any errors have occured.
+    /// - Returns: A shared publisher that can be used to inform the user if any errors have occurred.
     func login(username: String, password: String) -> AnyPublisher<LoginUserResponse, MatrixError> {
         let loginPublisher = client.login(username: username, password: password, displayName: "Watch")
             .share()

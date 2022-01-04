@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A view that displays a local echo for an outgoing message along with
-/// any errors that may have occured.
+/// any errors that may have occurred.
 struct MessageTransactionView: View {
     @EnvironmentObject var matrix: MatrixController
     @ObservedObject var transaction: MessageTransaction
@@ -10,7 +10,7 @@ struct MessageTransactionView: View {
     
     var body: some View {
         HStack {
-            MessageBubble(text: transaction.content.body ?? "", color: .accentColor)
+            MessageBubble(text: transaction.originalMessage, color: .accentColor)
                 .foregroundColor(transaction.isDelivered ? .primary : .secondary)
             
             if transaction.error != nil {

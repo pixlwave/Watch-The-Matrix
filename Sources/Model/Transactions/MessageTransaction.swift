@@ -10,6 +10,8 @@ class MessageTransaction: ObservableObject, Identifiable {
     let content: MessageContent
     /// The ID of the room that the message is for.
     let roomID: String
+    /// The original message without any reply formatting applied.
+    let originalMessage: String
     
     /// A cancellable token for the send operation.
     var token: AnyCancellable?
@@ -25,6 +27,7 @@ class MessageTransaction: ObservableObject, Identifiable {
     init(id: String, message: String, asReplyTo messageToQuote: Message? = nil, roomID: String) {
         self.id = id
         self.roomID = roomID
+        self.originalMessage = message
         
         var content: MessageContent?
         if let messageToQuote = messageToQuote,
