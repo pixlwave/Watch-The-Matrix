@@ -10,7 +10,7 @@ struct MessageTransactionView: View {
     
     var body: some View {
         HStack {
-            MessageBubble(text: transaction.message, color: .accentColor)
+            MessageBubble(text: transaction.content.body ?? "", color: .accentColor)
                 .foregroundColor(transaction.isDelivered ? .primary : .secondary)
             
             if transaction.error != nil {

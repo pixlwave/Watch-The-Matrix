@@ -29,6 +29,7 @@
     <entity name="Message" representedClassName="Message" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="htmlBody" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="mediaHeight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mediaURL" optional="YES" attributeType="URI"/>
@@ -74,6 +75,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="isEncrypted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isSpace" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="joinedMemberCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
         <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -91,10 +93,10 @@
     <elements>
         <element name="Edit" positionX="0" positionY="0" width="128" height="89"/>
         <element name="Member" positionX="0" positionY="0" width="128" height="134"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="239"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="254"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
         <element name="Redaction" positionX="0" positionY="0" width="128" height="89"/>
-        <element name="Room" positionX="0" positionY="0" width="128" height="149"/>
+        <element name="Room" positionX="0" positionY="0" width="128" height="164"/>
         <element name="SyncState" positionX="0" positionY="0" width="128" height="44"/>
     </elements>
 </model>

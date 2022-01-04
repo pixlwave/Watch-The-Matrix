@@ -8,15 +8,22 @@ struct MessageComposer: View {
     @EnvironmentObject private var matrix: MatrixController
     
     let room: Room
+    var messageToReplyTo: Message? = nil
+    var completion: (() -> Void)? = nil
+    
     @State private var message = ""
     @State private var shouldClearMessage = false
+    
+    var placeholder: LocalizedStringKey {
+        messageToReplyTo == nil ? "Message" : "Reply"
+    }
     
     var body: some View {
         switch flickTypeMode {
         case .ask, .always:
-            FlickTypeTextEditor("Message", text: $message, mode: flickTypeMode, onCommit: send)
+            FlickTypeTextEditor(placeholder, text: $message, mode: flickTypeMode, onCommit: send)
         case .off:
-            TextField("Message", text: $message)
+            TextField(placeholder, text: $message)
                 .submitLabel(.send)
                 .onSubmit(send)
                 .onChange(of: shouldClearMessage, perform: clearMessage)
@@ -26,7 +33,8 @@ struct MessageComposer: View {
     func send() {
         guard !message.isEmpty else { return }
         
-        matrix.sendMessage(message, in: room)
+        matrix.sendMessage(message, in: room, asReplyTo: messageToReplyTo)
+        completion?()
         
         // workaround for onSubmit in watchOS 8 which fails
         // to clear the message when updated directly here.

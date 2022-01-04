@@ -24,8 +24,17 @@
         "repositoryURL": "https://github.com/pixlwave/Matrix",
         "state": {
           "branch": "main",
-          "revision": "129ea9b8980e95672c9041bb044a6ae79b8ba6b9",
+          "revision": "8825349e75ca8481d4897ba676ff8eee68169576",
           "version": null
+        }
+      },
+      {
+        "package": "HTMLEntities",
+        "repositoryURL": "https://github.com/Kitura/swift-html-entities",
+        "state": {
+          "branch": null,
+          "revision": "3686a2b931be24dd2531307f89e2f1d648c0200e",
+          "version": "4.0.0"
         }
       }
     ]

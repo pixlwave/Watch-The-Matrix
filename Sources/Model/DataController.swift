@@ -157,6 +157,10 @@ class DataController {
         message.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
         message.room = room
         
+        if event.content.format == .html {
+            message.htmlBody = event.content.formattedBody
+        }
+        
         // media related properties
         message.mediaURL = event.content.mediaURL
         if let mediaWidth = event.content.mediaInfo?.width {

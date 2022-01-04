@@ -68,12 +68,12 @@ class RoomTests: BaseTestCase {
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 8")
     }
     
-    func testMemberCount() throws {
+    func testSyncedMemberCount() throws {
         // given the sample data set
         try dataController.createSampleData()
         
         let firstRoom = dataController.room(id: "!test0:example.org")!
-        XCTAssertEqual(firstRoom.memberCount, 10, "The first room should have 10 members.")
+        XCTAssertEqual(firstRoom.syncedMemberCount, 10, "The first room should have 10 members.")
         
         // when adding one new member to the first room and another to the last room
         _ = dataController.createMember(id: "@a:example.org", in: firstRoom)
@@ -82,7 +82,7 @@ class RoomTests: BaseTestCase {
         _ = dataController.createMember(id: "@b:example.org", in: secondRoom)
         
         // then there should be an additional member counted in the room
-        XCTAssertEqual(firstRoom.memberCount, 11, "The first room should have 11 members.")
+        XCTAssertEqual(firstRoom.syncedMemberCount, 11, "The first room should have 11 members.")
     }
     
     func testGenerateRoomName() {

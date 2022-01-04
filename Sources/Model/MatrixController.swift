@@ -206,23 +206,29 @@ class MatrixController: ObservableObject {
                     room.previousBatch = timeline.previousBatch
                 }
                 
-                // process state events first as these occured before any state events included in the timeline
+                // process state events first as these occurred before any state events included in the timeline
                 joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
                 
                 // process the timeline events
                 dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
                 
-                if let unreadCount = joinedRoom.unreadNotifications?.notificationCount {
-                    room.unreadCount = Int32(unreadCount)
-                }
+                // update counts if provided
+                joinedRoom.unreadNotifications?.notificationCount.map { room.unreadCount = Int32($0) }
+                joinedRoom.summary?.joinedMemberCount.map { room.joinedMemberCount = Int32($0) }
             } else {
                 let room = dataController.createRoom(id: roomID, joinedRoom: joinedRoom)
-                getType(of: room)
-                getName(of: room)
-                loadMoreMessages(in: room)
                 
-                if let unreadCount = joinedRoom.unreadNotifications?.notificationCount {
-                    room.unreadCount = Int32(unreadCount)
+                // update counts if provided
+                joinedRoom.unreadNotifications?.notificationCount.map { room.unreadCount = Int32($0) }
+                joinedRoom.summary?.joinedMemberCount.map { room.joinedMemberCount = Int32($0) }
+                
+                if room.name == nil {
+                    getName(of: room)
+                }
+                
+                if !room.isEncrypted {
+                    getType(of: room)
+                    loadMoreMessages(in: room)
                 }
             }
         }
@@ -324,18 +330,21 @@ class MatrixController: ObservableObject {
     }
     
     /// Sends a message to the specified room.
-    func sendMessage(_ message: String, in room: Room, asReplyTo originalMessage: Message? = nil) {
+    func sendMessage(_ message: String, in room: Room, asReplyTo messageToQuote: Message? = nil) {
         guard let roomID = room.id else { return }
         
         // create a message transaction
         let transactionManager = TransactionManager.shared
         let transaction = MessageTransaction(id: transactionManager.generateTransactionID(),
                                              message: message,
+                                             asReplyTo: messageToQuote,
                                              roomID: roomID)
         
         // send the message, updating the transaction based on the response
-        #warning("Messages MUST be formatted as a rich reply.")
-        transaction.token = client.sendMessage(message, in: roomID, asReplyTo: originalMessage?.id, with: transaction.id)
+        transaction.token = client.send(transaction.content,
+                                        as: RoomMessageEvent.self,
+                                        in: roomID,
+                                        with: transaction.id)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {
@@ -357,7 +366,10 @@ class MatrixController: ObservableObject {
         transaction.error = nil
         
         // send the message, updating the transaction based on the response
-        transaction.token = client.sendMessage(transaction.message, in: transaction.roomID, with: transaction.id)
+        transaction.token = client.send(transaction.content,
+                                        as: RoomMessageEvent.self,
+                                        in: transaction.roomID,
+                                        with: transaction.id)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {

@@ -26,6 +26,7 @@
 		A559560826B47B2600AB1499 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
 		A561B753277A320600CEAF26 /* MessageAligner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561B752277A320600CEAF26 /* MessageAligner.swift */; };
 		A5620D55264915E500EAF88B /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A5620D54264915E500EAF88B /* Matrix */; };
+		A562FF4627847C3A0094B97E /* HTMLEntities in Frameworks */ = {isa = PBXBuildFile; productRef = A562FF4527847C3A0094B97E /* HTMLEntities */; };
 		A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56329DF263C3861003D0E67 /* LoginViewModel.swift */; };
 		A564A4C6260B4E6B00895426 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
 		A564A4CE260B588B00895426 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4CD260B588B00895426 /* TestData.swift */; };
@@ -190,6 +191,7 @@
 			files = (
 				A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */,
 				A59430742673D53300A47018 /* FlickTypeKit in Frameworks */,
+				A562FF4627847C3A0094B97E /* HTMLEntities in Frameworks */,
 				A5620D55264915E500EAF88B /* Matrix in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,6 +439,7 @@
 				A5799D3525FC205C00D4B940 /* KeychainAccess */,
 				A5620D54264915E500EAF88B /* Matrix */,
 				A59430732673D53300A47018 /* FlickTypeKit */,
+				A562FF4527847C3A0094B97E /* HTMLEntities */,
 			);
 			productName = "Watch The Matrix WatchKit Extension";
 			productReference = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */;
@@ -482,6 +485,7 @@
 				A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				A5620D53264915E500EAF88B /* XCRemoteSwiftPackageReference "Matrix" */,
 				A59430722673D53300A47018 /* XCRemoteSwiftPackageReference "FlickTypeKit" */,
+				A562FF4427847C3A0094B97E /* XCRemoteSwiftPackageReference "swift-html-entities" */,
 			);
 			productRefGroup = A59A0C4825DD6AC000B5EDAA /* Products */;
 			projectDirPath = "";
@@ -964,6 +968,14 @@
 				kind = branch;
 			};
 		};
+		A562FF4427847C3A0094B97E /* XCRemoteSwiftPackageReference "swift-html-entities" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/swift-html-entities";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -987,6 +999,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5620D53264915E500EAF88B /* XCRemoteSwiftPackageReference "Matrix" */;
 			productName = Matrix;
+		};
+		A562FF4527847C3A0094B97E /* HTMLEntities */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A562FF4427847C3A0094B97E /* XCRemoteSwiftPackageReference "swift-html-entities" */;
+			productName = HTMLEntities;
 		};
 		A5799D3525FC205C00D4B940 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

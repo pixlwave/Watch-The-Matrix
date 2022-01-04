@@ -34,8 +34,9 @@ extension Room {
         TransactionManager.shared.store(for: id ?? "")
     }
     
-    /// The number of members in the room.
-    var memberCount: Int {
+    /// The number of members in the room's `members` property. This number
+    /// may be less than the `joinedMemberCount` as not all members have been synced.
+    var syncedMemberCount: Int {
         let request: NSFetchRequest<Member> = Member.fetchRequest()
         request.predicate = NSPredicate(format: "room == %@", self)
         return (try? managedObjectContext?.count(for: request)) ?? 0

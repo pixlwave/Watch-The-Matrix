@@ -24,6 +24,15 @@ struct MessageView: View {
         self.isCurrentUser = isCurrentUser
     }
     
+    var senderName: some View {
+        // show the sender's name or id if requested
+        Text(sender.displayName ?? sender.id ?? "")
+            .font(.footnote)
+            .foregroundColor(.primary.opacity(0.667))
+            .padding(.horizontal, 4)    // match the indentation of the message text
+            .padding(.vertical, 2)
+    }
+    
     @ViewBuilder
     var header: some View {
         let insetEdge: Edge.Set = isCurrentUser ? .trailing : .leading
@@ -36,6 +45,10 @@ struct MessageView: View {
             }
             
             HStack(spacing: 0) {
+                if showSender && alignment == .trailing {
+                    senderName
+                }
+                
                 replyQuote.map { _ in
                     RoundedRectangle(cornerRadius: 2)
                         .foregroundStyle(.tertiary)
@@ -44,13 +57,8 @@ struct MessageView: View {
                         .padding(.vertical, 4)
                 }
 
-                if showSender {
-                    // show the sender's name or id if requested
-                    Text(sender.displayName ?? sender.id ?? "")
-                        .font(.footnote)
-                        .foregroundColor(.primary.opacity(0.667))
-                        .padding(.horizontal, 4)    // match the indentation of the message text
-                        .padding(.vertical, 2)
+                if showSender && alignment == .leading {
+                    senderName
                 }
             }
         }

@@ -63,7 +63,13 @@ extension Message {
     }
     
     func formatAsReply() {
-        guard isReply, let body = body else { return }
+        guard isReply else { return }
+        formatBodyAsReply()
+        formatHTMLBodyAsReply()
+    }
+    
+    private func formatBodyAsReply() {
+        guard let body = body else { return }
         
         let components = body.components(separatedBy: .newlines)
         
@@ -96,5 +102,16 @@ extension Message {
         
         self.body = components[(separatingLine + 1)...].joined(separator: "\n")
         self.replyQuote = quoteComponents.joined(separator: "\n")
+    }
+    
+    private func formatHTMLBodyAsReply() {
+        guard
+            let htmlBody = htmlBody,
+            let lastTagRange = htmlBody.range(of: "</mx-reply>", options: .backwards),
+            let lastIndex = htmlBody.indices.last,
+            lastTagRange.upperBound < lastIndex
+        else { return }
+        
+        self.htmlBody = String(htmlBody[lastTagRange.upperBound...])
     }
 }

@@ -27,7 +27,7 @@ struct RoomView: View {
     
     var body: some View {
         // show the name of the message sender when there are more than 2 people in the room
-        let showSenders = room.memberCount > 2
+        let showSenders = room.joinedMemberCount > 2
         
         ScrollViewReader { reader in
             ScrollView {
@@ -102,8 +102,8 @@ struct RoomView: View {
                     // outside of the condition above to include edits to the last message
                     markRoomAsRead()
                 }
-                .sheet(item: $messageToReactTo) { _ in
-                    ReactionPicker(message: $messageToReactTo)
+                .sheet(item: $messageToReactTo) { message in
+                    ReactionPicker(message: message, room: room)
                 }
             }
         }
