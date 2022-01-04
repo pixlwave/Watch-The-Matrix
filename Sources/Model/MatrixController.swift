@@ -289,10 +289,10 @@ class MatrixController: ObservableObject {
             } receiveValue: { response in
                 guard let events = response.members else { return }
                 
-                let members = events.compactMap { $0 as? RoomMemberEvent }
+                let members = events.lazy
+                                    .compactMap { $0 as? RoomMemberEvent }
                                     .filter { $0.content.membership == .join }
                                     .compactMap { self.dataController.createMember(event: $0, in: room) }
-                                    .lazy
                 
                 room.members = NSSet(set: Set(members))
                 self.dataController.save()
