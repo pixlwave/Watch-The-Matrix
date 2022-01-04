@@ -15,21 +15,6 @@ extension Message {
         return request
     }
     
-    /// A an array of tuples of unique reactions and their count for this message.
-    var reactionsViewModel: [(key: String, count: Int)] {
-        // get all unique reaction keys
-        let reactions = (try? managedObjectContext?.fetch(reactionsRequest)) ?? []
-        let keys = NSOrderedSet(array: reactions.compactMap { $0.key })
-        
-        // make an array of tuples containing each key and it's count
-        return keys.compactMap {
-            let key = $0 as! String
-            let count = reactions.filter { $0.key == key }.count
-            
-            return (key: key, count: count)
-        }
-    }
-    
     /// The newest edit made to this message, or nil if no edits have been made.
     var lastEdit: Edit? {
         let request: NSFetchRequest<Edit> = Edit.fetchRequest()
@@ -60,6 +45,31 @@ extension Message {
     
     var isReply: Bool {
         repliesToEventID != nil
+    }
+    
+    /// Returns all unique reactions for this message along with their count and
+    /// whether or not they should be selected for a particular user ID.
+    func aggregatedReactions(for userID: String) -> [AggregatedReaction] {
+        let reactions = (try? managedObjectContext?.fetch(reactionsRequest)) ?? []
+
+        // store reactions in a counted set and record which reactions the user sent
+        let reactionSet = NSCountedSet()
+        var userReactions = [String: Bool]()
+        
+        reactions.forEach {
+            guard let key = $0.key else { return }
+            reactionSet.add(key)
+            
+            if $0.sender?.id == userID {
+                userReactions[key] = true
+            }
+        }
+        
+        // create the array of aggregated reactions
+        return reactionSet.map {
+            let key = $0 as! String
+            return AggregatedReaction(key: key, count: reactionSet.count(for: key), isSelected: userReactions[key] ?? false)
+        }
     }
     
     func formatAsReply() {

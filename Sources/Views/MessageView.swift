@@ -4,6 +4,8 @@ import Matrix
 /// A view that displays the contents of a message and it's sender, along with
 /// any reactions and an indication of whether the message has been edited.
 struct MessageView: View {
+    @EnvironmentObject private var matrix: MatrixController
+    
     @ObservedObject var message: Message
     @ObservedObject private var sender: Member    // observe the sender for updates to their display name
     
@@ -67,7 +69,7 @@ struct MessageView: View {
     var body: some View {
         // get the most recent edit and any reactions to the message
         let lastEdit = message.lastEdit
-        let reactions = message.reactionsViewModel
+        let reactions = message.aggregatedReactions(for: matrix.userID ?? "")
         
         VStack(alignment: alignment, spacing: 0) {
             header

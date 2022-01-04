@@ -17,6 +17,11 @@ class MessageTests: BaseTestCase {
             reaction.key = "👋"
             reaction.date = Date()
             reaction.message = message
+            if i == 0 {
+                let member = Member(context: dataController.viewContext)
+                member.id = "@reactiontest:example.org"
+                reaction.sender = member
+            }
         }
         
         for i in 0..<2 {
@@ -29,9 +34,13 @@ class MessageTests: BaseTestCase {
         
         dataController.save()
         
-        XCTAssertEqual(message?.reactionsViewModel.count, 2, "There should be 2 unique reactions to the message.")
-        XCTAssertEqual(message?.reactionsViewModel[0].count, 3, "There should be 3 👋 reactions to the message.")
-        XCTAssertEqual(message?.reactionsViewModel[1].count, 2, "There should be 2 🙃 reactions to the message.")
+        let aggregatedReactions = message?.aggregatedReactions(for: "@reactiontest:example.org") ?? []
+        
+        XCTAssertEqual(aggregatedReactions.count, 2, "There should be 2 unique reactions to the message.")
+        XCTAssertEqual(aggregatedReactions[0].count, 3, "There should be 3 👋 reactions to the message.")
+        XCTAssertEqual(aggregatedReactions[1].count, 2, "There should be 2 🙃 reactions to the message.")
+        XCTAssertTrue(aggregatedReactions[0].isSelected, "The 👋 reaction should be selected.")
+        XCTAssertFalse(aggregatedReactions[1].isSelected, "The 🙃 reaction should not be selected.")
     }
     
     func testEditingAMessage() throws {
