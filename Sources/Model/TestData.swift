@@ -58,11 +58,7 @@ extension DataController {
                 
                 // redact the 18th message from the 10th member
                 if j == 17 {
-                    let redaction = Redaction(context: viewContext)
-                    redaction.id = "redact\(i)\(j)-\(room.id!)"
-                    redaction.date = Date()
-                    redaction.sender = members.last
-                    redaction.message = room.lastMessage
+                    room.lastMessage?.isRedacted = true
                 }
                 
                 // edit the 19th message from the 10th member
@@ -74,6 +70,14 @@ extension DataController {
                     edit.message = room.lastMessage
                 }
             }
+            
+            // add 1 pending redaction to the room
+            let redaction = Redaction(context: viewContext)
+            redaction.id = "pending-redaction\(i)\(0)-\(room.id!)"
+            redaction.eventID = "unsynced-message\(i)\(000)-\(room.id!)"
+            redaction.date = Date()
+            redaction.sender = members.last
+            redaction.room = room
         }
         
         let state = syncState()

@@ -21,11 +21,8 @@ class RoomTests: BaseTestCase {
         XCTAssertEqual(room.lastMessage?.body, "Hello, World!")
         
         // when redacting the last message
-        let redaction = Redaction(context: dataController.viewContext)
-        redaction.id = "redact_hello"
-        redaction.date = Date()
-        redaction.message = message
-        redaction.sender = (room.members as? Set<Member>)?.first
+        message.isRedacted = true
+        dataController.save()
         
         // then the last message should revert back to the sample data set
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 9")
@@ -58,11 +55,8 @@ class RoomTests: BaseTestCase {
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 9")
         
         // when redacting the last message
-        let redaction = Redaction(context: dataController.viewContext)
-        redaction.id = "redact_hello"
-        redaction.date = Date()
-        redaction.message = room.lastMessage
-        redaction.sender = (room.members as? Set<Member>)?.first
+        room.lastMessage?.isRedacted = true
+        dataController.save()
         
         // then the redacted message shouldn't be returned as the last message
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 8")

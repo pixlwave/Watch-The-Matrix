@@ -31,6 +31,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="htmlBody" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isRedacted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="mediaHeight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mediaURL" optional="YES" attributeType="URI"/>
         <attribute name="mediaWidth" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
@@ -39,7 +40,6 @@
         <attribute name="typeString" optional="YES" attributeType="String"/>
         <relationship name="edits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Edit" inverseName="message" inverseEntity="Edit"/>
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reaction" inverseName="message" inverseEntity="Reaction"/>
-        <relationship name="redactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Redaction" inverseName="message" inverseEntity="Redaction"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="messages" inverseEntity="Room"/>
         <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="messages" inverseEntity="Member"/>
         <uniquenessConstraints>
@@ -62,8 +62,9 @@
     </entity>
     <entity name="Redaction" representedClassName="Redaction" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="eventID" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="redactions" inverseEntity="Message"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="pendingRedactions" inverseEntity="Room"/>
         <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="redactions" inverseEntity="Member"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -73,14 +74,15 @@
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
-        <attribute name="isEncrypted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isSpace" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isEncrypted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isSpace" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="joinedMemberCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="previousBatch" optional="YES" attributeType="String"/>
         <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Member" inverseName="room" inverseEntity="Member"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="room" inverseEntity="Message"/>
+        <relationship name="pendingRedactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Redaction" inverseName="room" inverseEntity="Redaction"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -95,8 +97,8 @@
         <element name="Member" positionX="0" positionY="0" width="128" height="134"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="254"/>
         <element name="Reaction" positionX="0" positionY="0" width="128" height="104"/>
-        <element name="Redaction" positionX="0" positionY="0" width="128" height="89"/>
-        <element name="Room" positionX="0" positionY="0" width="128" height="164"/>
+        <element name="Redaction" positionX="0" positionY="0" width="128" height="104"/>
+        <element name="Room" positionX="0" positionY="0" width="128" height="179"/>
         <element name="SyncState" positionX="0" positionY="0" width="128" height="44"/>
     </elements>
 </model>

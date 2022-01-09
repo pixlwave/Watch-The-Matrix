@@ -62,24 +62,6 @@ class MessageTests: BaseTestCase {
         XCTAssertEqual(message.lastEdit?.body, "I've been edited", "The message should return an edit.")
     }
     
-    func testRedactingMessage() throws {
-        // given an un-redacted message from the sample data set
-        try dataController.createSampleData()
-        
-        let message = dataController.room(id: "!test0:example.org")!.lastMessage!
-        XCTAssertFalse(message.isRedacted, "The message should not be redacted.")
-        
-        // when redacting that message
-        let redaction = Redaction(context: dataController.viewContext)
-        redaction.id = "redact_last_message"
-        redaction.date = Date()
-        redaction.message = message
-        dataController.save()
-        
-        // then the message should indicate it has been redacted
-        XCTAssertTrue(message.isRedacted, "The message should be redacted.")
-    }
-    
     func testFormattingMessageAsReply() throws {
         try dataController.createSampleData()
         

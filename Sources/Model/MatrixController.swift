@@ -210,7 +210,7 @@ class MatrixController: ObservableObject {
                 joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
                 
                 // process the timeline events
-                dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+                dataController.process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
                 
                 // update counts if provided
                 joinedRoom.unreadNotifications?.notificationCount.map { room.unreadCount = Int32($0) }
@@ -311,8 +311,9 @@ class MatrixController: ObservableObject {
                 guard let events = response.events else { return }
                 
                 // the events are reversed to prevent a template message being created for a
-                // relationship and then being created again from if it's event is in the response.
-                self.dataController.process(events: events.reversed(), in: room, includeState: false)
+                // relationship and then being created again if its event is in the response.
+                #warning("The paginating parameter is technically incorrect as the array is being reversed")
+                self.dataController.process(events: events.reversed(), in: room, paginating: .backwards)
                 room.previousBatch = response.endToken
                 
                 self.dataController.save()

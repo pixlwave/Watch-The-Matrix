@@ -1,0 +1,24 @@
+{
+  "timeline": {
+    "events": [
+      {
+        "content": { },
+        "origin_server_ts": 1617304947090,
+        "sender": "@test:example.org",
+        "type": "m.room.redaction",
+        "event_id": "redact-r019-!test0:example.org",
+        "redacts": "r019-!test0:example.org"
+      }
+    ],
+    "prev_batch": "t25-1919",
+    "limited": true
+  },
+  "state": {
+    "events": []
+  },
+  "unread_notifications": {
+    "notification_count": 0,
+    "highlight_count": 0
+  },
+  "summary": {}
+}

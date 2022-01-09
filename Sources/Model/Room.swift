@@ -8,7 +8,7 @@ extension Room {
     
     /// A request that will fetch all of the messages belonging to this room.
     var messagesRequest: NSFetchRequest<Message> {
-        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        let request = Message.fetchRequest()
         request.predicate = NSPredicate(format: "room == %@", self)
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: true)]
         return request
@@ -17,16 +17,23 @@ extension Room {
     /// The last message in the room.
     var lastMessage: Message? {
         // create a request for one item, ignoring redacted messages and sorted by date descending
-        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        let request = Message.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "room == %@", self),
-            NSPredicate(format: "redactions.@count == 0")
+            NSPredicate(format: "isRedacted == false")
         ])
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Message.date, ascending: false)]
         request.fetchLimit = 1
         
         // return the item from the request
         return try? managedObjectContext?.fetch(request).first
+    }
+    
+    /// A request that will fetch all of the pending redactions belonging to this room.
+    var pendingRedactionsRequest: NSFetchRequest<Redaction> {
+        let request = Redaction.fetchRequest()
+        request.predicate = NSPredicate(format: "room == %@", self)
+        return request
     }
     
     /// The room's transaction store for outgoing messages.
@@ -37,7 +44,7 @@ extension Room {
     /// The number of members in the room's `members` property. This number
     /// may be less than the `joinedMemberCount` as not all members have been synced.
     var syncedMemberCount: Int {
-        let request: NSFetchRequest<Member> = Member.fetchRequest()
+        let request = Member.fetchRequest()
         request.predicate = NSPredicate(format: "room == %@", self)
         return (try? managedObjectContext?.count(for: request)) ?? 0
     }
@@ -45,7 +52,7 @@ extension Room {
     /// Generate a name from the members in this room ignoring the user passed in.
     func generateName(for userID: String?) -> String {
         // create a request for up to 5 members excluding the specified user
-        let request: NSFetchRequest<Member> = Member.fetchRequest()
+        let request = Member.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "room == %@", self),
             NSPredicate(format: "id != %@", userID ?? "")

@@ -1,0 +1,37 @@
+{
+  "!test:example.org": {
+    "timeline": {
+      "events": [
+        {
+          "type": "m.reaction",
+          "sender": "user7:example.org",
+          "content": {
+            "m.relates_to": {
+              "event_id": "$001",
+              "key": "😄",
+              "rel_type": "m.annotation"
+            }
+          },
+          "origin_server_ts": 1641059202370,
+          "unsigned": {
+            "age": 1901659
+          },
+          "event_id": "$000"
+        }
+      ],
+      "prev_batch": "t2243",
+      "limited": true
+    },
+    "state": {
+      "events": []
+    },
+    "unread_notifications": {
+      "notification_count": 0,
+      "highlight_count": 0
+    },
+    "summary": {
+      "m.joined_member_count": 10,
+      "m.invited_member_count": 1
+    }
+  }
+}

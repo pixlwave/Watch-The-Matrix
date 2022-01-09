@@ -24,6 +24,10 @@
 		A54E5CE225F5342E00D43CDE /* Matrix.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54E5CCB25F5331900D43CDE /* Matrix.xcdatamodeld */; };
 		A559560726B47B2600AB1499 /* NewJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */; };
 		A559560826B47B2600AB1499 /* SyncMessageJoinedRoom.json in Resources */ = {isa = PBXBuildFile; fileRef = A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */; };
+		A560A48B278B34F100F5EC01 /* RedactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A560A48A278B34F100F5EC01 /* RedactionTests.swift */; };
+		A560A48D278B490B00F5EC01 /* JoinedRoom-ReactionRedaction.json in Resources */ = {isa = PBXBuildFile; fileRef = A560A48C278B478300F5EC01 /* JoinedRoom-ReactionRedaction.json */; };
+		A560A491278B4FC700F5EC01 /* LoadMessages.json in Resources */ = {isa = PBXBuildFile; fileRef = A560A490278B4FC700F5EC01 /* LoadMessages.json */; };
+		A560A495278B4FD900F5EC01 /* SyncNewRoomWithReaction.json in Resources */ = {isa = PBXBuildFile; fileRef = A560A494278B4FD900F5EC01 /* SyncNewRoomWithReaction.json */; };
 		A561B753277A320600CEAF26 /* MessageAligner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561B752277A320600CEAF26 /* MessageAligner.swift */; };
 		A5620D55264915E500EAF88B /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A5620D54264915E500EAF88B /* Matrix */; };
 		A562FF4627847C3A0094B97E /* HTMLEntities in Frameworks */ = {isa = PBXBuildFile; productRef = A562FF4527847C3A0094B97E /* HTMLEntities */; };
@@ -130,6 +134,10 @@
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A54E5CCF25F5331900D43CDE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		A54E5CD025F5331900D43CDE /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		A560A48A278B34F100F5EC01 /* RedactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactionTests.swift; sourceTree = "<group>"; };
+		A560A48C278B478300F5EC01 /* JoinedRoom-ReactionRedaction.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "JoinedRoom-ReactionRedaction.json"; sourceTree = "<group>"; };
+		A560A490278B4FC700F5EC01 /* LoadMessages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadMessages.json; sourceTree = "<group>"; };
+		A560A494278B4FD900F5EC01 /* SyncNewRoomWithReaction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncNewRoomWithReaction.json; sourceTree = "<group>"; };
 		A561B752277A320600CEAF26 /* MessageAligner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAligner.swift; sourceTree = "<group>"; };
 		A56329DF263C3861003D0E67 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A564A4C5260B4E6B00895426 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -208,6 +216,7 @@
 				A59BB4F12618B1D400A91D68 /* RoomTests.swift */,
 				A58B95DF261F918100A3E8F5 /* MemberTests.swift */,
 				A51076872620A74A006362C0 /* MessageTests.swift */,
+				A560A48A278B34F100F5EC01 /* RedactionTests.swift */,
 				A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */,
 				A538FE0126B479B8004F37F6 /* Info.plist */,
 			);
@@ -329,7 +338,10 @@
 			children = (
 				A59BB50F2618C15500A91D68 /* NewJoinedRoom.json */,
 				A59BB51B2618C16D00A91D68 /* SyncMessageJoinedRoom.json */,
+				A560A48C278B478300F5EC01 /* JoinedRoom-ReactionRedaction.json */,
 				A5D54D432780B8CC00B01C8B /* MessageReplies.json */,
+				A560A494278B4FD900F5EC01 /* SyncNewRoomWithReaction.json */,
+				A560A490278B4FC700F5EC01 /* LoadMessages.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -504,9 +516,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A560A491278B4FC700F5EC01 /* LoadMessages.json in Resources */,
 				A5D54D442780BEC300B01C8B /* MessageReplies.json in Resources */,
 				A559560826B47B2600AB1499 /* SyncMessageJoinedRoom.json in Resources */,
+				A560A48D278B490B00F5EC01 /* JoinedRoom-ReactionRedaction.json in Resources */,
 				A559560726B47B2600AB1499 /* NewJoinedRoom.json in Resources */,
+				A560A495278B4FD900F5EC01 /* SyncNewRoomWithReaction.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +563,7 @@
 				A538FE0B26B479C1004F37F6 /* RoomTests.swift in Sources */,
 				A538FE0C26B479C1004F37F6 /* MemberTests.swift in Sources */,
 				A538FE0926B479C1004F37F6 /* EventProcessingTests.swift in Sources */,
+				A560A48B278B34F100F5EC01 /* RedactionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

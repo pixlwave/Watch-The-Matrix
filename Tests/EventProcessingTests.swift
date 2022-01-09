@@ -12,7 +12,7 @@ class EventProcessingTests: BaseTestCase {
         
         // when processing the events from this response
         joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
-        dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+        dataController.process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
         
         dataController.save()
         
@@ -33,7 +33,7 @@ class EventProcessingTests: BaseTestCase {
         let room = dataController.room(id: "!room:example.org")!
         
         joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
-        dataController.process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+        dataController.process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
         
         dataController.save()
         
@@ -51,4 +51,60 @@ class EventProcessingTests: BaseTestCase {
         XCTAssertEqual(fetchedMember.displayName, "Test User", "The member's name should be \"Test User\" and shouldn't have changed.")
     }
     
+    func testNewJoinedRoomWithReaction() throws {
+        // given a joined room response with a single reaction event
+        let dict = try loadJSON(named: "SyncNewRoomWithReaction", as: [String: JoinedRoom].self)
+        let roomID = dict.keys.first!
+        let joinedRoom = dict[roomID]!
+        
+        let room = Room(context: dataController.viewContext)
+        room.id = roomID
+        
+        // when processing the events from this response
+        joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
+        dataController.process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
+        
+        dataController.save()
+        
+        // then there should be one room, one member and one message created
+        XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 member.")
+        XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1, "There should be 1 message.")
+        XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 1, "There should be 1 reaction.")
+    }
+    
+    #warning("This test currently fails")
+    func testLoadMessageWithExistingReaction() throws {
+        // given a single room with a reaction that created a template message for its relationship
+        try testNewJoinedRoomWithReaction()
+        let room = dataController.room(id: "!test:example.org")!
+        XCTAssertNil(room.lastMessage?.body, "The shouldn't have any content yet.")
+        
+        // when more messages are loaded in the room, including the event for the template message
+        let dict = try loadJSON(named: "LoadMessages", as: MessagesResponse.self)
+        let events = dict.events!
+        
+        // reversed events to create messages before any relations create them
+        #warning("The paginating parameter is technically incorrect as the events array is reversed here")
+        dataController.process(events: events.reversed(), in: room, paginating: .backwards)
+        room.previousBatch = dict.endToken
+        
+        self.dataController.save()
+        
+        // then there should be one room, with two members, two messages and a single reaction
+        XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
+        XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 2, "There should be 2 members.")
+        XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1, "There should be 1 message.")
+        XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 1, "There should be 1 reaction.")
+        
+        
+        // then the room's last message content should be updated
+        XCTAssertEqual(room.lastMessage?.body, "Edited message", "The message should match the content from the sync response.")
+        
+        let lastMessage = dataController.message(id: "$001")
+        XCTAssertNotNil(lastMessage)
+        XCTAssertNotNil(lastMessage?.room)
+        XCTAssertNotNil(lastMessage?.body)
+        XCTAssertNotNil(lastMessage?.date)
+    }
 }

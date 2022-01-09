@@ -25,19 +25,6 @@ extension Message {
         return try? managedObjectContext?.fetch(request).first
     }
     
-    /// A fetch request for all redactions made to this message.
-    private var redactionsRequest: NSFetchRequest<Redaction> {
-        let request: NSFetchRequest<Redaction> = Redaction.fetchRequest()
-        request.predicate = NSPredicate(format: "message == %@", self)
-        return request
-    }
-    
-    /// A boolean that indicates whether this message has been redacted or not.
-    var isRedacted: Bool {
-        // check if there is at least 1 redaction
-        return (try? managedObjectContext?.count(for: redactionsRequest)) ?? 0 > 0
-    }
-    
     var mediaAspectRadio: Double? {
         guard mediaWidth > 0 && mediaHeight > 0 else { return nil }
         return mediaWidth / mediaHeight

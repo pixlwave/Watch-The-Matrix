@@ -1,0 +1,62 @@
+{
+  "chunk": [
+    {
+      "type": "m.room.message",
+      "room_id": "!test:example.org",
+      "sender": "user1:example.org",
+      "content": {
+        "msgtype": "m.text",
+        "body": "* Edited message",
+        "m.new_content": {
+          "msgtype": "m.text",
+          "body": "Edited message"
+        },
+        "m.relates_to": {
+          "event_id": "$001",
+          "rel_type": "m.replace"
+        }
+      },
+      "origin_server_ts": 1641059012080,
+      "unsigned": {
+        "age": 2421490
+      },
+      "event_id": "$002",
+      "user_id": "user1:example.org",
+      "age": 2421490
+    },
+    {
+      "type": "m.room.message",
+      "room_id": "!test:example.org",
+      "sender": "user1:example.org",
+      "content": {
+        "msgtype": "m.text",
+        "body": "Original message"
+      },
+      "origin_server_ts": 1641059000831,
+      "unsigned": {
+        "age": 2432739,
+        "m.relations": {
+          "m.annotation": {
+            "chunk": [
+              {
+                "type": "m.reaction",
+                "key": "😄",
+                "count": 1
+              }
+            ]
+          },
+          "m.replace": {
+            "event_id": "$002",
+            "origin_server_ts": 1641059012080,
+            "sender": "user1:example.org"
+          }
+        }
+      },
+      "event_id": "$001",
+      "user_id": "user1:example.org",
+      "age": 2432739
+    }
+  ],
+  "start": "t2243",
+  "end": "t2240"
+}

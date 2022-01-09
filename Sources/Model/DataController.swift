@@ -6,7 +6,7 @@ import Matrix
 class DataController {
     /// A version number that is incremented when breaking changes are made
     /// to the data model, processing or storage logic to force a resync.
-    private let version = 5
+    private let version = 6
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
@@ -33,7 +33,7 @@ class DataController {
             #endif
             
             // delete the database from disk if the version number has been incremented
-            if UserDefaults.standard.integer(forKey: "DataControllerVersion") < version, let url = container.persistentStoreDescriptions.first?.url {
+            if UserDefaults.standard.integer(forKey: "DataControllerVersion") != version, let url = container.persistentStoreDescriptions.first?.url {
                 try? FileManager.default.removeItem(at: url)
                 UserDefaults.standard.set(version, forKey: "DataControllerVersion")
             }
@@ -118,7 +118,7 @@ class DataController {
         room.id = id
         
         joinedRoom.state?.events?.forEach { processStateEvent($0, in: room) }
-        process(events: joinedRoom.timeline?.events ?? [], in: room, includeState: true)
+        process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
         room.previousBatch = joinedRoom.timeline?.previousBatch
         
         return room
@@ -255,33 +255,25 @@ class DataController {
         edit.message = message(id: messageID) ?? createMessage(id: messageID)
     }
     
-    /// Created a redaction from a Matrix `RoomRedactionEvent`.
-    /// - Parameter event: A Matrix event of type `RoomRedactionEvent`.
-    /// - Parameter room: The room that the message being redacted belongs to.
-    /// - Returns: The `Redaction` object if successful or `nil` if the event was invalid.
-    ///
-    /// The redaction is created on the view context.
-    func createRedaction(event: RoomRedactionEvent, in room: Room) {
-        guard let messageID = event.redacts else { return }
-        
-        let redaction = Redaction(context: viewContext)
-        redaction.id = event.eventID
-        redaction.date = event.date
-        redaction.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
-        redaction.message = message(id: messageID) ?? createMessage(id: messageID)
-    }
-    
     
     // MARK: Process Responses
+    #warning("Move to the Matrix package.")
+    enum PaginationDirection {
+        case forwards
+        case backwards
+    }
     /// Process any room events in the provided array for the specified room.
     /// The following event types are currently processed:
     /// - Messages
     /// - Message Edits
     /// - Reactions
     /// - Redactions
-    /// - State if `includeState` is true
-    func process(events: [RoomEvent], in room: Room, includeState: Bool) {
+    /// - State if `paginating` is `.forwards`
+    func process(events: [RoomEvent]?, in room: Room, paginating: PaginationDirection) {
+        guard let events = events else { return }
+        
         var messages = [Message]()
+        var redactionEvents = [RoomRedactionEvent]()
             
         events.forEach {
             if let messageEvent = $0 as? RoomMessageEvent {
@@ -300,9 +292,36 @@ class DataController {
             } else if let reactionEvent = $0 as? RoomReactionEvent {
                 createReaction(event: reactionEvent, in: room)
             } else if let redactionEvent = $0 as? RoomRedactionEvent {
-                createRedaction(event: redactionEvent, in: room)
-            } else if includeState {
+                // batch redactions together to process later when paginating
+                // backwards as the related events might not be processed yet
+                if paginating == .backwards {
+                    redactionEvents.append(redactionEvent)
+                } else {
+                    processRedaction(event: redactionEvent, in: room)
+                }
+            } else if paginating == .forwards {
                 processStateEvent($0, in: room)
+            }
+        }
+        
+        // process all redactions together after paginating backwards
+        if paginating == .backwards {
+            redactionEvents.forEach { redactionEvent in
+                processRedaction(event: redactionEvent, in: room)
+            }
+            
+            if let pendingRedactions = try? viewContext.fetch(room.pendingRedactionsRequest) {
+                pendingRedactions.forEach { redaction in
+                    guard let eventID = redaction.eventID else { return }
+                    
+                    if let message = message(id: eventID) {
+                        message.isRedacted = true
+                        viewContext.delete(redaction)
+                    } else if let reaction = reaction(id: eventID) {
+                        viewContext.delete(reaction)
+                        viewContext.delete(redaction)
+                    }
+                }
             }
         }
     }
@@ -331,29 +350,59 @@ class DataController {
         }
     }
     
+    /// Processes `RoomRedactionEvent` events, redacting messages or events if
+    /// they are already synced. If no matching event can be found a `Reaction` object
+    /// will be created to perform the redaction later.
+    /// - Parameter event: A Matrix event of type `RoomRedactionEvent`.
+    /// - Parameter room: The room that the redaction is in.
+    ///
+    /// The view context is used to create/delete objects.
+    func processRedaction(event: RoomRedactionEvent, in room: Room) {
+        guard let eventID = event.redacts else { return }
+        
+        if let message = message(id: eventID) {
+            message.isRedacted = true
+        } else if let reaction = reaction(id: eventID) {
+            viewContext.delete(reaction)
+        } else {
+            let redaction = Redaction(context: viewContext)
+            redaction.id = event.eventID
+            redaction.eventID = eventID
+            redaction.date = event.date
+            redaction.sender = member(id: event.sender, in: room) ?? createMember(id: event.sender, in: room)
+        }
+    }
+    
     
     // MARK: Get Objects
     /// Fetch the room with the matching ID from the data store.
     func room(id: String) -> Room? {
-        let request: NSFetchRequest<Room> = Room.fetchRequest()
+        let request = Room.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }
     
     /// Fetch the message with the matching ID from the data store.
     func message(id: String) -> Message? {
-        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        let request = Message.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }
     
     /// Fetch the member with the matching ID from the data store.
     func member(id: String, in room: Room) -> Member? {
-        let request: NSFetchRequest<Member> = Member.fetchRequest()
+        let request = Member.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
             NSPredicate(format: "id == %@", id),
             NSPredicate(format: "room == %@", room)
         ])
+        return try? viewContext.fetch(request).first
+    }
+    
+    /// Fetch the reaction with the matching ID from the data store.
+    func reaction(id: String) -> Reaction? {
+        let request = Reaction.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id)
         return try? viewContext.fetch(request).first
     }
 }
