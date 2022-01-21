@@ -1,8 +1,8 @@
 # Watch The Matrix
 
-A watchOS client for [matrix.org](https://www.matrix.org) built on top of [pixlwave/Matrix](https://github.com/pixlwave/Matrix).
+A watchOS client for [Matrix](https://www.matrix.org) built on top of [pixlwave/Matrix](https://github.com/pixlwave/Matrix).
 
-View rooms and send messages & reactions on Apple Watch. Targets watchOS 7.
+View rooms and send messages & reactions on Apple Watch. Targets watchOS 8.
 
 Join the discussion and get the TestFlight at [#watchthe:matrix.org](https://matrix.to/#/#watchthe:matrix.org).
 
