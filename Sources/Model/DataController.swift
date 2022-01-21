@@ -127,7 +127,7 @@ class DataController {
     /// Creates an empty message with the specified ID that can be updated at a later date
     /// when it's content is received from the server. The message is created on the view context.
     ///
-    /// The message isn't assigned to a room so that it isn't shown until it's content has been filled
+    /// The message isn't assigned to a room so that it isn't shown until its content has been filled
     /// in from the server.
     func createMessage(id: String) -> Message {
         let message = Message(context: viewContext)
@@ -143,13 +143,12 @@ class DataController {
     /// - Returns: The `Message` object that was created, or `nil` if the event was invalid.
     ///
     /// The message is created on the view context and will be added to the room.
-    func createMessage(event: RoomMessageEvent, in room: Room) -> Message? {
+    func updateMessage(_ message: Message, from event: RoomMessageEvent, in room: Room) {
         guard
             let body = event.content.body,
             let type = event.content.type
-        else { return nil }
+        else { return }
         
-        let message = Message(context: viewContext)
         message.id = event.eventID
         message.body = body
         message.typeString = type.rawValue
@@ -175,8 +174,6 @@ class DataController {
             message.repliesToEventID = relationship.eventID
             message.formatAsReply()
         }
-
-        return message
     }
     
     /// Creates an empty member with the specified ID that can be updated at a later date
@@ -278,13 +275,13 @@ class DataController {
         events.forEach {
             if let messageEvent = $0 as? RoomMessageEvent {
                 if messageEvent.content.relationship?.type != .replace {
-                    if let message = createMessage(event: messageEvent, in: room) {
-                        messages.append(message)
-                        
-                        // if the event has a transaction id, remove its local echo
-                        if let transactionID = messageEvent.unsigned?.transactionID {
-                            room.transactionStore.removeTransaction(with: transactionID)
-                        }
+                    let message = message(id: messageEvent.eventID) ?? createMessage(id: messageEvent.eventID)
+                    updateMessage(message, from: messageEvent, in: room)
+                    messages.append(message)
+                    
+                    // if the event has a transaction id, remove its local echo
+                    if let transactionID = messageEvent.unsigned?.transactionID {
+                        room.transactionStore.removeTransaction(with: transactionID)
                     }
                 } else {
                     createEdit(event: messageEvent)

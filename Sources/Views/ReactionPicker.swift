@@ -14,10 +14,13 @@ struct ReactionPicker: View {
             // displays a two column reaction picker with 6 emoji to choose from
             LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
                 ForEach(["👍", "👎", "😄", "😭", "❤️", "🤯"], id: \.self) { reaction in
+                    let alreadySent = message.hasReaction(reaction, from: matrix.userID)
                     Button { react(with: reaction) } label: {
                         Text(reaction)
                             .font(.system(size: 21))
                     }
+                    .disabled(alreadySent)
+                    .opacity(alreadySent ? 0.667 : 1)
                 }
             }
             
@@ -44,5 +47,6 @@ struct Previews_ReactionPicker_Previews: PreviewProvider {
     static var previews: some View {
         let message = matrix.dataController.message(id: "0199-!test0:example.org")!
         ReactionPicker(message: message, room: message.room!)
+            .environmentObject(matrix)
     }
 }

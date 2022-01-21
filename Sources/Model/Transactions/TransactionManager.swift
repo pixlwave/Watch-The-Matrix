@@ -28,7 +28,6 @@ class TransactionManager {
     
     /// Generates a new unique transaction ID for this device session.
     func generateTransactionID() -> String {
-        #warning("MXTools uses a random prefix here instead of user defaults 🤔.")
         let id = String(transactionNumber, radix: 36)
         
         // Currently only used from the main thread, but potentially a good place try out actors when they land?

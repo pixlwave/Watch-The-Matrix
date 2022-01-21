@@ -99,12 +99,8 @@ class EventProcessingTests: BaseTestCase {
         
         
         // then the room's last message content should be updated
-        XCTAssertEqual(room.lastMessage?.body, "Edited message", "The message should match the content from the sync response.")
-        
-        let lastMessage = dataController.message(id: "$001")
-        XCTAssertNotNil(lastMessage)
-        XCTAssertNotNil(lastMessage?.room)
-        XCTAssertNotNil(lastMessage?.body)
-        XCTAssertNotNil(lastMessage?.date)
+        XCTAssertEqual(room.lastMessage?.body, "Original message", "The message should match the content from the pagination response.")
+        XCTAssertEqual(room.lastMessage?.lastEdit?.body, "Edited message", "The message should contain the edit from the pagination response.")
+        XCTAssertEqual(room.lastMessage?.aggregatedReactions(for: "").count, 1, "The message should have the reaction from the original sync response.")
     }
 }

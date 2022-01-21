@@ -9,7 +9,7 @@ extension Message {
     
     /// A request that will fetch any reactions that have been made to this message.
     private var reactionsRequest: NSFetchRequest<Reaction> {
-        let request: NSFetchRequest<Reaction> = Reaction.fetchRequest()
+        let request = Reaction.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Reaction.date, ascending: true)]
         return request
@@ -17,7 +17,7 @@ extension Message {
     
     /// The newest edit made to this message, or nil if no edits have been made.
     var lastEdit: Edit? {
-        let request: NSFetchRequest<Edit> = Edit.fetchRequest()
+        let request = Edit.fetchRequest()
         request.predicate = NSPredicate(format: "message == %@", self)
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Edit.date, ascending: false)]
         request.fetchLimit = 1
@@ -41,22 +41,35 @@ extension Message {
 
         // store reactions in a counted set and record which reactions the user sent
         let reactionSet = NSCountedSet()
-        var userReactions = [String: Bool]()
+        var userReactions = [String: String]()
         
         reactions.forEach {
             guard let key = $0.key else { return }
             reactionSet.add(key)
             
             if $0.sender?.id == userID {
-                userReactions[key] = true
+                userReactions[key] = $0.id
             }
         }
         
         // create the array of aggregated reactions
         return reactionSet.map {
             let key = $0 as! String
-            return AggregatedReaction(key: key, count: reactionSet.count(for: key), isSelected: userReactions[key] ?? false)
+            return AggregatedReaction(key: key, count: reactionSet.count(for: key), eventIDToRedact: userReactions[key])
         }
+    }
+    
+    func hasReaction(_ key: String, from userID: String?) -> Bool {
+        guard let userID = userID else { return false }
+        
+        let request = Reaction.fetchRequest()
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
+            NSPredicate(format: "message == %@", self),
+            NSPredicate(format: "key == %@", key),
+            NSPredicate(format: "sender.id == %@", userID)
+        ])
+        
+        return ((try? managedObjectContext?.count(for: request)) ?? 0) > 0
     }
     
     func formatAsReply() {

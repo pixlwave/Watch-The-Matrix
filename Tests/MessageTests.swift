@@ -39,8 +39,8 @@ class MessageTests: BaseTestCase {
         XCTAssertEqual(aggregatedReactions.count, 2, "There should be 2 unique reactions to the message.")
         XCTAssertEqual(aggregatedReactions[0].count, 3, "There should be 3 👋 reactions to the message.")
         XCTAssertEqual(aggregatedReactions[1].count, 2, "There should be 2 🙃 reactions to the message.")
-        XCTAssertTrue(aggregatedReactions[0].isSelected, "The 👋 reaction should be selected.")
-        XCTAssertFalse(aggregatedReactions[1].isSelected, "The 🙃 reaction should not be selected.")
+        XCTAssertNotNil(aggregatedReactions[0].eventIDToRedact, "The 👋 reaction should have an event ID for the user.")
+        XCTAssertNil(aggregatedReactions[1].eventIDToRedact, "The 🙃 reaction should not have an event ID for the user.")
     }
     
     func testEditingAMessage() throws {
@@ -70,8 +70,10 @@ class MessageTests: BaseTestCase {
         let messages = try loadJSON(named: "MessageReplies", as: [RoomMessageEvent].self)
         
         // when loading the events as messages
-        let rootMessage = dataController.createMessage(event: messages[0], in: room)!
-        let richReply = dataController.createMessage(event: messages[1], in: room)!
+        let rootMessage = dataController.createMessage(id: messages[0].eventID)
+        dataController.updateMessage(rootMessage, from: messages[0], in: room)
+        let richReply = dataController.createMessage(id: messages[1].eventID)
+        dataController.updateMessage(richReply, from: messages[1], in: room)
         dataController.save()
         
         // then the messages should be correctly identified as replies and formatted appropriately
