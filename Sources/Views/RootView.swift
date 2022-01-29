@@ -6,25 +6,27 @@ struct RootView: View {
     @EnvironmentObject var matrix: MatrixController
     
     // sheets and alerts
+    @State private var presentedRoom: Room?
     @State private var isPresentingSettings = false
     @State private var syncError: MatrixError? = nil
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(entity: Room.entity(),
-                  sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)],
+                  sortDescriptors: [NSSortDescriptor(keyPath: \Room.lastMessageDate, ascending: false)],
                   predicate: NSPredicate(format: "isSpace != true"),
                   animation: .default) var rooms: FetchedResults<Room>
     
-    var body: some View {
-        // sort the rooms by the date of the last message, newest at the top
-        // when the room has no content push it to the end of the list
-        // core data appears to lack the ability to do this in the fetch request
-        let sortedRooms = rooms.sorted { room1, room2 in
-            let date1 = room1.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
-            let date2 = room2.lastMessage?.date ?? Date(timeIntervalSince1970: 0)
-            return date1 > date2
+    /// A binding to `presentedRoom` that controls the navigation link.
+    var isPresentingRoom: Binding<Bool> {
+        Binding {
+            presentedRoom != nil
+        } set: { newValue in
+            guard !newValue else { return }
+            presentedRoom = nil
         }
-        
+    }
+    
+    var body: some View {
         List {
             if case let .syncError(error) = matrix.state {
                 Button { syncError = error } label: {
@@ -38,16 +40,26 @@ struct RootView: View {
                 }
             }
             
-            ForEach(sortedRooms) { room in
-                NavigationLink(destination: RoomView(room: room)
-                                .environmentObject(matrix)
-                                .environment(\.managedObjectContext, viewContext)) {
+            ForEach(rooms) { room in
+                Button { presentedRoom = room } label: {
                     RoomCell(room: room)
                 }
                 .disabled(room.isEncrypted)
             }
         }
         .navigationTitle("Rooms")
+        .background(
+            // Use a hidden navigation link to fix links in a list popping when
+            // a new sort order moves the currently selected cell offscreen.
+            NavigationLink("", isActive: isPresentingRoom) {
+                presentedRoom.map { room in
+                    RoomView(room: room)
+                        .environmentObject(matrix)
+                        .environment(\.managedObjectContext, viewContext)
+                }
+            }
+            .hidden()
+        )
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button { isPresentingSettings = true } label: {

@@ -20,6 +20,12 @@ class EventProcessingTests: BaseTestCase {
         XCTAssertEqual(dataController.count(for: Room.fetchRequest()), 1, "There should be 1 room.")
         XCTAssertEqual(dataController.count(for: Member.fetchRequest()), 1, "There should be 1 member.")
         XCTAssertEqual(dataController.count(for: Message.fetchRequest()), 1, "There should be 1 message.")
+        
+        // and the room's last message should reflect the sync response
+        XCTAssertEqual(room.lastMessage?.body, "Hello, World", "The room's last message body should match the sync response.")
+        XCTAssertEqual(room.excerpt, "Hello, World", "The room's excerpt match the sync response.")
+        XCTAssertNotNil(room.lastMessageDate, "The lastMessageDate property should have been set.")
+        XCTAssertEqual(room.lastMessageDate, room.lastMessage?.date, "The lastMessageDate property should match the room's lastMessage.")
     }
     
     
@@ -27,11 +33,10 @@ class EventProcessingTests: BaseTestCase {
         // given a room with one message and one member
         try testProcessNewJoinedRoom()
         
-        let joinedRoom = try loadJSON(named: "SyncMessageJoinedRoom", as: JoinedRoom.self)
-        
-        // when processing a sync response with one new message for the room from the same member
         let room = dataController.room(id: "!room:example.org")!
         
+        // when processing a sync response with one new message for the room from the same member
+        let joinedRoom = try loadJSON(named: "SyncMessageJoinedRoom", as: JoinedRoom.self)
         joinedRoom.state?.events?.forEach { dataController.processStateEvent($0, in: room) }
         dataController.process(events: joinedRoom.timeline?.events, in: room, paginating: .forwards)
         
@@ -49,6 +54,12 @@ class EventProcessingTests: BaseTestCase {
         XCTAssertEqual(fetchedRoom.members?.count, 1)
         XCTAssertEqual(fetchedRoom.name, "Test Room", "The room's name should be \"Test Room\" and shouldn't have changed.")
         XCTAssertEqual(fetchedMember.displayName, "Test User", "The member's name should be \"Test User\" and shouldn't have changed.")
+        
+        // and the room's last message should reflect the sync response
+        XCTAssertEqual(room.lastMessage?.body, "A message that arrived later", "The room's last message body should match the sync response.")
+        XCTAssertEqual(room.excerpt, "A message that arrived later", "The room's excerpt should have been updated.")
+        XCTAssertNotNil(room.lastMessageDate, "The lastMessageDate property should have been set.")
+        XCTAssertEqual(room.lastMessageDate, room.lastMessage?.date, "The lastMessageDate property should match the room's lastMessage.")
     }
     
     func testNewJoinedRoomWithReaction() throws {
@@ -73,7 +84,6 @@ class EventProcessingTests: BaseTestCase {
         XCTAssertEqual(dataController.count(for: Reaction.fetchRequest()), 1, "There should be 1 reaction.")
     }
     
-    #warning("This test currently fails")
     func testLoadMessageWithExistingReaction() throws {
         // given a single room with a reaction that created a template message for its relationship
         try testNewJoinedRoomWithReaction()
@@ -85,8 +95,7 @@ class EventProcessingTests: BaseTestCase {
         let events = dict.events!
         
         // reversed events to create messages before any relations create them
-        #warning("The paginating parameter is technically incorrect as the events array is reversed here")
-        dataController.process(events: events.reversed(), in: room, paginating: .backwards)
+        dataController.process(events: events, in: room, paginating: .backwards)
         room.previousBatch = dict.endToken
         
         self.dataController.save()

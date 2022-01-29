@@ -16,19 +16,18 @@ struct RoomCell: View {
             }
             
             Text(room.name ?? room.generateName(for: matrix.userID))
+                .foregroundColor(.primary)
                 .fontWeight(.medium)
                 .lineLimit(1)
         }
     }
     
     @ViewBuilder var detail: some View {
-        let lastMessage = room.lastMessage
-        
-        Text(lastMessage?.lastEdit?.body ?? lastMessage?.body ?? "")
+        Text(room.excerpt ?? "")
             .lineLimit(1)
             .foregroundColor(.secondary)
         
-        Text(lastMessage?.date?.relativeString ?? "")
+        Text(room.lastMessageDate?.relativeString ?? "")
             .font(.footnote)
             .foregroundColor(.secondary)
     }

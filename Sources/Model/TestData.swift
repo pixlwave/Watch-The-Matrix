@@ -78,6 +78,9 @@ extension DataController {
             redaction.date = Date()
             redaction.sender = members.last
             redaction.room = room
+            
+            // update the room's last message date for sorting
+            room.updateCachedProperties()
         }
         
         let state = syncState()

@@ -6,7 +6,7 @@ import Matrix
 class DataController {
     /// A version number that is incremented when breaking changes are made
     /// to the data model, processing or storage logic to force a resync.
-    private let version = 6
+    private let version = 7
     /// The persistence container used to store any synced data.
     private let container: NSPersistentContainer
     
@@ -105,7 +105,7 @@ class DataController {
         batchDelete(entity: Edit.self)
         batchDelete(entity: Redaction.self)
         batchDelete(entity: SyncState.self)
-         
+        
         save()      // save here to ensure all data is completely deleted
     }
     
@@ -267,7 +267,10 @@ class DataController {
     /// - Redactions
     /// - State if `paginating` is `.forwards`
     func process(events: [RoomEvent]?, in room: Room, paginating: PaginationDirection) {
-        guard let events = events else { return }
+        // the events are reversed when paginating backwards to prevent a template message being
+        // created for a relationship and then being created again if its event is in the response.
+        #warning("Test whether this reversal is now actually necessary")
+        guard let events = paginating == .forwards ? events : events?.reversed() else { return }
         
         var messages = [Message]()
         var redactionEvents = [RoomRedactionEvent]()
@@ -321,6 +324,9 @@ class DataController {
                 }
             }
         }
+        
+        // Update the room's last message date for sorting
+        room.updateCachedProperties()
     }
     
     /// Processes an event for state in the specified room.

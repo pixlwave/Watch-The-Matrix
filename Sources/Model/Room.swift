@@ -49,6 +49,20 @@ extension Room {
         return (try? managedObjectContext?.count(for: request)) ?? 0
     }
     
+    /// Update any cached properties used to display the room in the room list.
+    func updateCachedProperties() {
+        let lastMessage = lastMessage
+        let body = lastMessage?.lastEdit?.body ?? lastMessage?.body
+        
+        if excerpt != body {
+            excerpt = body
+        }
+        
+        if lastMessageDate != lastMessage?.date {
+            lastMessageDate = lastMessage?.date
+        }
+    }
+    
     /// Generate a name from the members in this room ignoring the user passed in.
     func generateName(for userID: String?) -> String {
         // create a request for up to 5 members excluding the specified user

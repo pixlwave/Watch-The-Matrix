@@ -15,17 +15,21 @@ class RoomTests: BaseTestCase {
         message.date = Date()
         message.sender = (room.members as? Set<Member>)?.first
         message.room = room
+        room.updateCachedProperties()
         dataController.save()
         
         // then the last message should return this new message
         XCTAssertEqual(room.lastMessage?.body, "Hello, World!")
+        XCTAssertEqual(room.excerpt, "Hello, World!")
         
         // when redacting the last message
         message.isRedacted = true
+        room.updateCachedProperties()
         dataController.save()
         
         // then the last message should revert back to the sample data set
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 9")
+        XCTAssertEqual(room.excerpt, "Hello Room 0 from User 9")
     }
     
     func testLastMessageLoadingOldMessages() throws {
@@ -53,13 +57,16 @@ class RoomTests: BaseTestCase {
         
         let room = dataController.room(id: "!test0:example.org")!
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 9")
+        XCTAssertEqual(room.excerpt, "Hello Room 0 from User 9")
         
         // when redacting the last message
         room.lastMessage?.isRedacted = true
+        room.updateCachedProperties()
         dataController.save()
         
         // then the redacted message shouldn't be returned as the last message
         XCTAssertEqual(room.lastMessage?.body, "Hello Room 0 from User 8")
+        XCTAssertEqual(room.excerpt, "Hello Room 0 from User 8")
     }
     
     func testSyncedMemberCount() throws {
