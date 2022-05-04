@@ -37,6 +37,7 @@ struct SettingsView: View {
         .confirmationDialog("Sign Out?", isPresented: $isPresentingSignOutAlert) {
             Button("Sign out", role: .destructive) {
                 matrix.logout()
+                dismiss()
             }
             
             Button("Cancel") { }
