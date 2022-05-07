@@ -54,6 +54,7 @@
 		A59A0C6525DD6AC200B5EDAA /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A0C6425DD6AC200B5EDAA /* ComplicationController.swift */; };
 		A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */; };
 		A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C6925DD6AC300B5EDAA /* Preview Assets.xcassets */; };
+		A59A6FD5282652BC00B59CF2 /* ErrorResponse-Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A6FD4282652BC00B59CF2 /* ErrorResponse-Types.swift */; };
 		A5A30C0C260BA53700861601 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
 		A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A77A74265833C000B683FF /* TransactionManager.swift */; };
 		A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0826482CA3005384AF /* RoomCell.swift */; };
@@ -166,6 +167,7 @@
 		A59A0C6925DD6AC300B5EDAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A59A0C6B25DD6AC300B5EDAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		A59A6FD4282652BC00B59CF2 /* ErrorResponse-Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ErrorResponse-Types.swift"; sourceTree = "<group>"; };
 		A59BB4B12618AFE600A91D68 /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
 		A59BB4F12618B1D400A91D68 /* RoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTests.swift; sourceTree = "<group>"; };
 		A59BB4F82618B22F00A91D68 /* EventProcessingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProcessingTests.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */,
+				A59A6FD4282652BC00B59CF2 /* ErrorResponse-Types.swift */,
 				A5B43C0A264831F4005384AF /* Date-Formatting.swift */,
 			);
 			path = Extensions;
@@ -574,6 +577,7 @@
 				A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */,
 				A59A0C6125DD6AC200B5EDAA /* NotificationController.swift in Sources */,
 				A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */,
+				A59A6FD5282652BC00B59CF2 /* ErrorResponse-Types.swift in Sources */,
 				A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */,
 				A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */,
 				A5FEEBEA27118E4200B57B84 /* SettingsView.swift in Sources */,

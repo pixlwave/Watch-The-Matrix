@@ -79,6 +79,25 @@ class MatrixController: ObservableObject {
         syncCancellable?.cancel()
     }
     
+    /// Reset user credentials, clear all synced data and display the login screen.
+    private func resetStoredData() {
+        // reset access credentials
+        self.userID = nil
+        self.deviceID = nil
+        self.client.accessToken = nil
+        self.client.homeserver = .default
+        self.saveCredentials()
+        
+        // clear all synced data
+        self.dataController.deleteAll()
+        
+        // create a fresh sync state object
+        self.syncState = self.dataController.syncState()
+        
+        // update the ui state
+        self.state = .signedOut
+    }
+    
     /// A cancellation token used for login, register and logout operations.
     private var authCancellable: AnyCancellable?
     
@@ -130,24 +149,9 @@ class MatrixController: ObservableObject {
             } receiveValue: { success in
                 guard success else { return }
                 
-                // cancel the long poll
+                // cancel the long poll and remove the user's data
                 self.pauseSync()
-                
-                // reset access credentials
-                self.userID = nil
-                self.deviceID = nil
-                self.client.accessToken = nil
-                self.client.homeserver = .default
-                self.saveCredentials()
-                
-                // clear all synced data
-                self.dataController.deleteAll()
-                
-                // create a fresh sync state object
-                self.syncState = self.dataController.syncState()
-                
-                // update the ui state
-                self.state = .signedOut
+                self.resetStoredData()
             }
     }
     
@@ -173,8 +177,7 @@ class MatrixController: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
-                    print(error)
-                    self.state = .syncError(error: error)
+                    self.process(error)
                 }
             } receiveValue: { response in
                 self.process(response.rooms?.joined ?? [:])
@@ -191,6 +194,21 @@ class MatrixController: ObservableObject {
                 
                 self.sync()
             }
+    }
+    
+    /// Processes sync errors handling specific types such as invalid tokens.
+    private func process(_ error: MatrixError) {
+        print(error)
+        
+        if case let .errorResponse(errorResponse) = error {
+            if errorResponse.isLoggedOut {
+                // force a logout and show the login screen
+                resetStoredData()
+                return
+            }
+        }
+        
+        self.state = .syncError(error: error)
     }
     
     /// Process the joined rooms from a sync response, creating new `Room` instances and updating
