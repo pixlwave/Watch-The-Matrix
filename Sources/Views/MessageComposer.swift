@@ -18,15 +18,19 @@ struct MessageComposer: View {
         messageToReplyTo == nil ? "Message" : "Reply"
     }
     
-    var body: some View {
+    var useFlickType: Bool {
         // FlickType fails when presented from a sheet so disable it for replies
-        if flickTypeMode == .off || messageToReplyTo != nil {
+        flickTypeMode != .off && messageToReplyTo == nil
+    }
+    
+    var body: some View {
+        if useFlickType {
+            FlickTypeTextEditor(placeholder, text: $message, mode: flickTypeMode, onCommit: send)
+        } else {
             TextField(placeholder, text: $message)
                 .submitLabel(.send)
                 .onSubmit(send)
                 .onChange(of: shouldClearMessage, perform: clearMessage)
-        } else {
-            FlickTypeTextEditor(placeholder, text: $message, mode: flickTypeMode, onCommit: send)
         }
     }
     
@@ -36,9 +40,13 @@ struct MessageComposer: View {
         matrix.sendMessage(message, in: room, asReplyTo: messageToReplyTo)
         completion?()
         
-        // workaround for onSubmit in watchOS 8 which fails
-        // to clear the message when updated directly here.
-        shouldClearMessage = true
+        if useFlickType {
+            message = ""
+        } else {
+            // workaround for onSubmit in watchOS 8 which fails
+            // to clear the message when updated directly here.
+            shouldClearMessage = true
+        }
     }
     
     func clearMessage(_ shouldClear: Bool) {
