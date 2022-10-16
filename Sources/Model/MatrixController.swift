@@ -147,7 +147,7 @@ class MatrixController: ObservableObject {
             .sink { completion in
                 //
             } receiveValue: { success in
-                guard success else { return }
+                if !success { print("Logout request failed, clearing data anyway.") }
                 
                 // cancel the long poll and remove the user's data
                 self.pauseSync()

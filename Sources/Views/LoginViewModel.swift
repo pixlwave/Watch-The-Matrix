@@ -102,7 +102,6 @@ extension LoginView {
                         self.loginError = error
                     }
                 } receiveValue: { _ in }
-
         }
     }
 }
