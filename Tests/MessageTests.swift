@@ -1,6 +1,6 @@
 import XCTest
 import Matrix
-@testable import Watch_The_Matrix_WatchKit_Extension
+@testable import Watch_The_Matrix_WatchKit_App
 
 class MessageTests: BaseTestCase {
     func testReactingToAMessage() throws {

@@ -1,5 +1,5 @@
 import XCTest
-@testable import Watch_The_Matrix_WatchKit_Extension
+@testable import Watch_The_Matrix_WatchKit_App
 @testable import Matrix
 
 class BaseTestCase: XCTestCase {

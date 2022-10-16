@@ -60,7 +60,7 @@ extension Message {
     }
     
     func hasReaction(_ key: String, from userID: String?) -> Bool {
-        guard let userID = userID else { return false }
+        guard let userID else { return false }
         
         let request = Reaction.fetchRequest()
         request.predicate = NSCompoundPredicate(type: .and, subpredicates: [
@@ -79,7 +79,7 @@ extension Message {
     }
     
     private func formatBodyAsReply() {
-        guard let body = body else { return }
+        guard let body else { return }
         
         let components = body.components(separatedBy: .newlines)
         

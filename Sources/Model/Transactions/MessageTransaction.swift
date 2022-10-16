@@ -30,7 +30,7 @@ class MessageTransaction: ObservableObject, Identifiable {
         self.originalMessage = message
         
         var content: MessageContent?
-        if let messageToQuote = messageToQuote,
+        if let messageToQuote,
            let quoteID = messageToQuote.id,
            let quoteBody = messageToQuote.body,
            let quoteSender = messageToQuote.sender?.id {

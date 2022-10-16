@@ -29,24 +29,19 @@
 		A560A491278B4FC700F5EC01 /* LoadMessages.json in Resources */ = {isa = PBXBuildFile; fileRef = A560A490278B4FC700F5EC01 /* LoadMessages.json */; };
 		A560A495278B4FD900F5EC01 /* SyncNewRoomWithReaction.json in Resources */ = {isa = PBXBuildFile; fileRef = A560A494278B4FD900F5EC01 /* SyncNewRoomWithReaction.json */; };
 		A561B753277A320600CEAF26 /* MessageAligner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561B752277A320600CEAF26 /* MessageAligner.swift */; };
-		A5620D55264915E500EAF88B /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A5620D54264915E500EAF88B /* Matrix */; };
-		A562FF4627847C3A0094B97E /* HTMLEntities in Frameworks */ = {isa = PBXBuildFile; productRef = A562FF4527847C3A0094B97E /* HTMLEntities */; };
 		A56329E0263C3861003D0E67 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56329DF263C3861003D0E67 /* LoginViewModel.swift */; };
 		A564A4C6260B4E6B00895426 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4C5260B4E6B00895426 /* DataController.swift */; };
 		A564A4CE260B588B00895426 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A564A4CD260B588B00895426 /* TestData.swift */; };
 		A56C7FB32614AF9A0067CB3B /* MatrixError-Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56C7FB22614AF9A0067CB3B /* MatrixError-Identifiable.swift */; };
-		A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5799D3525FC205C00D4B940 /* KeychainAccess */; };
 		A58015282623280800C61D25 /* ReactionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58015272623280800C61D25 /* ReactionPicker.swift */; };
 		A581EB90277A4CEB0083B24A /* AlignedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A581EB8F277A4CEB0083B24A /* AlignedScrollView.swift */; };
 		A59430712673D4E900A47018 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59430702673D4E900A47018 /* ExtensionDelegate.swift */; };
-		A59430742673D53300A47018 /* FlickTypeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A59430732673D53300A47018 /* FlickTypeKit */; };
 		A59437F4265D02DF00A81E1E /* MessageTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F3265D02DF00A81E1E /* MessageTransactionView.swift */; };
 		A59437F6265D05DA00A81E1E /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59437F5265D05DA00A81E1E /* MessageBubble.swift */; };
 		A5989DFC265AE28100DAD57C /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFA265AE28100DAD57C /* TransactionStore.swift */; };
 		A5989DFE265AE2E100DAD57C /* MessageTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5989DFD265AE2B500DAD57C /* MessageTransaction.swift */; };
 		A59A0C4C25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */; };
-		A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A59A0C5D25DD6AC200B5EDAA /* WatchTheMatrixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A0C5C25DD6AC200B5EDAA /* WatchTheMatrixApp.swift */; };
 		A59A0C5F25DD6AC200B5EDAA /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A0C5E25DD6AC200B5EDAA /* RootView.swift */; };
 		A59A0C6125DD6AC200B5EDAA /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A0C6025DD6AC200B5EDAA /* NotificationController.swift */; };
@@ -57,6 +52,10 @@
 		A59A6FD5282652BC00B59CF2 /* ErrorResponse-Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A6FD4282652BC00B59CF2 /* ErrorResponse-Types.swift */; };
 		A5A30C0C260BA53700861601 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A30C0B260BA53700861601 /* Edit.swift */; };
 		A5A77A75265833C000B683FF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A77A74265833C000B683FF /* TransactionManager.swift */; };
+		A5A9B43C28FC938B004C651F /* Matrix in Frameworks */ = {isa = PBXBuildFile; productRef = A5A9B43B28FC938B004C651F /* Matrix */; };
+		A5A9B43E28FC9391004C651F /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A9B43D28FC9391004C651F /* KeychainAccess */; };
+		A5A9B44028FC9395004C651F /* FlickTypeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A5A9B43F28FC9395004C651F /* FlickTypeKit */; };
+		A5A9B44228FC9398004C651F /* HTMLEntities in Frameworks */ = {isa = PBXBuildFile; productRef = A5A9B44128FC9398004C651F /* HTMLEntities */; };
 		A5B43C0926482CA3005384AF /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0826482CA3005384AF /* RoomCell.swift */; };
 		A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0A264831F4005384AF /* Date-Formatting.swift */; };
 		A5BC73C72700B97E00AF5AF9 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */; };
@@ -70,12 +69,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A538FE0226B479B8004F37F6 /* PBXContainerItemProxy */ = {
+		A576D38C28FC8C3D00A3FCF5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A59A0C4125DD6AC000B5EDAA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A59A0C5625DD6AC200B5EDAA;
-			remoteInfo = "Watch The Matrix WatchKit Extension";
+			remoteGlobalIDString = A59A0C4A25DD6AC000B5EDAA;
+			remoteInfo = "Watch The Matrix WatchKit App";
 		};
 		A59A0C4D25DD6AC000B5EDAA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -84,27 +83,9 @@
 			remoteGlobalIDString = A59A0C4A25DD6AC000B5EDAA;
 			remoteInfo = "Watch The Matrix WatchKit App";
 		};
-		A59A0C5925DD6AC200B5EDAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A59A0C4125DD6AC000B5EDAA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A59A0C5625DD6AC200B5EDAA;
-			remoteInfo = "Watch The Matrix WatchKit Extension";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A59A0C7225DD6AC300B5EDAA /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				A59A0C5825DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A59A0C7625DD6AC300B5EDAA /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,7 +138,6 @@
 		A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch The Matrix WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C5025DD6AC200B5EDAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A59A0C5225DD6AC200B5EDAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch The Matrix WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59A0C5C25DD6AC200B5EDAA /* WatchTheMatrixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTheMatrixApp.swift; sourceTree = "<group>"; };
 		A59A0C5E25DD6AC200B5EDAA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		A59A0C6025DD6AC200B5EDAA /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
@@ -199,10 +179,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5799D3625FC205C00D4B940 /* KeychainAccess in Frameworks */,
-				A59430742673D53300A47018 /* FlickTypeKit in Frameworks */,
-				A562FF4627847C3A0094B97E /* HTMLEntities in Frameworks */,
-				A5620D55264915E500EAF88B /* Matrix in Frameworks */,
+				A5A9B43E28FC9391004C651F /* KeychainAccess in Frameworks */,
+				A5A9B44028FC9395004C651F /* FlickTypeKit in Frameworks */,
+				A5A9B44228FC9398004C651F /* HTMLEntities in Frameworks */,
+				A5A9B43C28FC938B004C651F /* Matrix in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +272,7 @@
 				A59A0C4F25DD6AC000B5EDAA /* Watch App */,
 				A538FDFE26B479B7004F37F6 /* Tests */,
 				A59A0C4825DD6AC000B5EDAA /* Products */,
+				A5A9B43A28FC938B004C651F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -300,7 +281,6 @@
 			children = (
 				A59A0C4725DD6AC000B5EDAA /* Watch The Matrix.app */,
 				A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */,
-				A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */,
 				A538FDFD26B479B7004F37F6 /* Tests.xctest */,
 			);
 			name = Products;
@@ -347,6 +327,13 @@
 				A560A490278B4FC700F5EC01 /* LoadMessages.json */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		A5A9B43A28FC938B004C651F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A5D9CF06260B4CD000875D38 /* Views */ = {
@@ -396,7 +383,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A538FE0326B479B8004F37F6 /* PBXTargetDependency */,
+				A576D38D28FC8C3D00A3FCF5 /* PBXTargetDependency */,
 			);
 			name = Tests;
 			productName = Tests;
@@ -425,40 +412,23 @@
 			buildConfigurationList = A59A0C7325DD6AC300B5EDAA /* Build configuration list for PBXNativeTarget "Watch The Matrix WatchKit App" */;
 			buildPhases = (
 				A59A0C4925DD6AC000B5EDAA /* Resources */,
-				A59A0C7225DD6AC300B5EDAA /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A59A0C5A25DD6AC200B5EDAA /* PBXTargetDependency */,
-			);
-			name = "Watch The Matrix WatchKit App";
-			productName = "Watch The Matrix WatchKit App";
-			productReference = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A59A0C6F25DD6AC300B5EDAA /* Build configuration list for PBXNativeTarget "Watch The Matrix WatchKit Extension" */;
-			buildPhases = (
 				A59A0C5325DD6AC200B5EDAA /* Sources */,
 				A59A0C5425DD6AC200B5EDAA /* Frameworks */,
-				A59A0C5525DD6AC200B5EDAA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Watch The Matrix WatchKit Extension";
+			name = "Watch The Matrix WatchKit App";
 			packageProductDependencies = (
-				A5799D3525FC205C00D4B940 /* KeychainAccess */,
-				A5620D54264915E500EAF88B /* Matrix */,
-				A59430732673D53300A47018 /* FlickTypeKit */,
-				A562FF4527847C3A0094B97E /* HTMLEntities */,
+				A5A9B43B28FC938B004C651F /* Matrix */,
+				A5A9B43D28FC9391004C651F /* KeychainAccess */,
+				A5A9B43F28FC9395004C651F /* FlickTypeKit */,
+				A5A9B44128FC9398004C651F /* HTMLEntities */,
 			);
-			productName = "Watch The Matrix WatchKit Extension";
-			productReference = A59A0C5725DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
+			productName = "Watch The Matrix WatchKit App";
+			productReference = A59A0C4B25DD6AC000B5EDAA /* Watch The Matrix WatchKit App.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -467,19 +437,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					A538FDFC26B479B7004F37F6 = {
 						CreatedOnToolsVersion = 12.5.1;
-						TestTargetID = A59A0C5625DD6AC200B5EDAA;
+						TestTargetID = A59A0C4A25DD6AC000B5EDAA;
 					};
 					A59A0C4625DD6AC000B5EDAA = {
 						CreatedOnToolsVersion = 12.4;
 					};
 					A59A0C4A25DD6AC000B5EDAA = {
-						CreatedOnToolsVersion = 12.4;
-					};
-					A59A0C5625DD6AC200B5EDAA = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
@@ -508,7 +475,6 @@
 			targets = (
 				A59A0C4625DD6AC000B5EDAA /* Watch The Matrix */,
 				A59A0C4A25DD6AC000B5EDAA /* Watch The Matrix WatchKit App */,
-				A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */,
 				A538FDFC26B479B7004F37F6 /* Tests */,
 			);
 		};
@@ -539,17 +505,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A59A0C5525DD6AC200B5EDAA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 				A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */,
 				A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */,
 				A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */,
+				A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,20 +576,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A538FE0326B479B8004F37F6 /* PBXTargetDependency */ = {
+		A576D38D28FC8C3D00A3FCF5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */;
-			targetProxy = A538FE0226B479B8004F37F6 /* PBXContainerItemProxy */;
+			target = A59A0C4A25DD6AC000B5EDAA /* Watch The Matrix WatchKit App */;
+			targetProxy = A576D38C28FC8C3D00A3FCF5 /* PBXContainerItemProxy */;
 		};
 		A59A0C4E25DD6AC000B5EDAA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A59A0C4A25DD6AC000B5EDAA /* Watch The Matrix WatchKit App */;
 			targetProxy = A59A0C4D25DD6AC000B5EDAA /* PBXContainerItemProxy */;
-		};
-		A59A0C5A25DD6AC200B5EDAA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A59A0C5625DD6AC200B5EDAA /* Watch The Matrix WatchKit Extension */;
-			targetProxy = A59A0C5925DD6AC200B5EDAA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -666,7 +620,7 @@
 				SDKROOT = watchos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Watch The Matrix WatchKit Extension.appex/Watch The Matrix WatchKit Extension";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Watch The Matrix WatchKit App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Watch The Matrix WatchKit App";
 				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
@@ -688,7 +642,7 @@
 				SDKROOT = watchos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Watch The Matrix WatchKit Extension.appex/Watch The Matrix WatchKit Extension";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Watch The Matrix WatchKit App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Watch The Matrix WatchKit App";
 				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
@@ -809,69 +763,22 @@
 			};
 			name = Release;
 		};
-		A59A0C7025DD6AC300B5EDAA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
-				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
-				DEVELOPMENT_TEAM = NU8A5Y875P;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Debug;
-		};
-		A59A0C7125DD6AC300B5EDAA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
-				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
-				DEVELOPMENT_TEAM = NU8A5Y875P;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Release;
-		};
 		A59A0C7425DD6AC300B5EDAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
-				IBSC_MODULE = Watch_The_Matrix_WatchKit_Extension;
 				INFOPLIST_FILE = "Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -887,12 +794,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Watch The Matrix WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
-				IBSC_MODULE = Watch_The_Matrix_WatchKit_Extension;
 				INFOPLIST_FILE = "Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -909,6 +821,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -922,6 +835,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = NU8A5Y875P;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.pixlwave.Watch-The-Matrix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -946,15 +860,6 @@
 			buildConfigurations = (
 				A59A0C6D25DD6AC300B5EDAA /* Debug */,
 				A59A0C6E25DD6AC300B5EDAA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A59A0C6F25DD6AC300B5EDAA /* Build configuration list for PBXNativeTarget "Watch The Matrix WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A59A0C7025DD6AC300B5EDAA /* Debug */,
-				A59A0C7125DD6AC300B5EDAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1015,25 +920,25 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A5620D54264915E500EAF88B /* Matrix */ = {
+		A5A9B43B28FC938B004C651F /* Matrix */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A5620D53264915E500EAF88B /* XCRemoteSwiftPackageReference "Matrix" */;
 			productName = Matrix;
 		};
-		A562FF4527847C3A0094B97E /* HTMLEntities */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A562FF4427847C3A0094B97E /* XCRemoteSwiftPackageReference "swift-html-entities" */;
-			productName = HTMLEntities;
-		};
-		A5799D3525FC205C00D4B940 /* KeychainAccess */ = {
+		A5A9B43D28FC9391004C651F /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A5799D3425FC205C00D4B940 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
 		};
-		A59430732673D53300A47018 /* FlickTypeKit */ = {
+		A5A9B43F28FC9395004C651F /* FlickTypeKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A59430722673D53300A47018 /* XCRemoteSwiftPackageReference "FlickTypeKit" */;
 			productName = FlickTypeKit;
+		};
+		A5A9B44128FC9398004C651F /* HTMLEntities */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A562FF4427847C3A0094B97E /* XCRemoteSwiftPackageReference "swift-html-entities" */;
+			productName = HTMLEntities;
 		};
 /* End XCSwiftPackageProductDependency section */
 

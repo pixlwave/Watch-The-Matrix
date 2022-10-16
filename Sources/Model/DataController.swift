@@ -41,7 +41,7 @@ class DataController {
         
         // finally load the persistent stores into the container
         container.loadPersistentStores { storeDescription, error in
-            if let error = error { fatalError("Core Data container error: \(error)") }
+            if let error { fatalError("Core Data container error: \(error)") }
         }
         
         #warning("This works for properties, but may not be suitable for relationships.")

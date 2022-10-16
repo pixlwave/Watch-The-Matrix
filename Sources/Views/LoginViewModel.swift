@@ -91,7 +91,7 @@ extension LoginView {
         /// Log in to the homeserver using the supplied username and password.
         /// This method will return immediately if a homeserver has not been set.
         func login() {
-            guard let homeserver = homeserver else { return }
+            guard let homeserver else { return }
             
             matrix.client.homeserver = homeserver
             
