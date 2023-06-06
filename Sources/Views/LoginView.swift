@@ -47,10 +47,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static let matrix = MatrixController.preview
-    
-    static var previews: some View {
-        LoginView(matrix: matrix)
+#Preview {
+    NavigationStack {
+        LoginView(matrix: MatrixController.preview)
     }
 }

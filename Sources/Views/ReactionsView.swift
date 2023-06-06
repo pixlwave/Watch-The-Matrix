@@ -16,11 +16,11 @@ struct ReactionsView: View {
                     }
                     .padding(.vertical, 2)
                     .padding(.horizontal, 4)
-                    .background(
+                    .background {
                         Capsule()
                             .strokeBorder(reaction.eventIDToRedact == nil ? .clear : Color.accentColor, lineWidth: 1.5)
                             .background(reaction.eventIDToRedact == nil ? Color(.darkGray) : Color.accentColor.opacity(0.5), in: Capsule())
-                    )
+                    }
                     .accessibilityElement(children: .combine);      #warning("This accessibility element isn't surfaced.")
                 }
             }
@@ -28,13 +28,11 @@ struct ReactionsView: View {
     }
 }
 
-struct Previews_ReactionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReactionsView(reactions: [
-            AggregatedReaction(key: "👍", count: 3, eventIDToRedact: nil),
-            AggregatedReaction(key: "😄", count: 2, eventIDToRedact: "smile"),
-            AggregatedReaction(key: "🟩", count: 10, eventIDToRedact: nil),
-            AggregatedReaction(key: "🟨", count: 1, eventIDToRedact: "yellow")
-        ], alignment: .leading)
-    }
+#Preview {
+    ReactionsView(reactions: [
+        AggregatedReaction(key: "👍", count: 3, eventIDToRedact: nil),
+        AggregatedReaction(key: "😄", count: 2, eventIDToRedact: "smile"),
+        AggregatedReaction(key: "🟩", count: 10, eventIDToRedact: nil),
+        AggregatedReaction(key: "🟨", count: 1, eventIDToRedact: "yellow")
+    ], alignment: .leading)
 }

@@ -6,7 +6,6 @@ struct RootView: View {
     @EnvironmentObject var matrix: MatrixController
     
     // sheets and alerts
-    @State private var presentedRoom: Room?
     @State private var isPresentingSettings = false
     @State private var syncError: MatrixError? = nil
     
@@ -15,16 +14,6 @@ struct RootView: View {
                   sortDescriptors: [NSSortDescriptor(keyPath: \Room.lastMessageDate, ascending: false)],
                   predicate: NSPredicate(format: "isSpace != true"),
                   animation: .default) var rooms: FetchedResults<Room>
-    
-    /// A binding to `presentedRoom` that controls the navigation link.
-    var isPresentingRoom: Binding<Bool> {
-        Binding {
-            presentedRoom != nil
-        } set: { newValue in
-            guard !newValue else { return }
-            presentedRoom = nil
-        }
-    }
     
     var body: some View {
         List {
@@ -41,25 +30,18 @@ struct RootView: View {
             }
             
             ForEach(rooms) { room in
-                Button { presentedRoom = room } label: {
+                NavigationLink(value: room) {
                     RoomCell(room: room)
                 }
                 .disabled(room.isEncrypted)
             }
         }
         .navigationTitle("Rooms")
-        .background(
-            // Use a hidden navigation link to fix links in a list popping when
-            // a new sort order moves the currently selected cell offscreen.
-            NavigationLink("", isActive: isPresentingRoom) {
-                presentedRoom.map { room in
-                    RoomView(room: room)
-                        .environmentObject(matrix)
-                        .environment(\.managedObjectContext, viewContext)
-                }
-            }
-            .hidden()
-        )
+        .navigationDestination(for: Room.self) { room in
+            RoomView(room: room)
+                .environmentObject(matrix)
+                .environment(\.managedObjectContext, viewContext)
+        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button { isPresentingSettings = true } label: {
@@ -78,14 +60,12 @@ struct RootView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static let matrix = MatrixController.preview
+#Preview {
+    let matrix = MatrixController.preview
     
-    static var previews: some View {
-        NavigationView {
-            RootView()
-                .environmentObject(matrix)
-                .environment(\.managedObjectContext, matrix.dataController.viewContext)
-        }
+    NavigationStack {
+        RootView()
+            .environmentObject(matrix)
+            .environment(\.managedObjectContext, matrix.dataController.viewContext)
     }
 }

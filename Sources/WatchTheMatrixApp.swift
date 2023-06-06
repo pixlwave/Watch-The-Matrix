@@ -10,7 +10,7 @@ struct WatchTheMatrixApp: App {
         WindowGroup {
             // navigation view prevents overlap with the time when scrolling the login form
             // doesn't have any effect on the progress view's layout so use it all the time
-            NavigationView {
+            NavigationStack {
                 switch matrix.state {
                 case .signedOut:
                     LoginView(matrix: matrix)

@@ -57,13 +57,11 @@ struct RoomCell: View {
 }
 
 
-struct RoomCell_Previews: PreviewProvider {
-    static let matrix = MatrixController.preview
+#Preview {
+    let matrix = MatrixController.preview
     
-    static var previews: some View {
-        List {
-            RoomCell(room: matrix.dataController.room(id: "!test0:example.org")!)
-                .environmentObject(matrix)
-        }
+    List {
+        RoomCell(room: matrix.dataController.room(id: "!test0:example.org")!)
+            .environmentObject(matrix)
     }
 }

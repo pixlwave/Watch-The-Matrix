@@ -58,7 +58,10 @@ struct RoomView: View {
                         } else {
                             Label("Deleted", systemImage: "trash")
                                 .padding()
-                                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(Color(.darkGray).opacity(1 / 3)))
+                                .background {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .foregroundColor(Color(.darkGray).opacity(1 / 3))
+                                }
                                 .id(message.id) // give the view it's message's id for programatic scrolling
                         }
                     }
@@ -116,14 +119,12 @@ struct RoomView: View {
     }
 }
 
-struct RoomView_Previews: PreviewProvider {
-    static let matrix = MatrixController.preview
+#Preview {
+    let matrix = MatrixController.preview
     
-    static var previews: some View {
-        NavigationView {
-            RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
-                .environmentObject(matrix)
-                .environment(\.managedObjectContext, matrix.dataController.viewContext)
-        }
+    NavigationStack {
+        RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
+            .environmentObject(matrix)
+            .environment(\.managedObjectContext, matrix.dataController.viewContext)
     }
 }

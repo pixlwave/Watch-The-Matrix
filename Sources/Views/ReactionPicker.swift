@@ -44,12 +44,10 @@ struct ReactionPicker: View {
     }
 }
 
-struct Previews_ReactionPicker_Previews: PreviewProvider {
-    static let matrix = MatrixController.preview
+#Preview {
+    let matrix = MatrixController.preview
+    let message = matrix.dataController.message(id: "0199-!test0:example.org")!
     
-    static var previews: some View {
-        let message = matrix.dataController.message(id: "0199-!test0:example.org")!
-        ReactionPicker(message: message, room: message.room!)
-            .environmentObject(matrix)
-    }
+    ReactionPicker(message: message, room: message.room!)
+        .environmentObject(matrix)
 }

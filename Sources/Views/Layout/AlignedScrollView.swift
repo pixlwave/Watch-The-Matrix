@@ -39,10 +39,10 @@ struct AlignedScrollView<Content: View>: View {
                     .frame(width: leadingWidth)
                 
                 content()
-                    .background(contentReader)
+                    .background { contentReader }
             }
         }
-        .background(frameReader)
+        .background { frameReader }
     }
     
 }
