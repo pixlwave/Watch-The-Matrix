@@ -9,7 +9,7 @@ class MatrixController: ObservableObject {
     /// The Matrix client object used to interact with the homeserver
     var client = Client()
     
-    enum State { case signedOut, initialSync, syncing, syncError(error: MatrixError) }
+    enum State { case signedOut, initialSync, syncing, syncError(error: MatrixError), signingOut }
     
     /// The current state of the Matrix stack.
     @Published private(set) var state: State = .signedOut
@@ -142,15 +142,17 @@ class MatrixController: ObservableObject {
     /// Logout of the homeserver. If successful the user's credentials will be reset and the state
     /// will be updated triggering LoginView to be shown.
     func logout() {
+        // cancel the long poll first
+        pauseSync()
+        state = .signingOut
+        
         authCancellable = client.logout()
             .receive(on: DispatchQueue.main)
-            .sink { completion in
-                //
-            } receiveValue: { success in
+            .replaceError(with: false)
+            .sink { success in
                 if !success { print("Logout request failed, clearing data anyway.") }
                 
-                // cancel the long poll and remove the user's data
-                self.pauseSync()
+                // remove the user's data
                 self.resetStoredData()
             }
     }

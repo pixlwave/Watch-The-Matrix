@@ -16,7 +16,7 @@ struct WatchTheMatrixApp: App {
                 switch matrix.state {
                 case .signedOut:
                     LoginView(matrix: matrix)
-                case .initialSync:
+                case .initialSync, .signingOut:
                     ProgressView()
                 case .syncing, .syncError:
                     RootView()
