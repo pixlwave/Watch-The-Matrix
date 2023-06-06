@@ -3,8 +3,6 @@ import Matrix
 
 @main
 struct WatchTheMatrixApp: App {
-    @WKApplicationDelegateAdaptor var delegate: ExtensionDelegate
-    
     @StateObject var matrix = MatrixController()
     @Environment(\.scenePhase) var scenePhase
     

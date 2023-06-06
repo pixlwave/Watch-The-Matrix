@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "flicktypekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/FlickType/FlickTypeKit",
-      "state" : {
-        "branch" : "main",
-        "revision" : "aa227379c7ab3c1997545aa24248b3ae372ed3c0"
-      }
-    },
-    {
       "identity" : "keychainaccess",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kishikawakatsumi/KeychainAccess",
