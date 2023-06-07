@@ -3,11 +3,11 @@ import SwiftUI
 /// A view that displays text input for username, password and a custom homeserver
 /// along with a button to log in.
 struct LoginView: View {
-    @StateObject private var viewModel: ViewModel
+    @Bindable private var viewModel: LoginViewModel
     
     init(matrix: MatrixController) {
-        let viewModel = ViewModel(matrix: matrix)
-        _viewModel = StateObject(wrappedValue: viewModel)
+        let viewModel = LoginViewModel(matrix: matrix)
+        _viewModel = Bindable(wrappedValue: viewModel)
     }
     
     @ViewBuilder var homeserverFooter: some View {

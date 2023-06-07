@@ -1,9 +1,10 @@
-import Combine
 import Matrix
+import Combine
+import Observation
 import HTMLEntities
 
 /// A class that represents a transaction for outbound messages.
-class MessageTransaction: ObservableObject, Identifiable {
+@Observable class MessageTransaction: Identifiable {
     /// The transaction ID used when sending the message.
     let id: String
     /// The content of the message.
@@ -14,11 +15,11 @@ class MessageTransaction: ObservableObject, Identifiable {
     let originalMessage: String
     
     /// A cancellable token for the send operation.
-    var token: AnyCancellable?
+    var token: AnyCancellable? = nil
     /// The event ID created by the server if the message was sent successfully.
-    @Published var eventID: String?
+    var eventID: String? = nil
     /// An error that occurred when sending the message, otherwise nil.
-    @Published var error: MatrixError?
+    var error: MatrixError? = nil
     
     var isDelivered: Bool {
         eventID != nil

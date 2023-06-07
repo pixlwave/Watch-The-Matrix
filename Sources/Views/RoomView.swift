@@ -6,7 +6,7 @@ import CoreData
 struct RoomView: View {
     @EnvironmentObject var matrix: MatrixController
     @ObservedObject var room: Room
-    @ObservedObject var transactionStore: TransactionStore
+    let transactionStore: TransactionStore
     
     /// A boolean indicating  whether `.onAppear` has been called.
     @State private var hasAppeared = false
@@ -79,17 +79,17 @@ struct RoomView: View {
                 .navigationTitle(room.name ?? room.generateName(for: matrix.userID))
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-                    if !hasAppeared {
-                        // update the last message id and display the last message
-                        lastMessageID = messages.last?.id
-                        reader.scrollTo(lastMessageID, anchor: .bottom)
-                        
-                        // mark the last message in the room as read
-                        markRoomAsRead()
-                        
-                        // prevent the closure from running after the reaction sheet has been shown
-                        hasAppeared = true
-                    }
+                    guard !hasAppeared else { return }
+                    
+                    // update the last message id and display the last message
+                    lastMessageID = messages.last?.id
+                    reader.scrollTo(lastMessageID, anchor: .bottom)
+                    
+                    // mark the last message in the room as read
+                    markRoomAsRead()
+                    
+                    // prevent the closure from running after the reaction sheet has been shown
+                    hasAppeared = true
                 }
                 .onReceive(messages.publisher) { _ in
                     // if a more recent message has been added, show that message

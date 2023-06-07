@@ -4,7 +4,7 @@ import SwiftUI
 /// any errors that may have occurred.
 struct MessageTransactionView: View {
     @EnvironmentObject var matrix: MatrixController
-    @ObservedObject var transaction: MessageTransaction
+    let transaction: MessageTransaction
     
     @State private var isPresentingError = false
     

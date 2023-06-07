@@ -1,9 +1,9 @@
-import Foundation
+import Observation
 
 /// An obervable class to hold all transactions associated with a specific room.
-class TransactionStore: ObservableObject {
+@Observable class TransactionStore {
     /// All of the message transactions contained within this store.
-    @Published var messages: [MessageTransaction] = []
+    var messages: [MessageTransaction] = []
     
     /// Add a new `MessageTransaction` to this store.
     func add(_ message: MessageTransaction) {
