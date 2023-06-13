@@ -1,11 +1,12 @@
 import SwiftUI
 
 struct NotificationView: View {
+    let message: String
     var body: some View {
-        Text("Hello, World!")
+        Text(message)
     }
 }
 
 #Preview {
-    NotificationView()
+    NotificationView(message: "Hello, World!")
 }

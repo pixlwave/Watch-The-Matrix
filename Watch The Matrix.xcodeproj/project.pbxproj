@@ -58,9 +58,9 @@
 		A5B43C0B264831F4005384AF /* Date-Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B43C0A264831F4005384AF /* Date-Formatting.swift */; };
 		A5BC73C72700B97E00AF5AF9 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */; };
 		A5BCCB5A260C9DAB00CBC29B /* Redaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCCB59260C9DAB00CBC29B /* Redaction.swift */; };
-		A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */; };
 		A5D54D442780BEC300B01C8B /* MessageReplies.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D54D432780B8CC00B01C8B /* MessageReplies.json */; };
 		A5DCA2B4262B85F7004A328B /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCA2B3262B85F7004A328B /* ReactionsView.swift */; };
+		A5E324AB2A38B70C0085AACB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A5E324AA2A38B70C0085AACB /* Localizable.xcstrings */; };
 		A5E9E87325F673C00054D1A2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87225F673C00054D1A2 /* Reaction.swift */; };
 		A5E9E87B25F676730054D1A2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9E87A25F676730054D1A2 /* MessageView.swift */; };
 		A5FEEBEA27118E4200B57B84 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FEEBE927118E4200B57B84 /* SettingsView.swift */; };
@@ -106,9 +106,6 @@
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A538FDFD26B479B7004F37F6 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A538FE0126B479B8004F37F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A53EF81A2611ED9F00DED74F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A53EF81B2611F21F00DED74F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A53EF81C2611F5E800DED74F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A54E5CCC25F5331900D43CDE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A54E5CCD25F5331900D43CDE /* MatrixController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixController.swift; sourceTree = "<group>"; };
 		A54E5CCE25F5331900D43CDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -156,9 +153,9 @@
 		A5B43C0A264831F4005384AF /* Date-Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Formatting.swift"; sourceTree = "<group>"; };
 		A5BC73C62700B97E00AF5AF9 /* ImageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
 		A5BCCB59260C9DAB00CBC29B /* Redaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Redaction.swift; sourceTree = "<group>"; };
-		A5C6FD2C2611E9FB0096DF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5D54D432780B8CC00B01C8B /* MessageReplies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MessageReplies.json; sourceTree = "<group>"; };
 		A5DCA2B3262B85F7004A328B /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
+		A5E324AA2A38B70C0085AACB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A5E9E87225F673C00054D1A2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		A5E9E87A25F676730054D1A2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		A5FEEBE927118E4200B57B84 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -356,7 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
-				A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */,
+				A5E324AA2A38B70C0085AACB /* Localizable.xcstrings */,
 				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
 				A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */,
 				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
@@ -500,7 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */,
-				A5C6FD2B2611E9FB0096DF72 /* Localizable.strings in Resources */,
+				A5E324AB2A38B70C0085AACB /* Localizable.xcstrings in Resources */,
 				A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */,
 				A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */,
 			);
@@ -580,20 +577,6 @@
 			targetProxy = A59A0C4D25DD6AC000B5EDAA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A5C6FD2D2611E9FB0096DF72 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A5C6FD2C2611E9FB0096DF72 /* en */,
-				A53EF81A2611ED9F00DED74F /* fr */,
-				A53EF81B2611F21F00DED74F /* de */,
-				A53EF81C2611F5E800DED74F /* es */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A538FE0526B479B8004F37F6 /* Debug */ = {
@@ -694,6 +677,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -751,6 +735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -780,6 +765,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
@@ -806,6 +792,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
