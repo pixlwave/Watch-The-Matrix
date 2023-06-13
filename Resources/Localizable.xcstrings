@@ -1,66 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Always" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Immer"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Always"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Siempre"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toujours"
-          }
-        }
-      }
-    },
-    "Ask Each Time" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jedes Mal fragen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ask Each Time"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pregunte cada vez"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Demande à chaque fois"
-          }
-        }
-      }
-    },
     "Cancel" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -89,7 +30,6 @@
       }
     },
     "Deleted" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -118,7 +58,6 @@
       }
     },
     "Discard" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -146,38 +85,9 @@
         }
       }
     },
-    "Done" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fertig"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hecho"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terminé"
-          }
-        }
-      }
-    },
     "Edited" : {
       "comment" : "MessageView",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -206,7 +116,7 @@
       }
     },
     "Empty Room" : {
-      "extractionState" : "migrated",
+      "comment" : "There is no-one else in the room",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -236,7 +146,6 @@
     },
     "Encrypted " : {
       "comment" : "RoomCell",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -266,7 +175,6 @@
     },
     "Failed to Send" : {
       "comment" : "MessageTransactionView",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -295,7 +203,6 @@
       }
     },
     "Homeserver" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -325,7 +232,6 @@
     },
     "Load More…" : {
       "comment" : "RoomView",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -354,7 +260,6 @@
       }
     },
     "Login" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -384,7 +289,6 @@
     },
     "Message" : {
       "comment" : "MessageComposer",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -412,37 +316,7 @@
         }
       }
     },
-    "Never" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niemals"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Never"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nunca"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jamais"
-          }
-        }
-      }
-    },
     "Password" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -471,7 +345,6 @@
       }
     },
     "Reply" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -500,7 +373,6 @@
       }
     },
     "Retry" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -530,7 +402,6 @@
     },
     "Rooms" : {
       "comment" : "RootView",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -560,7 +431,6 @@
     },
     "Settings" : {
       "comment" : "SettingsView",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -589,7 +459,6 @@
       }
     },
     "Sign out" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -618,7 +487,6 @@
       }
     },
     "Sign Out?" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -648,7 +516,6 @@
     },
     "Sync Error" : {
       "comment" : "WatchTheMatrixApp",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -676,37 +543,7 @@
         }
       }
     },
-    "Unknown Room" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unbekannter Raum"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unknown Room"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Habitación Desconocida"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pièce inconnue"
-          }
-        }
-      }
-    },
     "Unsupported Room" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -734,38 +571,8 @@
         }
       }
     },
-    "Use FlickType" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FlickType Verwenden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use FlickType"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usar FlickType"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Utiliser FlickType"
-          }
-        }
-      }
-    },
     "Username" : {
       "comment" : "LoginView",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
