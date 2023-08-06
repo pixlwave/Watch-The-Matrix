@@ -6,9 +6,9 @@ extension LoginView {
     class ViewModel: ObservableObject {
         private var matrix: MatrixController
         
-        @Published var username = ""
-        @Published var password = ""
-        @Published var homeserver: Homeserver?
+        @Published var username = ProcessInfo.processInfo.environment["username"] ?? ""
+        @Published var password = ProcessInfo.processInfo.environment["password"] ?? ""
+        @Published var homeserver: Homeserver? = ProcessInfo.processInfo.environment["homeserver"].flatMap(Homeserver.init)
         
         private var lookupCancellable: AnyCancellable?
         
