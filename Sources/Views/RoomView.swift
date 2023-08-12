@@ -119,12 +119,14 @@ struct RoomView: View {
     }
 }
 
-#Preview {
-    let matrix = MatrixController.preview
+struct RoomView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
     
-    NavigationStack {
-        RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
-            .environmentObject(matrix)
-            .environment(\.managedObjectContext, matrix.dataController.viewContext)
+    static var previews: some View {
+        NavigationStack {
+            RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
+                .environmentObject(matrix)
+                .environment(\.managedObjectContext, matrix.dataController.viewContext)
+        }
     }
 }

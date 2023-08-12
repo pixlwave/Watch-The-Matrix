@@ -5,8 +5,8 @@ struct MessageComposer: View {
     @EnvironmentObject private var matrix: MatrixController
     
     let room: Room
-    var messageToReplyTo: Message? = nil
-    var completion: (() -> Void)? = nil
+    var messageToReplyTo: Message?
+    var completion: (() -> Void)?
     
     @State private var message = ""
     

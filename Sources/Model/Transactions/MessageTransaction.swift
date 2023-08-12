@@ -15,11 +15,11 @@ import HTMLEntities
     let originalMessage: String
     
     /// A cancellable token for the send operation.
-    var token: AnyCancellable? = nil
+    var token: AnyCancellable?
     /// The event ID created by the server if the message was sent successfully.
-    var eventID: String? = nil
+    var eventID: String?
     /// An error that occurred when sending the message, otherwise nil.
-    var error: MatrixError? = nil
+    var error: MatrixError?
     
     var isDelivered: Bool {
         eventID != nil

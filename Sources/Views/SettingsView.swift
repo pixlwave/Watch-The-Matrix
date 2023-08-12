@@ -29,11 +29,13 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    let matrix = MatrixController.preview
+struct SettingsView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
     
-    NavigationStack {
-        SettingsView()
-            .environmentObject(matrix)
+    static var previews: some View {
+        NavigationStack {
+            SettingsView()
+                .environmentObject(matrix)
+        }
     }
 }

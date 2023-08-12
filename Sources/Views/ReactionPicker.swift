@@ -33,8 +33,7 @@ struct ReactionPicker: View {
             }
             .multilineTextAlignment(.center)
         }
-        // FIXME: Use presentationBackground on watchOS 10.
-        .background(Color.gray.opacity(0.2).ignoresSafeArea())
+        .presentationBackground(.gray.opacity(0.2)) // improve button visibility.
     }
     
     /// Reacts to the message and dismisses the sheet.
@@ -44,10 +43,20 @@ struct ReactionPicker: View {
     }
 }
 
-#Preview {
-    let matrix = MatrixController.preview
-    let message = matrix.dataController.message(id: "0199-!test0:example.org")!
+struct ReactionPicker_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
+    static let message = matrix.dataController.message(id: "0199-!test0:example.org")!
     
-    ReactionPicker(message: message, room: message.room!)
-        .environmentObject(matrix)
+    static var previews: some View {
+        ReactionPicker(message: message, room: message.room!)
+            .environmentObject(matrix)
+            .previewDisplayName("View")
+        
+        Color.clear
+            .sheet(isPresented: .constant(true)) {
+                ReactionPicker(message: message, room: message.room!)
+                    .environmentObject(matrix)
+            }
+            .previewDisplayName("Sheet")
+    }
 }

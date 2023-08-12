@@ -28,11 +28,13 @@ struct ReactionsView: View {
     }
 }
 
-#Preview {
-    ReactionsView(reactions: [
-        AggregatedReaction(key: "👍", count: 3, eventIDToRedact: nil),
-        AggregatedReaction(key: "😄", count: 2, eventIDToRedact: "smile"),
-        AggregatedReaction(key: "🟩", count: 10, eventIDToRedact: nil),
-        AggregatedReaction(key: "🟨", count: 1, eventIDToRedact: "yellow")
-    ], alignment: .leading)
+struct ReactionsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ReactionsView(reactions: [
+            AggregatedReaction(key: "👍", count: 3, eventIDToRedact: nil),
+            AggregatedReaction(key: "😄", count: 2, eventIDToRedact: "smile"),
+            AggregatedReaction(key: "🟩", count: 10, eventIDToRedact: nil),
+            AggregatedReaction(key: "🟨", count: 1, eventIDToRedact: "yellow")
+        ], alignment: .leading)
+    }
 }

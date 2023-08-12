@@ -7,7 +7,7 @@ struct RootView: View {
     
     // sheets and alerts
     @State private var isPresentingSettings = false
-    @State private var syncError: MatrixError? = nil
+    @State private var syncError: MatrixError?
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(entity: Room.entity(),
@@ -19,13 +19,10 @@ struct RootView: View {
         List {
             if case let .syncError(error) = matrix.state {
                 Button { syncError = error } label: {
-                    HStack {
-                        Spacer()
-                        Text("Sync Error")
-                            .foregroundColor(.red)
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                    }
+                    Text("Sync Error")
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                 }
             }
             
@@ -37,17 +34,17 @@ struct RootView: View {
             }
         }
         .navigationTitle("Rooms")
-        .navigationDestination(for: Room.self) { room in
-            RoomView(room: room)
-                .environmentObject(matrix)
-                .environment(\.managedObjectContext, viewContext)
-        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button { isPresentingSettings = true } label: {
                     Image(systemName: "person")
                 }
             }
+        }
+        .navigationDestination(for: Room.self) { room in
+            RoomView(room: room)
+                .environmentObject(matrix)
+                .environment(\.managedObjectContext, viewContext)
         }
         .sheet(isPresented: $isPresentingSettings) {
             SettingsView()
@@ -60,12 +57,14 @@ struct RootView: View {
     }
 }
 
-#Preview {
-    let matrix = MatrixController.preview
+struct RootView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
     
-    NavigationStack {
-        RootView()
-            .environmentObject(matrix)
-            .environment(\.managedObjectContext, matrix.dataController.viewContext)
+    static var previews: some View {
+        NavigationStack {
+            RootView()
+                .environmentObject(matrix)
+                .environment(\.managedObjectContext, matrix.dataController.viewContext)
+        }
     }
 }

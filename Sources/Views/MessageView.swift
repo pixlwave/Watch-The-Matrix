@@ -94,18 +94,20 @@ struct MessageView: View {
     }
 }
 
-#Preview {
-    let matrix = MatrixController.preview
+struct MessageView_Previews: PreviewProvider {
+    static let matrix = MatrixController.preview
     
-    ScrollView {
-        VStack {
-            MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
-                        showSender: true,
-                        isCurrentUser: false)
-            MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
-                        showSender: true,
-                        isCurrentUser: true)
+    static var previews: some View {
+        ScrollView {
+            VStack {
+                MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+                            showSender: true,
+                            isCurrentUser: false)
+                MessageView(message: matrix.dataController.message(id: "0199-!test0:example.org")!,
+                            showSender: true,
+                            isCurrentUser: true)
+            }
+            .environmentObject(matrix)
         }
-        .environmentObject(matrix)
     }
 }

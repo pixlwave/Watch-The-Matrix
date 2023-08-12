@@ -3,10 +3,10 @@ import SwiftUI
 /// A view that displays text input for username, password and a custom homeserver
 /// along with a button to log in.
 struct LoginView: View {
-    @Bindable private var viewModel: LoginViewModel
+    @Bindable private var viewModel: ViewModel
     
     init(matrix: MatrixController) {
-        let viewModel = LoginViewModel(matrix: matrix)
+        let viewModel = ViewModel(matrix: matrix)
         _viewModel = Bindable(wrappedValue: viewModel)
     }
     
@@ -47,8 +47,10 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        LoginView(matrix: MatrixController.preview)
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            LoginView(matrix: MatrixController.preview)
+        }
     }
 }

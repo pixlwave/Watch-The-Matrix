@@ -39,7 +39,10 @@ struct MessageTransactionView: View {
     }
 }
 
-#Preview {
-    let transaction = MessageTransaction(id: "1", message: "Hello, World!", roomID: "!1:example.com")
-    MessageTransactionView(transaction: transaction)
+struct MessageTransactionView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        let transaction = MessageTransaction(id: "1", message: "Hello, World!", roomID: "!1:example.com")
+        MessageTransactionView(transaction: transaction)
+    }
 }

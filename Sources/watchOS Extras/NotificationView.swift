@@ -7,6 +7,8 @@ struct NotificationView: View {
     }
 }
 
-#Preview {
-    NotificationView(message: "Hello, World!")
+struct NotifivationView_Previews: PreviewProvider {
+    static var previews: some View {
+        NotificationView(message: "Hello, World!")
+    }
 }
