@@ -19,6 +19,7 @@ struct ReactionPicker: View {
                         Text(reaction)
                             .font(.system(size: 21))
                     }
+                    .buttonBorderShape(.roundedRectangle)
                     .disabled(alreadySent)
                     .opacity(alreadySent ? 0.667 : 1)
                 }
@@ -32,6 +33,8 @@ struct ReactionPicker: View {
             }
             .multilineTextAlignment(.center)
         }
+        // FIXME: Use presentationBackground on watchOS 10.
+        .background(Color.gray.opacity(0.2).ignoresSafeArea())
     }
     
     /// Reacts to the message and dismisses the sheet.

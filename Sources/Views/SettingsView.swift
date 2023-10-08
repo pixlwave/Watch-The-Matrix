@@ -29,11 +29,6 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
-        .toolbar {
-            ToolbarItem(placement: .destructiveAction) {
-                Button("Done") { dismiss() }
-            }
-        }
         .confirmationDialog("Sign Out?", isPresented: $isPresentingSignOutAlert) {
             Button("Sign out", role: .destructive) {
                 matrix.logout()
