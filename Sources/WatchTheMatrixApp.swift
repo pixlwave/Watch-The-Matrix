@@ -23,13 +23,13 @@ struct WatchTheMatrixApp: App {
                 }
             }
         }
-        .onChange(of: scenePhase, perform: updateSyncState)
+        .onChange(of: scenePhase, updateSyncState)
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
     
     /// Pauses or resumes syncing appropriately for the supplied scene phase.
-    func updateSyncState(for scenePhase: ScenePhase) {
+    func updateSyncState(from oldPhase: ScenePhase, to scenePhase: ScenePhase) {
         // leave an initial sync running, don't pause or restart it
         if case .initialSync = matrix.state { return }
         
