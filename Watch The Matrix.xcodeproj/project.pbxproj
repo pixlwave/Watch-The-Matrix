@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A515EAC22610D28C00D27C86 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515EAC12610D28C00D27C86 /* SyncState.swift */; };
 		A51EA1732657BD160067A708 /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51EA1722657BD160067A708 /* MessageComposer.swift */; };
+		A52AA4CC2C2CA83600096D95 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A52AA4CB2C2CA83600096D95 /* PrivacyInfo.xcprivacy */; };
 		A52BA37325DEC59800BBCCFC /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA37225DEC59800BBCCFC /* RoomView.swift */; };
 		A52BA38A25DECDC500BBCCFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BA38625DECCDD00BBCCFC /* LoginView.swift */; };
 		A538FE0726B479C1004F37F6 /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A510767B26207890006362C0 /* DataControllerTests.swift */; };
@@ -102,6 +103,7 @@
 		A51076872620A74A006362C0 /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		A515EAC12610D28C00D27C86 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncState.swift; sourceTree = "<group>"; };
 		A51EA1722657BD160067A708 /* MessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposer.swift; sourceTree = "<group>"; };
+		A52AA4CB2C2CA83600096D95 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A52BA37225DEC59800BBCCFC /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		A52BA38625DECCDD00BBCCFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A538FDFD26B479B7004F37F6 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -353,10 +355,11 @@
 			isa = PBXGroup;
 			children = (
 				A59A0C6625DD6AC300B5EDAA /* Assets.xcassets */,
-				A5E324AA2A38B70C0085AACB /* Localizable.xcstrings */,
 				A59A0C6B25DD6AC300B5EDAA /* Info.plist */,
-				A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */,
+				A5E324AA2A38B70C0085AACB /* Localizable.xcstrings */,
+				A52AA4CB2C2CA83600096D95 /* PrivacyInfo.xcprivacy */,
 				A59A0C6C25DD6AC300B5EDAA /* PushNotificationPayload.apns */,
+				A594306F2673D4A500A47018 /* Watch The Matrix WatchKit Extension.entitlements */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				A59A0C6A25DD6AC300B5EDAA /* Preview Assets.xcassets in Resources */,
 				A5E324AB2A38B70C0085AACB /* Localizable.xcstrings in Resources */,
 				A59A0C6725DD6AC300B5EDAA /* Assets.xcassets in Resources */,
+				A52AA4CC2C2CA83600096D95 /* PrivacyInfo.xcprivacy in Resources */,
 				A59A0C5125DD6AC200B5EDAA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
