@@ -94,6 +94,9 @@ class MatrixController: ObservableObject {
         // create a fresh sync state object
         self.syncState = self.dataController.syncState()
         
+        // clear any cached images
+        URLCache.shared.removeAllCachedResponses()
+        
         // update the ui state
         self.state = .signedOut
     }

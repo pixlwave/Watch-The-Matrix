@@ -38,9 +38,9 @@ struct RoomView: View {
                         }
                     }
                     
-                    ForEach(messages.indices, id: \.self) { index in
-                        let message = messages[index]
-                        
+                    // make sure to identify using the message otherwise image state is lost when new
+                    // messages get added to the fetch results
+                    ForEach(Array(messages.enumerated()), id: \.element) { index, message in
                         // figure out whether the sender's name is the same to avoid duplicate labels
                         let previousMessage = messages.indices.contains(index - 1) ? messages[index - 1] : nil
                         let senderHasChanged = previousMessage?.sender != message.sender
