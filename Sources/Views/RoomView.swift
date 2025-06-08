@@ -36,6 +36,7 @@ struct RoomView: View {
                         Button("Load More…") {
                             matrix.loadMoreMessages(in: room)
                         }
+                        .frame(maxWidth: .infinity)
                     }
                     
                     // make sure to identify using the message otherwise image state is lost when new
