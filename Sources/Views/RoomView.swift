@@ -4,7 +4,7 @@ import CoreData
 
 /// A view that shows the messages of a room.
 struct RoomView: View {
-    @EnvironmentObject var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     @ObservedObject var room: Room
     let transactionStore: TransactionStore
     
@@ -126,7 +126,7 @@ struct RoomView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             RoomView(room: matrix.dataController.room(id: "!test0:example.org")!)
-                .environmentObject(matrix)
+                .environment(matrix)
                 .environment(\.managedObjectContext, matrix.dataController.viewContext)
         }
     }

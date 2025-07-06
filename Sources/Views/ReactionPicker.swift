@@ -3,8 +3,8 @@ import SwiftUI
 /// A view that displays a two column reaction picker with 6 emoji to choose from.
 /// Tapping on one of the emoji will react to the supplied message.
 struct ReactionPicker: View {
+    @Environment(MatrixController.self) private var matrix
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var matrix: MatrixController
     
     let message: Message
     let room: Room
@@ -49,13 +49,13 @@ struct ReactionPicker_Previews: PreviewProvider {
     
     static var previews: some View {
         ReactionPicker(message: message, room: message.room!)
-            .environmentObject(matrix)
+            .environment(matrix)
             .previewDisplayName("View")
         
         Color.clear
             .sheet(isPresented: .constant(true)) {
                 ReactionPicker(message: message, room: message.room!)
-                    .environmentObject(matrix)
+                    .environment(matrix)
             }
             .previewDisplayName("Sheet")
     }

@@ -4,7 +4,7 @@ import Combine
 import KeychainAccess
 
 /// A class that calls the Matrix Client to make requests and hands the appropriate responses back to it's DataController.
-class MatrixController: ObservableObject {
+@Observable class MatrixController {
     
     /// The Matrix client object used to interact with the homeserver
     var client = Client()
@@ -12,10 +12,10 @@ class MatrixController: ObservableObject {
     enum State { case signedOut, initialSync, syncing, syncError(error: MatrixError), signingOut }
     
     /// The current state of the Matrix stack.
-    @Published private(set) var state: State = .signedOut
+    private(set) var state: State = .signedOut
     
-    @Published private(set) var userID: String?
-    @Published private(set) var deviceID: String?
+    private(set) var userID: String?
+    private(set) var deviceID: String?
     
     /// An object that represents the current sync state to the Matrix homeserver.
     private var syncState: SyncState

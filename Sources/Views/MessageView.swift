@@ -4,7 +4,7 @@ import Matrix
 /// A view that displays the contents of a message and it's sender, along with
 /// any reactions and an indication of whether the message has been edited.
 struct MessageView: View {
-    @EnvironmentObject private var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     
     @ObservedObject var message: Message
     @ObservedObject private var sender: Member    // observe the sender for updates to their display name
@@ -107,7 +107,7 @@ struct MessageView_Previews: PreviewProvider {
                             showSender: true,
                             isCurrentUser: true)
             }
-            .environmentObject(matrix)
+            .environment(matrix)
         }
     }
 }

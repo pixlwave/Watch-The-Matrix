@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject private var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     @Environment(\.dismiss) private var dismiss
     
     @State private var isPresentingSignOutConfirmation = false
@@ -41,7 +41,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             SettingsView()
-                .environmentObject(matrix)
+                .environment(matrix)
         }
     }
 }

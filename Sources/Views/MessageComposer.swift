@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A view that displays a text field to send messages from.
 struct MessageComposer: View {
-    @EnvironmentObject private var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     
     let room: Room
     var messageToReplyTo: Message?

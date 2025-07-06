@@ -3,7 +3,7 @@ import Matrix
 
 /// A view that displays all of the rooms that the user is currently joined to.
 struct RootView: View {
-    @EnvironmentObject var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     
     // sheets and alerts
     @State private var isPresentingSettings = false
@@ -43,7 +43,7 @@ struct RootView: View {
         }
         .navigationDestination(for: Room.self) { room in
             RoomView(room: room)
-                .environmentObject(matrix)
+                .environment(matrix)
                 .environment(\.managedObjectContext, viewContext)
         }
         .sheet(isPresented: $isPresentingSettings) {
@@ -63,7 +63,7 @@ struct RootView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             RootView()
-                .environmentObject(matrix)
+                .environment(matrix)
                 .environment(\.managedObjectContext, matrix.dataController.viewContext)
         }
     }

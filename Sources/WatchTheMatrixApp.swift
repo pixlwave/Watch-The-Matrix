@@ -3,8 +3,8 @@ import Matrix
 
 @main
 struct WatchTheMatrixApp: App {
-    @StateObject var matrix = MatrixController()
-    @Environment(\.scenePhase) var scenePhase
+    @State private var matrix = MatrixController()
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -19,7 +19,7 @@ struct WatchTheMatrixApp: App {
                 case .syncing, .syncError:
                     RootView()
                         .environment(\.managedObjectContext, matrix.dataController.viewContext)
-                        .environmentObject(matrix)
+                        .environment(matrix)
                 }
             }
         }

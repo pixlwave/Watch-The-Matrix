@@ -3,7 +3,7 @@ import SwiftUI
 /// A view that displays a local echo for an outgoing message along with
 /// any errors that may have occurred.
 struct MessageTransactionView: View {
-    @EnvironmentObject var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     let transaction: MessageTransaction
     
     @State private var isPresentingError = false

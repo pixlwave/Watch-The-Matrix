@@ -4,7 +4,7 @@ import SwiftUI
 /// an indication of whether the room has an unread messages.
 struct RoomCell: View {
     @ObservedObject var room: Room
-    @EnvironmentObject var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     
     var title: some View {
         HStack {
@@ -62,7 +62,7 @@ struct RoomCell_Previews: PreviewProvider {
     static var previews: some View {
         List {
             RoomCell(room: matrix.dataController.room(id: "!test0:example.org")!)
-                .environmentObject(matrix)
+                .environment(matrix)
         }
     }
 }

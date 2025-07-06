@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ImageBubble: View {
-    @EnvironmentObject private var matrix: MatrixController
+    @Environment(MatrixController.self) private var matrix
     let message: Message
     
     enum ContentState { case loading, loaded(Image), error }
