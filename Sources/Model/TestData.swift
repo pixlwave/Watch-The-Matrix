@@ -3,7 +3,7 @@ import CoreData
 extension MatrixController {
     /// An instance of MatrixController with sample data ready for previews.
     static var preview: MatrixController {
-        let matrix = MatrixController(inMemory: true)
+        let matrix = MatrixController(inMemory: true, mockUserID: "@username:matrix.org")
         
         do {
             try matrix.dataController.createSampleData()

@@ -15,6 +15,12 @@ struct SettingsView: View {
                     Text("Sign out")
                         .frame(maxWidth: .infinity)
                 }
+            } header: {
+                matrix.userID.map {
+                    Text($0)
+                        .foregroundStyle(.secondary)
+                        .padding(.bottom)
+                }
             }
         }
         .navigationTitle("Settings")

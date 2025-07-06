@@ -28,12 +28,16 @@ class MatrixController: ObservableObject {
     
     /// Initialises the controller and starts communication with the homeserver if user credentials are found.
     /// - Parameter inMemory: Whether to keep the data store in memory or persist it to disk.
-    init(inMemory: Bool = false) {
+    init(inMemory: Bool = false, mockUserID: String? = nil) {
         dataController = DataController(inMemory: inMemory)
         
         // get the sync state from the data store and load any saved credentials
         syncState = dataController.syncState()
         loadCredentials()
+        
+        if let mockUserID {
+            self.userID = mockUserID
+        }
         
         // resumes syncing if an access token was loaded
         resumeSync()
