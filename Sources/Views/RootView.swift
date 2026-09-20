@@ -1,5 +1,6 @@
 import SwiftUI
 import Matrix
+import CoreData
 
 /// A view that displays all of the rooms that the user is currently joined to.
 struct RootView: View {
